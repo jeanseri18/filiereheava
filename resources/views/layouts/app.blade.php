@@ -84,7 +84,7 @@
         <aside class="app-sidebar  " data-bs-theme="dark" style="background-color:#038C4F;color:white">
             <!--begin::Sidebar Brand-->
             <div class="sidebar-brand">
-                <!--begin::Brand Link--> <a href="./index.html" class="brand-link">
+                <!--begin::Brand Link--> <a href="#" class="brand-link">
                     <!--begin::Brand Image--> <img src="logobg.png" alt="AdminLTE Logo"
                         class="brand-image opacity-75 shadow">
                     <!--end::Brand Image-->
