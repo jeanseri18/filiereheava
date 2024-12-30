@@ -55,82 +55,80 @@
 </style>
 @endpush
 
-@section('content')
-<div class="container">
-    <!-- Zone de téléchargement -->
-    <div class="mb-4">
-        <div class="upload-box" onclick="document.getElementById('file-upload').click();">
-            <input type="file" id="file-upload" multiple>
-            <p><i class="bi bi-cloud-upload" style="font-size: 2rem; color: #038C4F;"></i></p>
-            <p>Glissez vos fichiers ici ou cliquez pour les sélectionner</p>
-        </div>
-    </div>
 
-    <!-- Tableau des documents -->
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Mes Documents</h3>
-        </div>
-        <div class="card-body p-0">
-            <table class="table table-striped">
-                <thead>
+@section('content')
+    <div class="container">
+            <!-- Zone de téléchargement -->
+            <a href="{{ route('documents.create') }}" class="  mb-3">  <div class="mb-4">
+        <div class="upload-box">
+            <p><i class="bi bi-cloud-upload" style="font-size: 2rem; color: #038C4F;"></i></p>
+<p>Ajouter un document
+            </div>
+    </div></a>
+        <h2>Liste des Documents</h2>
+        
+        <!-- Message de succès -->
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+
+        <table id="Table" class="table table-bordered ">
+        <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Type de document</th>
+                    <th>Type de partage</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($documents as $document)
                     <tr>
-                        <th>#</th>
-                        <th>Nom du Document</th>
-                        <th>Date d'Ajout</th>
-                        <th>Statut</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Exemple de lignes -->
-                    <tr>
-                        <td>1</td>
-                        <td>Contrat_2023.pdf</td>
-                        <td>2024-11-27</td>
-                        <td><span class="badge badge-status badge-success">Validé</span></td>
+                        <td>{{ $document->nom }}</td>
+                        <td>{{ $document->type_doc }}</td>
+                        <td>{{ $document->type_share }}</td>
+                        <td>{{ $document->status }}</td>
                         <td>
-                            <a href="#" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i> Voir</a>
-                            <a href="#" class="btn btn-sm btn-success"><i class="bi bi-download"></i> Télécharger</a>
-                            <a href="#" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Supprimer</a>
+                            <a href="{{ route('documents.show', $document->id) }}" class="btn btn-info btn-sm">Voir</a>
+                            <a href="{{ route('documents.edit', $document->id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            <form action="{{ route('documents.destroy', $document->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce document ?')">Supprimer</button>
+                            </form>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Facture_2023.pdf</td>
-                        <td>2024-11-26</td>
-                        <td><span class="badge badge-status badge-warning">En attente</span></td>
-                        <td>
-                            <a href="#" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i> Voir</a>
-                            <a href="#" class="btn btn-sm btn-success"><i class="bi bi-download"></i> Télécharger</a>
-                            <a href="#" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Supprimer</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Document_rejeté.pdf</td>
-                        <td>2024-11-25</td>
-                        <td><span class="badge badge-status badge-danger">Rejeté</span></td>
-                        <td>
-                            <a href="#" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i> Voir</a>
-                            <a href="#" class="btn btn-sm btn-success"><i class="bi bi-download"></i> Télécharger</a>
-                            <a href="#" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Supprimer</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-</div>
 @endsection
 
+@push('styles')
+<link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/r-3.0.3/datatables.min.css" rel="stylesheet">
+@endpush
+
 @push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/r-3.0.3/datatables.min.js"></script>
 <script>
-    // Gestion de l'upload des fichiers
-    document.getElementById('file-upload').addEventListener('change', function (e) {
-        const files = e.target.files;
-        console.log('Fichiers sélectionnés :', files);
-        alert(`${files.length} fichier(s) sélectionné(s).`);
+    $(document).ready(function () {
+        $('#Table').DataTable({
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
+            }
+        });
     });
 </script>
 @endpush
+

@@ -1,25 +1,98 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DocumentsController;
+
+
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\DirectionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HistoryController;
+
+Route::get('/histories', [HistoryController::class, 'index'])->name('histories.index');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+});
+
+
+Route::get('documents', [DocumentController::class, 'index'])->name('documents.index'); // Liste des documents
+Route::get('documents/create', [DocumentController::class, 'create'])->name('documents.create'); // Formulaire de création
+Route::post('documents', [DocumentController::class, 'store'])->name('documents.store'); // Enregistrement d'un document
+Route::get('documents/{document}', [DocumentController::class, 'show'])->name('documents.show'); // Afficher un document spécifique
+Route::get('documents/{document}/edit', [DocumentController::class, 'edit'])->name('documents.edit'); // Formulaire de modification
+Route::put('documents/{document}', [DocumentController::class, 'update'])->name('documents.update'); // Mise à jour d'un document
+Route::delete('documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy'); // Suppression d'un document
+
+Route::get('/logins', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Routes pour la gestion des utilisateurs
+Route::prefix('users')->name('users.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/create', [UserController::class, 'create'])->name('create');
+    Route::post('/', [UserController::class, 'store'])->name('store');
+    Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
+    Route::put('/{user}', [UserController::class, 'update'])->name('update');
+    Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+});
+
+// Routes RESTful pour les directions
+Route::prefix('directions')->name('directions.')->group(function () {
+    // Afficher toutes les directions
+    Route::get('/', [DirectionController::class, 'index'])->name('index');
+
+    // Afficher le formulaire de création
+    Route::get('/create', [DirectionController::class, 'create'])->name('create');
+
+    // Ajouter une nouvelle direction
+    Route::post('/', [DirectionController::class, 'store'])->name('store');
+
+    // Afficher le formulaire de modification d'une direction
+    Route::get('/{direction}/edit', [DirectionController::class, 'edit'])->name('edit');
+
+    // Modifier une direction
+    Route::put('/{direction}', [DirectionController::class, 'update'])->name('update');
+
+    // Supprimer une direction
+    Route::delete('/{direction}', [DirectionController::class, 'destroy'])->name('destroy');
+});
+
+// Routes RESTful pour les services
+Route::prefix('services')->name('services.')->group(function () {
+    // Afficher la liste des services
+    Route::get('/', [ServiceController::class, 'index'])->name('index');
+
+    // Afficher le formulaire de création d'un service
+    Route::get('/create', [ServiceController::class, 'create'])->name('create');
+
+    // Enregistrer un nouveau service
+    Route::post('/', [ServiceController::class, 'store'])->name('store');
+
+    // Afficher le formulaire d'édition d'un service
+    Route::get('/{service}/edit', [ServiceController::class, 'edit'])->name('edit');
+
+    // Mettre à jour un service
+    Route::put('/{service}', [ServiceController::class, 'update'])->name('update');
+
+    // Supprimer un service
+    Route::delete('/{service}', [ServiceController::class, 'destroy'])->name('destroy');
+});
+
 
 Route::get('/', function () {
     return view('welcome');
 })->name('login');
 
-Route::get('/tableaudeboard', function () {
-    return view('dashboard.index');
-})->name('tab');
+
 
 Route::get('/action', function () {
     return view('action.index');
@@ -27,17 +100,16 @@ Route::get('/action', function () {
 
 
 
-
-Route::get('/dashboard', [DocumentController::class, 'dashboard'])->name('dashboard');
-Route::get('/courriers', [DocumentController::class, 'courriers'])->name('documents.courriers');
-Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
-Route::get('/documents/attente', [DocumentController::class, 'attente'])->name('documents.attente');
-Route::get('/documents/valide', [DocumentController::class, 'valide'])->name('documents.valide');
-Route::get('/documents/partages', [DocumentController::class, 'partages'])->name('documents.partages');
-Route::get('/documents/recherche', [DocumentController::class, 'recherche'])->name('documents.recherche');
-Route::get('/documents/archives', [DocumentController::class, 'archives'])->name('documents.archives');
-Route::get('/documents/verification', [DocumentController::class, 'verification'])->name('documents.verification');
-Route::get('/documents/historique', [DocumentController::class, 'historique'])->name('documents.historique');
-Route::get('/utilisateur', [DocumentController::class, 'utilisateur'])->name('utilisateur.index');
-Route::get('/ressources-humaines', [DocumentController::class, 'ressourcesHumaines'])->name('ressources.humaines');
-Route::get('/parametres', [DocumentController::class, 'parametres'])->name('parametres.index');
+//
+Route::get('/courriers', [DocumentsController::class, 'courriers'])->name('documents.courriers');
+Route::get('/documentss', [DocumentsController::class, 'index'])->name('documentss.index');
+Route::get('/documentss/attente', [DocumentsController::class, 'attente'])->name('documents.attente');
+Route::get('/documentss/valide', [DocumentsController::class, 'valide'])->name('documents.valide');
+Route::get('/documentss/partages', [DocumentsController::class, 'partages'])->name('documents.partages');
+Route::get('/documentss/recherche', [DocumentsController::class, 'recherche'])->name('documents.recherche');
+Route::get('/documentss/archives', [DocumentsController::class, 'archives'])->name('documents.archives');
+Route::get('/documentss/verification', [DocumentsController::class, 'verification'])->name('documents.verification');
+Route::get('/documentss/historique', [DocumentsController::class, 'historique'])->name('documents.historique');
+Route::get('/utilisateur', [DocumentsController::class, 'utilisateur'])->name('utilisateur.index');
+Route::get('/ressources-humaines', [DocumentsController::class, 'ressourcesHumaines'])->name('ressources.humaines');
+Route::get('/parametres', [DocumentsController::class, 'parametres'])->name('parametres.index');

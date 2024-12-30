@@ -1,59 +1,108 @@
 <?php
 
+// app/Http/Controllers/DocumentController.php
+
 namespace App\Http\Controllers;
 
+use App\Models\Document;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
 {
-    public function dashboard() {
-        return view('dashboard.index');
+    // Affiche la liste des documents
+    public function index()
+    {
+        $documents = Document::all();
+        return view('documents.index', compact('documents'));
     }
 
-    public function index() {
-        return view('documents.index');
-    }
-    public function courriers() {
-        return view('documents.courrier');
-    }
-
-    public function attente() {
-        return view('documents.attente');
+    // Affiche le formulaire de création d'un document
+    public function create()
+    {
+        return view('documents.create');
     }
 
-    public function valide() {
-        return view('documents.valide');
+    // Stocke un nouveau document
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'file_url' => 'required|string',
+            'type_doc' => 'required|in:document,courrier entrant,courrier sortant',
+            'type_share' => 'required|in:public,privé,groupe',
+            'status' => 'required|in:en attente,validé,rejeté,archivé',
+        ]);
+
+        Document::create([
+            'nom' => $request->nom,
+            'file_url' => $request->file_url,
+            'id_creator' => auth()->id(),
+            'type_doc' => $request->type_doc,
+            'type_share' => $request->type_share,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('documents.index')->with('success', 'Document créé avec succès');
     }
 
-    public function partages() {
-        return view('documents.partages');
+    // Affiche un document spécifique
+    public function show(Document $document)
+    {
+        return view('documents.show', compact('document'));
     }
 
-    public function recherche() {
-        return view('documents.recherche');
+    // Affiche le formulaire pour éditer un document
+    public function edit(Document $document)
+    {
+        return view('documents.edit', compact('document'));
     }
 
-    public function archives() {
-        return view('documents.archives');
+    // Met à jour un document existant
+    public function update(Request $request, Document $document)
+    {
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'file_url' => 'required|string',
+            'type_doc' => 'required|in:document,courrier entrant,courrier sortant',
+            'type_share' => 'required|in:public,privé,groupe',
+            'status' => 'required|in:en attente,validé,rejeté,archivé',
+        ]);
+
+        $document->update([
+            'nom' => $request->nom,
+            'file_url' => $request->file_url,
+            'type_doc' => $request->type_doc,
+            'type_share' => $request->type_share,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('documents.index')->with('success', 'Document mis à jour avec succès');
     }
 
-    public function verification() {
-        return view('documents.verification');
+    // Supprime un document
+    public function destroy(Document $document)
+    {
+        $document->delete();
+        return redirect()->route('documents.index')->with('success', 'Document supprimé');
     }
 
-    public function historique() {
-        return view('documents.historique');
+
+    public function entrants()
+    {
+        $documents = Document::where('type_doc', 'courrier entrant')
+                             ->orderBy('created_at', 'desc')
+                             ->get();
+
+        return view('documents.entrants', compact('documents'));
     }
 
-    public function utilisateur() {
-        return view('utilisateur.index');
-    }
+    // Afficher les documents sortants
+    public function sortants()
+    {
+        $documents = Document::where('type_doc', 'courrier sortant')
+                             ->orderBy('created_at', 'desc')
+                             ->get();
 
-    public function ressourcesHumaines() {
-        return view('ressources.index');
-    }
-
-    public function parametres() {
-        return view('parametres.index');
+        return view('documents.sortants', compact('documents'));
     }
 }

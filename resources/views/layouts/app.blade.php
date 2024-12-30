@@ -35,8 +35,8 @@
     </style>
 </head>
 
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
-    <div class="app-wrapper">
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary" style="background-color:WHITE">
+    <div class="app-wrapper" style="background-color:white">
         <nav class="app-header navbar navbar-expand bg-body" style="background-color:white">
             <!--begin::Container-->
             <div class="container-fluid">
@@ -107,6 +107,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('directions.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-speedometer2 text-white"></i>
+                                <p>Directions</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('services.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-speedometer2 text-white"></i>
+                                <p>Services</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('documents.courriers') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-speedometer2 text-white"></i>
                                 <p>Courriers</p>
@@ -119,75 +131,27 @@
                                         <i class="nav-icon bi bi-folder text-white"></i>
                                         <p>Mes documents</p>
                                     </a>
-                                </li>
+                                </li> 
                                 <!-- Documents en attente de validation -->
-                                <li class="nav-item">
-                                    <a href="{{ route('documents.attente') }}" class="nav-link" style="color:white">
-                                        <i class="nav-icon bi bi-clock-history text-white"></i>
-                                        <p>Documents en Attente</p>
-                                    </a>
-                                </li>
-                                <!-- Documents validés et signés -->
-                                <li class="nav-item">
-                                    <a href="{{ route('documents.valide') }}" class="nav-link" style="color:white">
-                                        <i class="nav-icon bi bi-check-circle text-white"></i>
-                                        <p>Documents Validés</p>
-                                    </a>
-                                </li>
-                                <!-- Documents partagés -->
-                                <li class="nav-item">
-                                    <a href="{{ route('documents.partages') }}" class="nav-link" style="color:white">
-                                        <i class="nav-icon bi bi-share text-white"></i>
-                                        <p>Documents Partagés</p>
-                                    </a>
-                                </li>
-
-                     <li class="nav-item">
-                                    <a href="{{ route('documents.recherche') }}" class="nav-link" style="color:white">
-                                        <i class="nav-icon bi bi-search text-white"></i>
-                                        <p>Recherche</p>
-                                    </a>
-                                </li>
-                                <!-- Archivage -->
-                                <li class="nav-item">
-                                    <a href="{{ route('documents.archives') }}" class="nav-link" style="color:white">
-                                        <i class="nav-icon bi bi-archive text-white"></i>
-                                        <p>Archivage</p>
-                                    </a>
-                                </li>
-                                <!-- Vérification des documents -->
-                                <li class="nav-item">
-                                    <a href="{{ route('documents.verification') }}" class="nav-link"
-                                        style="color:white">
-                                        <i class="nav-icon bi bi-patch-check text-white"></i>
-                                        <p>Vérification des Documents</p>
-                                    </a>
-                                </li>
-                   
+                               
                         <!-- Historique -->
                         <li class="nav-item">
-                            <a href="{{ route('documents.historique') }}" class="nav-link" style="color:white">
+                            <a href="{{ route('histories.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-clock text-white"></i>
                                 <p>Historique</p>
                             </a>
                         </li>
                         <!-- Utilisateur -->
                         <li class="nav-item">
-                            <a href="{{ route('utilisateur.index') }}" class="nav-link" style="color:white">
+                            <a href="{{ route('users.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-person text-white"></i>
                                 <p>Utilisateur</p>
                             </a>
                         </li>
-                        <!-- Ressources humaines -->
-                        <li class="nav-item">
-                            <a href="{{ route('ressources.humaines') }}" class="nav-link" style="color:white">
-                                <i class="nav-icon bi bi-people text-white"></i>
-                                <p>Ressources Humaines</p>
-                            </a>
-                        </li>
+               
                         <!-- Paramètres -->
                         <li class="nav-item">
-                            <a href="{{ route('parametres.index') }}" class="nav-link" style="color:white">
+                            <a href="{{ route('profile.edit') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-gear text-white"></i>
                                 <p>Paramètres</p>
                             </a>
@@ -201,7 +165,7 @@
         <!--end::Sidebar-->
         <!--begin::App Main-->
 
-        <main class="app-main">
+        <main class="app-main" style="background-color:white">
             <div class="app-content-header">
                 <!--
                 <div class="container-fluid"> 
@@ -220,7 +184,7 @@
                     </div>
                 </div> end::Row-->
             </div>
-            <div class="app-content">
+            <div class="app-content" >
                 <!--begin::Container-->
                 <div class="container-fluid">
                     <!--begin::Row-->

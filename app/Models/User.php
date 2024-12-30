@@ -17,12 +17,19 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+   
+
     protected $fillable = [
-        'name',
+        'nom',
         'email',
         'password',
+        'role',
+        'id_service',
+        'is_validator',
+        'status',
     ];
 
+   
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -42,4 +49,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+     // Relation avec le service
+     public function service()
+     {
+         return $this->belongsTo(Service::class, 'id_service');
+     }
 }
