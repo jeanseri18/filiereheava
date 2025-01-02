@@ -74,6 +74,8 @@
                 <a href="{{ route('documents.pending') }}" class="btn btn-secondary btn-sm">En Attente</a>
                 <a href="{{ route('documents.validated') }}" class="btn btn-success btn-sm">Validés</a>
                 <a href="{{ route('documents.rejected') }}" class="btn btn-danger btn-sm">Rejetés</a>
+                <a href="{{ route('documents.sharedWithMe') }}" class="btn btn-secondary btn-sm">Partagés avec moi</a>
+                <a href="{{ route('documents.sharedByMe') }}" class="btn btn-info btn-sm">Partagés par moi</a>
             </div>
         <!-- Message de succès -->
         @if(session('success'))

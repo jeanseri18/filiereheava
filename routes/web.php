@@ -9,13 +9,20 @@ use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentController;
-
+use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\CourrierController;
 use App\Http\Controllers\ShareGroupController;
 // routes/web.php
 
+Route::middleware(['auth'])->group(function () {
+    // Afficher les documents partagés avec l'utilisateur
+    Route::get('/documents/shared-with-me', [DocumentController::class, 'sharedWithMe'])->name('documents.sharedWithMe');
+
+    // Afficher les documents partagés par l'utilisateur
+    Route::get('/documents/shared-by-me', [DocumentController::class, 'sharedByMe'])->name('documents.sharedByMe');
+});
 
 Route::middleware('auth')->group(function () {
     // Afficher les documents filtrés par statut
@@ -113,6 +120,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/archives', [ArchiveController::class, 'index'])->name('archives.index');
+    Route::get('/archives/archive/{id}', [ArchiveController::class, 'archiveDocument'])->name('archives.archive');
+    Route::get('/archives/download/{id}', [ArchiveController::class, 'downloadDocument'])->name('archives.download');
 });
 
 

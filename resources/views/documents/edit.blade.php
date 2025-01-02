@@ -29,7 +29,7 @@
 
                 <div class="mb-3">
                     <label for="file_url" class="form-label">Fichier</label>
-                    <input type="text" name="file_url" id="file_url" class="form-control" 
+                    <input type="file" name="file_url" id="file_url" class="form-control" 
                            value="{{ old('file_url', $document->file_url) }}" placeholder="Entrez l'URL du fichier" required>
                 </div>
 

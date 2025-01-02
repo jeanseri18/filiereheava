@@ -133,8 +133,13 @@
                                     </a>
                                 </li> 
                                 <!-- Documents en attente de validation -->
-                               
                                 <li class="nav-item">
+                            <a href="{{ route('archives.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-clock text-white"></i>
+                                <p>Archivages</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('share_groups.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-clock text-white"></i>
                                 <p>Groupe de partage</p>
