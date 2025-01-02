@@ -38,7 +38,24 @@ class ArchiveController extends Controller
         return view('archives.index', compact('documents', 'typesDoc', 'typesShare', 'statuses'));
     }
     
-
+    public function unarchiveDocument($id)
+    {
+        $document = Document::findOrFail($id);
+    
+        if ($document->status === 'archivé') {
+            $document->status = 'soumis';  // Remplacez par l'état qui convient
+            $document->save();
+    
+            // Supprimer l'archive associée si nécessaire
+            $archive = Archive::where('id_document', $document->id)->first();
+            if ($archive) {
+                $archive->delete();
+            }
+        }
+    
+        return redirect()->route('archives.index')->with('success', 'Document désarchivé avec succès.');
+    }
+    
     public function archiveDocument($id)
     {
         $document = Document::findOrFail($id);

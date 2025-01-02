@@ -24,6 +24,10 @@ class Document extends Model
         return $this->belongsToMany(User::class, 'shares', 'id_document', 'id_user');
     }
 
+    public function shares()
+{
+    return $this->hasMany(Share::class, 'id_document');
+}
     public function sharedGroups()
     {
         return $this->belongsToMany(ShareGroup::class, 'shares', 'id_document', 'id_group');

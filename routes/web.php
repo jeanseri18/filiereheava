@@ -124,7 +124,9 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/archives', [ArchiveController::class, 'index'])->name('archives.index');
-    Route::get('/archives/archive/{id}', [ArchiveController::class, 'archiveDocument'])->name('archives.archive');
+    Route::post('/archives/archive/{id}', [ArchiveController::class, 'archiveDocument'])->name('archives.archive');
+    Route::post('/archives/unarchive/{id}', [ArchiveController::class, 'unarchiveDocument'])->name('archives.unarchive');
+
     Route::get('/archives/download/{id}', [ArchiveController::class, 'downloadDocument'])->name('archives.download');
 });
 

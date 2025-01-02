@@ -73,22 +73,51 @@
                         <td>
                             <a href="{{ route('archives.download', $document) }}" class="btn btn-success btn-sm">Télécharger</a>
                             @if($document->status === 'archivé')
-                                <a href="{{ route('archives.unarchive', $document) }}" class="btn btn-warning btn-sm">Désarchiver</a>
-                            @else
-                                <form method="POST" action="{{ route('archives.archive', $document) }}" style="display:inline;">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">Archiver</button>
-                                </form>
-                            @endif
+    <form method="POST" action="{{ route('archives.unarchive', $document) }}" style="display:inline;">
+        @csrf
+        <button type="submit" class="btn btn-warning btn-sm">Désarchiver</button>
+    </form>
+@else
+    <form method="POST" action="{{ route('archives.archive', $document) }}" style="display:inline;">
+        @csrf
+        <button type="submit" class="btn btn-danger btn-sm">Archiver</button>
+    </form>
+@endif
+
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
 
-        {{ $documents->links() }}
     @else
         <p>Aucun document trouvé avec ces critères.</p>
     @endif
 </div>
 @endsection
+
+@push('styles')
+<link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/r-3.0.3/datatables.min.css" rel="stylesheet">
+@endpush
+
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/r-3.0.3/datatables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#Table').DataTable({
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+            ],
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
+
+            }
+        });
+    });
+</script>
+@endpush
+

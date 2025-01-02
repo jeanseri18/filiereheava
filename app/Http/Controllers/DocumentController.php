@@ -173,60 +173,71 @@ class DocumentController extends Controller
     // Affiche le formulaire pour éditer un document
     public function edit(Document $document)
     {
-        return view('documents.edit', compact('document'));
+        $users = User::all(); // Tous les utilisateurs
+        $groups = ShareGroup::all(); // Tous les groupes de partage
+    
+
+        return view('documents.edit', compact('document','users', 'groups'));
     }
 
 // app/Http/Controllers/DocumentController.php
 
 public function update(Request $request, Document $document)
 {
+    // Validation des données
     $request->validate([
         'nom' => 'required|string|max:255',
-        'file_url' => 'required|string',
+        'file_url' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048', // Vérifie le fichier
         'type_doc' => 'required|in:document,courrier entrant,courrier sortant',
-        'type_share' => 'required|in:public,privé,groupe',
+        'type_share' => 'required|in:public,privé,groupe', // Les options de partage
     ]);
 
-    // Mise à jour des informations du document
-    $document->update([
-        'nom' => $request->nom,
-        'file_url' => $request->file_url,
-        'type_doc' => $request->type_doc,
-        'type_share' => $request->type_share,
-    ]);
+    // Mise à jour du nom du document et du type de document
+    $document->nom = $request->nom;
+    $document->type_doc = $request->type_doc;
+    $document->type_share = $request->type_share;
 
-    // Mise à jour des utilisateurs ou groupes partagés en fonction du type de partage
-    if ($request->type_share === 'privé') {
-        // Supprimer les anciens partages et ajouter les nouveaux utilisateurs
-        $document->sharedUsers()->delete();  // Supprimer tous les anciens partages
+    // Mise à jour du fichier, si présent
+    if ($request->hasFile('file_url')) {
+        $filePath = $request->file('file_url')->store('documents', 'public');
+        $document->file_url = $filePath;
+    }
 
-        if ($request->has('users')) {
-            foreach ($request->users as $userId) {
-                SharedUser::create([
-                    'user_id' => $userId,
-                    'document_id' => $document->id,
-                ]);
-            }
+    // Enregistrer les modifications du document
+    $document->save();
+
+    // Suppression des anciennes partages existants
+    Share::where('id_document', $document->id)->delete();
+
+    // Gestion du partage selon le type
+    if ($request->type_share === 'privé' && $request->has('users')) {
+        // Partage avec des utilisateurs spécifiques
+        foreach ($request->users as $userId) {
+            Share::create([
+                'id_user' => $userId,
+                'id_document' => $document->id,
+                'type_share' => 'utilisateur',
+            ]);
         }
-    } elseif ($request->type_share === 'groupe') {
-        // Supprimer les anciens partages et ajouter les nouveaux groupes
-        $document->sharedUsers()->delete();  // Supprimer tous les anciens partages
-
-        if ($request->has('groups')) {
-            foreach ($request->groups as $groupId) {
-                $group = ShareGroup::find($groupId);
-                foreach ($group->members as $member) {
-                    SharedUser::create([
-                        'user_id' => $member->id,
-                        'document_id' => $document->id,
-                    ]);
-                }
+    } elseif ($request->type_share === 'groupe' && $request->has('groups')) {
+        // Partage avec des groupes
+        foreach ($request->groups as $groupId) {
+            $group = ShareGroup::find($groupId);
+            foreach ($group->members as $member) {
+                Share::create([
+                    'id_group' => $groupId,
+                    'id_user' => $member->id,
+                    'id_document' => $document->id,
+                    'type_share' => 'groupe',
+                ]);
             }
         }
     }
 
-    return redirect()->route('documents.index')->with('success', 'Document mis à jour avec succès');
+    // Retour à la liste des documents avec un message de succès
+    return redirect()->route('documents.index')->with('success', 'Document mis à jour et partagé avec succès.');
 }
+
 
     // Supprime un document
     public function destroy(Document $document)
