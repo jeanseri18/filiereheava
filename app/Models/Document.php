@@ -19,4 +19,13 @@ class Document extends Model
     {
         return $this->belongsTo(User::class, 'id_creator');
     }
+    public function sharedUsers()
+    {
+        return $this->belongsToMany(User::class, 'shares', 'id_document', 'id_user');
+    }
+
+    public function sharedGroups()
+    {
+        return $this->belongsToMany(ShareGroup::class, 'shares', 'id_document', 'id_group');
+    }
 }

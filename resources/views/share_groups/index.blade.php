@@ -2,37 +2,29 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-10">
-            <h3>Liste des Services</h3>
-        </div>
-        <div class="col-md-2">
-            <a href="{{ route('services.create') }}" class="btn " style="background-color:#038C4F;color:white">Ajouter
-                un Service</a>
-        </div>
-    </div><br><br>
-    <table id="Table" class="table table-bordered  mt-3">
+<div class="row">
+<div class="col-md-9">
+    <h1>Groupes de Partage</h1> </div>
+    <div  class="col-md-3">
+
+    <a href="{{ route('share_groups.create') }}" class="btn  mb-3" style=" background-color: #038C4F; color:white;">Créer un Groupe</a>
+    </div> </div>
+    <br><br>
+    <table id="Table" class="table table-bordered">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>#</th>
                 <th>Nom</th>
-                <!--th>Direction</th-->
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($services as $service)
+            @foreach($groups as $group)
             <tr>
-                <td>{{ $service->id }}</td>
-                <td>{{ $service->nom }}</td>
-                <!--td>{{ $service->direction->nom ?? 'Non attribuée' }}</td-->
+                <td>{{ $group->id }}</td>
+                <td>{{ $group->nom }}</td>
                 <td>
-                    <a href="{{ route('services.edit', $service) }}" class="btn btn-warning">Modifier</a>
-                    <form action="{{ route('services.destroy', $service) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                    </form>
+                    <a href="{{ route('share_groups.show', $group->id) }}" class="btn btn-info">Détails</a>
                 </td>
             </tr>
             @endforeach

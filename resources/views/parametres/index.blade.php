@@ -4,17 +4,16 @@
 
 @section('content')
 <div class="container">
-
     <div class="row">
         {{-- Section : Informations sur le compte --}}
-        <div class="col-md-12">
+        <!--div class="col-md-12">
             <div class="card">
                 <div class="mb-3">
-                <br><br>
+                    <br><br>
                     {{-- Affichage de la photo de profil --}}
                     <div class="text-center">
                         <label for="profile_photo_input" class="d-inline-block cursor-pointer">
-                            <img src="" 
+                            <img src="{{ $user->profile_photo_url ?? asset('default-profile.png') }}" 
                                  alt="Photo de Profil" 
                                  class="profile-photo rounded-circle" 
                                  id="profile-photo-img" 
@@ -23,8 +22,9 @@
                     </div>
                     <input type="file" class="form-control mt-2 d-none" id="profile_photo_input" name="profile_photo"><br><br>
                 </div>
-            </div><br><br>
-        </div>
+            </div>
+            <br><br>
+        </div-->
 
         {{-- Section : Informations utilisateur --}}
         <div class="col-md-6">
@@ -33,14 +33,14 @@
                     <h5>Informations sur le compte</h5>
                 </div>
                 <div class="card-body">
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
                         {{-- Nom complet --}}
                         <div class="mb-3">
                             <label for="full_name" class="form-label">Nom et Prénom</label>
-                            <input type="text" class="form-control" id="full_name" name="full_name" value="{{ old('full_name', $user->full_name ?? '') }}" required>
+                            <input type="text" class="form-control" id="full_name" name="full_name" value="{{ old('full_name', $user->nom ?? '') }}" required>
                         </div>
 
                         {{-- Rôle --}}
@@ -55,13 +55,13 @@
                         {{-- Service --}}
                         <div class="mb-3">
                             <label for="service" class="form-label">Service</label>
-                            <input type="text" class="form-control" id="service" name="service" value="{{ old('service', $user->service ?? '') }}" required>
+                            <input type="text" class="form-control" id="service" name="service" value="{{ old('service', $user->id_service ?? '') }}" required>
                         </div>
 
                         {{-- Direction --}}
                         <div class="mb-3">
                             <label for="direction" class="form-label">Direction</label>
-                            <input type="text" class="form-control" id="direction" name="direction" value="{{ old('direction', $user->direction ?? '') }}" required>
+                            <input type="text" class="form-control" id="direction" name="direction" value="{{ old('direction', $user->status ?? '') }}" required>
                         </div>
 
                         {{-- Bouton de validation --}}
@@ -78,7 +78,7 @@
                     <h5>Modification du mot de passe</h5>
                 </div>
                 <div class="card-body">
-                    <form action="" method="POST">
+                    <form action="{{ route('profile.updatePassword') }}" method="POST">
                         @csrf
                         @method('PUT')
 

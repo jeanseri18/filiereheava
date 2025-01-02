@@ -16,7 +16,7 @@ class CreateDocumentsTable extends Migration
             $table->foreignId('id_creator')->constrained('users')->onDelete('cascade');
             $table->enum('type_doc', ['document', 'courrier entrant', 'courrier sortant']);
             $table->enum('type_share', ['public', 'privé', 'groupe']);
-            $table->enum('status', ['en attente', 'validé', 'rejeté', 'archivé'])->default('en attente');
+            $table->enum('status', ['ajouté','soumis','en attente', 'validé', 'rejeté', 'archivé'])->default('en attente');
             $table->timestamps();
         });
     }

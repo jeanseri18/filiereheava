@@ -65,8 +65,16 @@
 <p>Ajouter un document
             </div>
     </div></a>
+    <br><br>
         <h2>Liste des Documents</h2>
-        
+        <div class="mb-3">
+                <a href="{{ route('documents.index') }}" class="btn btn-primary btn-sm">Tous les documents</a>
+                <a href="{{ route('documents.added') }}" class="btn btn-warning btn-sm">Ajoutés</a>
+                <a href="{{ route('documents.submitted') }}" class="btn btn-info btn-sm">Soumis</a>
+                <a href="{{ route('documents.pending') }}" class="btn btn-secondary btn-sm">En Attente</a>
+                <a href="{{ route('documents.validated') }}" class="btn btn-success btn-sm">Validés</a>
+                <a href="{{ route('documents.rejected') }}" class="btn btn-danger btn-sm">Rejetés</a>
+            </div>
         <!-- Message de succès -->
         @if(session('success'))
             <div class="alert alert-success">
@@ -125,7 +133,7 @@
                 'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
             ],
             language: {
-                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
+                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
             }
         });
     });

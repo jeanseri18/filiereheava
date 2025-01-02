@@ -19,7 +19,7 @@ class ProfileController extends Controller
         $directions = Direction::all(); // Récupère toutes les directions
         $services = Service::all(); // Récupère tous les services
 
-        return view('profile.edit', compact('user', 'directions', 'services'));
+        return view('parametres.index', compact('user', 'directions', 'services'));
     }
     /**
      * Met à jour les informations du profil utilisateur.

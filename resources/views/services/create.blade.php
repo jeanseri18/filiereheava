@@ -4,7 +4,7 @@
 <div class="container ">
     <div class="card shadow-sm">
         <div class="card-header  text-black">
-            <h1 class="mb-0">Ajouter un Service</h1>
+            <h1 class="mb-0">Ajouter une direction</h1>
         </div>
         <div class="card-body">
             @if($errors->any())
@@ -20,12 +20,12 @@
             <form action="{{ route('services.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
-                    <label for="nom" class="form-label">Nom du Service</label>
+                    <label for="nom" class="form-label">Nom de la direction</label>
                     <input type="text" name="nom" id="nom" class="form-control" 
-                           placeholder="Entrez le nom du service" value="{{ old('nom') }}" required>
+                           placeholder="Entrez le nom de la direction" value="{{ old('nom') }}" required>
                 </div>
 
-                <div class="mb-3">
+                <!--div class="mb-3">
                     <label for="id_direction" class="form-label">Direction</label>
                     <select name="id_direction" id="id_direction" class="form-select" required>
                         <option value="" disabled selected>Choisissez une direction</option>
@@ -35,7 +35,7 @@
                                 {{ $direction->nom }}
                             </option>
                         @endforeach
-                    </select>
+                    </select-->
                 </div>
 
                 <div>

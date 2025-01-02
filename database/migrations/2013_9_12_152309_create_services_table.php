@@ -12,7 +12,7 @@ class CreateServicesTable extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
-            $table->foreignId('id_direction')->constrained('directions')->onDelete('cascade');
+            //$table->foreignId('id_direction')->constrained('directions')->onDelete('cascade');
             $table->timestamps();
         });
     }

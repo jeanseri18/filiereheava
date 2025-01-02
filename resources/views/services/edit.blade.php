@@ -4,7 +4,7 @@
 <div class="container ">
     <div class="card shadow-sm">
         <div class="card-header  text-black">
-            <h1 class="mb-0">Modifier le Service</h1>
+            <h1 class="mb-0">Modifier la direction</h1>
         </div>
         <div class="card-body">
             @if($errors->any())
@@ -22,12 +22,12 @@
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label for="nom" class="form-label">Nom du Service</label>
+                    <label for="nom" class="form-label">Nom de la direction</label>
                     <input type="text" name="nom" id="nom" class="form-control" 
                            value="{{ old('nom', $service->nom) }}" placeholder="Entrez le nom du service" required>
                 </div>
 
-                <div class="mb-3">
+                <!--div class="mb-3">
                     <label for="id_direction" class="form-label">Direction</label>
                     <select name="id_direction" id="id_direction" class="form-select" required>
                         <option value="" disabled>Choisissez une direction</option>
@@ -38,7 +38,7 @@
                             </option>
                         @endforeach
                     </select>
-                </div>
+                </div-->
 
                 <div>
                     <button type="submit" class="btn btn-success text-white">Mettre à jour</button>

@@ -68,8 +68,8 @@
                             <!--begin::Menu Body-->
                             <!--end::Menu Body-->
                             <!--begin::Menu Footer-->
-                            <li class="user-footer"> <a href="#" class="btn btn-default btn-flat">Profile</a> <a
-                                    href="#" class="btn btn-default btn-flat float-end">Deconnexion</a> </li>
+                            <li class="user-footer"> <a href="{{ route('profile.edit') }}" class="btn btn-default btn-flat">Profile</a> <a
+                                    href="{{ route('logout') }}" class="btn btn-default btn-flat float-end">Deconnexion</a> </li>
                             <!--end::Menu Footer-->
                         </ul>
                     </li>
@@ -106,20 +106,20 @@
                                 <p>Tableau de bord</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!--li class="nav-item">
                             <a href="{{ route('directions.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-speedometer2 text-white"></i>
+                                <p>Directions</p>
+                            </a>
+                        </li-->
+                        <li class="nav-item">
+                            <a href="{{ route('services.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-speedometer2 text-white"></i>
                                 <p>Directions</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('services.index') }}" class="nav-link" style="color:white">
-                                <i class="nav-icon bi bi-speedometer2 text-white"></i>
-                                <p>Services</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('documents.courriers') }}" class="nav-link" style="color:white">
+                            <a href="{{ route('courriers.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-speedometer2 text-white"></i>
                                 <p>Courriers</p>
                             </a>
@@ -134,6 +134,12 @@
                                 </li> 
                                 <!-- Documents en attente de validation -->
                                
+                                <li class="nav-item">
+                            <a href="{{ route('share_groups.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-clock text-white"></i>
+                                <p>Groupe de partage</p>
+                            </a>
+                        </li>
                         <!-- Historique -->
                         <li class="nav-item">
                             <a href="{{ route('histories.index') }}" class="nav-link" style="color:white">

@@ -24,7 +24,7 @@ class ServiceController extends Controller
     {
         $request->validate([
             'nom' => 'required|string|max:255',
-            'id_direction' => 'required|exists:directions,id',
+//            'id_direction' => 'required|exists:directions,id',
         ]);
 
         Service::create($request->all());
@@ -41,7 +41,7 @@ class ServiceController extends Controller
     {
         $request->validate([
             'nom' => 'required|string|max:255',
-            'id_direction' => 'required|exists:directions,id',
+//            'id_direction' => 'required|exists:directions,id',
         ]);
 
         $service->update($request->all());

@@ -54,4 +54,9 @@ class User extends Authenticatable
      {
          return $this->belongsTo(Service::class, 'id_service');
      }
+     public function shareGroups()
+{
+    return $this->belongsToMany(ShareGroup::class, 'share_lists', 'id_user', 'id_group')->withTimestamps();
+}
+
 }

@@ -25,5 +25,16 @@ class History extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+   
+    public function getStatusClassAttribute()
+    {
+        return match ($this->status) {
+            'terminé' => 'success',
+            'en cours' => 'warning',
+            'complété' => 'primary',
+            'erreur' => 'danger',
+            default => 'secondary',
+        };
+    }
 }
  

@@ -4,12 +4,13 @@
 <div class="container">
 
     <div class="row">
-    <div class="col-md-10">    <h3>Liste des Directions</h3>
+    <div class="col-md-9">    <h3>Liste des Directions</h3>
     </div>
-    <div class="col-md-2">    <a href="{{ route('directions.create') }}" class="btn  mb-3" style="background-color:#038C4F;color:white">Ajouter une Direction</a>
+    <div class="col-md-3">    <a href="{{ route('directions.create') }}" class="btn  mb-3" style="background-color:#038C4F;color:white">Ajouter une Direction</a>
     </div>
 
     </div>
+    <br><br>
     <table id="Table" class="table table-bordered ">
         <thead>
             <tr>
@@ -58,7 +59,7 @@
                 'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
             ],
             language: {
-                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
+                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
             }
         });
     });

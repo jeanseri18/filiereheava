@@ -11,6 +11,7 @@
     </div>
 
     </div>
+    <br><br>
     <table id="Table" class="table table-bordered ">
         <thead>
             <tr>
@@ -64,7 +65,7 @@
                 'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
             ],
             language: {
-                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
+                url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
             }
         });
     });
