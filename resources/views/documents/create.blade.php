@@ -52,7 +52,7 @@
         <label for="users" class="form-label">Utilisateurs</label>
         <select name="users[]" id="users" class="form-select" multiple>
             @foreach($users as $user)
-                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                <option value="{{ $user->id }}">{{ $user->nom }}</option>
             @endforeach
         </select>
     </div>

@@ -54,7 +54,7 @@
                     <label for="users" class="form-label">Utilisateurs</label>
                     <select name="users[]" id="users" class="form-select" multiple>
                         @foreach($users as $user)
-                            <option value="{{ $user->id }}" {{ in_array($user->id, old('users', $document->shares->pluck('id_user')->toArray())) ? 'selected' : '' }}>{{ $user->name }}</option>
+                            <option value="{{ $user->id }}" {{ in_array($user->id, old('users', $document->shares->pluck('id_user')->toArray())) ? 'selected' : '' }}>{{ $user->nom }}</option>
                         @endforeach
                     </select>
                 </div>
