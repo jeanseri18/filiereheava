@@ -25,7 +25,7 @@
             <label for="id_user" class="form-label">Sélectionnez un utilisateur</label>
             <select name="id_user" id="id_user" class="form-control" required>
                 @foreach($users as $user)
-                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                <option value="{{ $user->id }}">{{ $user->nom }}</option>
                 @endforeach
             </select>
         </div>
