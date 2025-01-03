@@ -9,11 +9,5 @@ class Courrier extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'content',
-        'sender',
-        'receiver',
-        'attachment',
-    ];
+    protected $fillable = ['title', 'content', 'sender', 'receiver', 'attachment'];
 }
