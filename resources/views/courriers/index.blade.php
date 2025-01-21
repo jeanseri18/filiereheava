@@ -7,13 +7,15 @@
     <h1>Liste des Courriers</h1>    </div>
     <div  class="col-md-3">
 
-    <a href="{{ route('courriers.create') }}" class="btn  mb-3" style=" background-color: #038C4F; color:white;">Ajouter courrier</a>
+    <a href="{{ route('courriers.create') }}" class="btn  mb-3" style=" background-color: #038C4F; color:white;"> <i class="bi bi-check-circle me-2"></i> Ajouter courrier</a>
 </div>    </div>
-<br><br>
+<br>
 
-    <table id="Table" class="table table-bordered">
-        <thead>
-            <tr>
+<div class="card custom-card">
+        <div class="card-body">
+            <table id="Table" class="table table-bordered table-striped">
+                <thead class="table-success">
+                    <tr>
                 <th>#</th>
                 <th>Titre</th>
                 <th>Expéditeur</th>
@@ -29,13 +31,42 @@
                 <td>{{ $courrier->sender }}</td>
                 <td>{{ $courrier->receiver }}</td>
                 <td>
-                    <a href="{{ route('courriers.show', $courrier->id) }}" class="btn btn-info">Voir</a>
+                <a href="{{ route('courriers.show', $courrier->id) }}" class="btn btn-info btn-sm">                                <i class="bi bi-eye me-1"></i>Voir le courrier</a>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+</div>
+</div>
+<style>
+    .custom-card {
+        border: 2px dashed #038C4F; /* Bordure avec traits */
+        border-radius: 8px; /* Coins arrondis */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre */
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .custom-card:hover {
+        transform: translateY(-5px); /* Animation au survol */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
+    }
+
+    .table-bordered th, .table-bordered td {
+        border: 1px dashed #ddd; /* Bordure en traits pour le tableau */
+    }
+
+    .btn-success {
+        background-color: #038C4F;
+        border-color: #038C4F;
+    }
+
+    .btn-success:hover {
+        background-color: #026838;
+        border-color: #026838;
+    }
+</style>
 @endsection
 
 

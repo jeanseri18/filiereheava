@@ -3,21 +3,23 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-10">
-            <h3>Liste des Services</h3>
+        <div class="col-md-9">
+            <h1>Liste des Directions</h1>
         </div>
-        <div class="col-md-2">
-            <a href="{{ route('services.create') }}" class="btn " style="background-color:#038C4F;color:white">Ajouter
-                un Service</a>
+        <div class="col-md-3">
+            <a href="{{ route('services.create') }}" class="btn " style="background-color:#038C4F;color:white">                <i class="bi bi-plus-circle me-2"></i>Ajouter
+                une direction</a>
         </div>
-    </div><br><br>
-    <table id="Table" class="table table-bordered  mt-3">
-        <thead>
-            <tr>
-                <th>ID</th>
+    </div><br>
+    <div class="card custom-card">
+        <div class="card-body">
+            <table id="Table" class="table table-bordered table-striped">
+                <thead class="table-success">
+                    <tr>
+                <th width="10%">ID</th>
                 <th>Nom</th>
                 <!--th>Direction</th-->
-                <th>Actions</th>
+                <th width="30%">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -38,7 +40,36 @@
             @endforeach
         </tbody>
     </table>
+    </div>
+    </div>
 </div>
+<style>
+    .custom-card {
+        border: 2px dashed #038C4F; /* Bordure avec traits */
+        border-radius: 8px; /* Coins arrondis */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre */
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .custom-card:hover {
+        transform: translateY(-5px); /* Animation au survol */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
+    }
+
+    .table-bordered th, .table-bordered td {
+        border: 1px dashed #ddd; /* Bordure en traits pour le tableau */
+    }
+
+    .btn-success {
+        background-color: #038C4F;
+        border-color: #038C4F;
+    }
+
+    .btn-success:hover {
+        background-color: #026838;
+        border-color: #026838;
+    }
+</style>
 @endsection
 
 

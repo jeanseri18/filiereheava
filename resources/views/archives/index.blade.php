@@ -2,7 +2,10 @@
 
 @section('content')
 <div class="container">
-    <h1 class="my-4">Liste des documents archivés</h1>
+<div class="alert alert-success">
+        <h1>Archivage</h1>
+        <p>Gestion des documents</p>
+    </div>
 
     <!-- Formulaire de recherche -->
     <form method="GET" action="{{ route('archives.index') }}" class="mb-4">
@@ -43,17 +46,19 @@
         </div>
         <div class="row g-3 mt-3">
             <div class="col-md-12 text-start">
-                <button type="submit" class="btn btn-primary">Rechercher</button>
+                <button type="submit" class="btn btn-success">Rechercher</button>
                 <a href="{{ route('archives.index') }}" class="btn btn-secondary">Réinitialiser</a>
             </div>
         </div>
     </form>
-
+    <div class="card custom-card">
+    <div class="card-body">
     <!-- Table des résultats -->
     @if($documents->count())
+
         <table id ="Table" class="table table-striped">
-            <thead>
-                <tr>
+        <thead class="table-success">
+        <tr>
                     <th>#</th>
                     <th>Nom</th>
                     <th>Type</th>
@@ -69,7 +74,11 @@
                         <td>{{ $document->nom }}</td>
                         <td>{{ $document->type_doc }}</td>
                         <td>{{ $document->type_share }}</td>
-                        <td><span class="badge bg-info">{{ ucfirst($document->status) }}</span></td>
+                        <td>   <span class="badge-status @if($document->status == 'validé') badge-success
+                                @elseif($document->status == 'rejeté') badge-danger
+                                @elseif($document->status == 'ajouté') badge-warning
+                                @elseif($document->status == 'soumis') badge-info
+                                @else badge-secondary @endif">{{ $document->status }}</span></span></td>
                         <td>
                             <a href="{{ route('archives.download', $document) }}" class="btn btn-success btn-sm">Télécharger</a>
                             @if($document->status === 'archivé')
@@ -94,6 +103,66 @@
         <p>Aucun document trouvé avec ces critères.</p>
     @endif
 </div>
+</div>
+</div>
+
+<!-- Styles personnalisés -->
+<style>
+    .badge-status {
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+        color: white;
+    }
+    .badge-black {
+        background-color: black;
+        color: white;
+    }
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .badge-warning {
+        background-color: #ffc107;
+        color: black;
+    }
+
+    .badge-info {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .custom-card {
+        border: 2px dashed #038C4F; /* Bordure avec traits */
+        border-radius: 8px; /* Coins arrondis */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre */
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .custom-card:hover {
+        transform: translateY(-5px); /* Animation au survol */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
+    }
+
+    .table-bordered th, .table-bordered td {
+        border: 1px dashed #ddd; /* Bordure en traits pour le tableau */
+    }
+
+    .btn-success {
+        background-color: #038C4F;
+        border-color: #038C4F;
+    }
+
+    .btn-success:hover {
+        background-color: #026838;
+        border-color: #026838;
+    }
+</style>
 @endsection
 
 @push('styles')

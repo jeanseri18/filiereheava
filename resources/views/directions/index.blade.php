@@ -11,8 +11,10 @@
 
     </div>
     <br><br>
-    <table id="Table" class="table table-bordered ">
-        <thead>
+    <div class="card custom-card">
+        <div class="card-body">
+            <table id="Table" class="table table-bordered table-striped">
+                <thead class="table-success">
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
@@ -39,6 +41,37 @@
         </tbody>
     </table><br>
 </div>
+</div>
+</div>
+
+<!-- Styles personnalisés -->
+<style>
+    .custom-card {
+        border: 2px dashed #038C4F; /* Bordure avec traits */
+        border-radius: 8px; /* Coins arrondis */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre */
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .custom-card:hover {
+        transform: translateY(-5px); /* Animation au survol */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
+    }
+
+    .table-bordered th, .table-bordered td {
+        border: 1px dashed #ddd; /* Bordure en traits pour le tableau */
+    }
+
+    .btn-success {
+        background-color: #038C4F;
+        border-color: #038C4F;
+    }
+
+    .btn-success:hover {
+        background-color: #026838;
+        border-color: #026838;
+    }
+</style>
 @endsection
 
 

@@ -45,7 +45,8 @@ class CourrierController extends Controller
     }
 
     public function show(Courrier $courrier)
-    {
+    {   
+
         return view('courriers.show', compact('courrier'));
     }
 }

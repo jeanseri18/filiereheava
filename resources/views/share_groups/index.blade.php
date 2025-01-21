@@ -2,37 +2,76 @@
 
 @section('content')
 <div class="container">
-<div class="row">
-<div class="col-md-9">
-    <h1>Groupes de Partage</h1> </div>
-    <div  class="col-md-3">
+    <!-- En-tête -->
+    <div class="row mb-4">
+        <div class="col-md-9">
+            <h1>Groupes de Partage</h1>
+        </div>
+        <div class="col-md-3 text-end">
+            <a href="{{ route('share_groups.create') }}" class="btn btn-success">
+                <i class="bi bi-plus-circle me-2"></i>Créer un Groupe
+            </a>
+        </div>
+    </div>
 
-    <a href="{{ route('share_groups.create') }}" class="btn  mb-3" style=" background-color: #038C4F; color:white;">Créer un Groupe</a>
-    </div> </div>
-    <br><br>
-    <table id="Table" class="table table-bordered">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Nom</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($groups as $group)
-            <tr>
-                <td>{{ $group->id }}</td>
-                <td>{{ $group->nom }}</td>
-                <td>
-                    <a href="{{ route('share_groups.show', $group->id) }}" class="btn btn-info">Détails</a>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <!-- Tableau des groupes -->
+    <div class="card custom-card">
+        <div class="card-body">
+            <table id="Table" class="table table-bordered table-striped">
+                <thead class="table-success">
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($groups as $group)
+                    <tr>
+                        <td width=10%>{{ $group->id }}</td>
+                        <td><i class="bi bi-people-fill"></i> {{ $group->nom }}</td>
+                        <td width=20%>
+                            <a href="{{ route('share_groups.show', $group->id) }}" class="btn btn-info btn-sm">
+                                <i class="bi bi-eye me-1"></i>Détails
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-@endsection
 
+<!-- Styles personnalisés -->
+<style>
+    .custom-card {
+        border: 2px dashed #038C4F; /* Bordure avec traits */
+        border-radius: 8px; /* Coins arrondis */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre */
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .custom-card:hover {
+        transform: translateY(-5px); /* Animation au survol */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
+    }
+
+    .table-bordered th, .table-bordered td {
+        border: 1px dashed #ddd; /* Bordure en traits pour le tableau */
+    }
+
+    .btn-success {
+        background-color: #038C4F;
+        border-color: #038C4F;
+    }
+
+    .btn-success:hover {
+        background-color: #026838;
+        border-color: #026838;
+    }
+</style>
+@endsection
 
 @push('styles')
 <link
@@ -56,7 +95,6 @@ $(document).ready(function() {
         ],
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
-
         }
     });
 });

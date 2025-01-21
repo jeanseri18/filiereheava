@@ -23,7 +23,7 @@
                     </select>
                 </div>
 
-                <div>
+                <div class="mb-3">
                     <button type="submit" class="btn btn-success">Enregistrer</button>
                 </div>
             </form>

@@ -43,7 +43,7 @@ class ArchiveController extends Controller
         $document = Document::findOrFail($id);
     
         if ($document->status === 'archivé') {
-            $document->status = 'soumis';  // Remplacez par l'état qui convient
+            $document->status = $document->oldstatus;  // Remplacez par l'état qui convient
             $document->save();
     
             // Supprimer l'archive associée si nécessaire
@@ -61,6 +61,8 @@ class ArchiveController extends Controller
         $document = Document::findOrFail($id);
 
         if ($document->status !== 'archivé') {
+            $document->oldstatus= $document->status;
+
             $document->status = 'archivé';
             $document->save();
 

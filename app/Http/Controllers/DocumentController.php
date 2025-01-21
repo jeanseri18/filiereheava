@@ -17,11 +17,11 @@ class DocumentController extends Controller
     // Affiche la liste des documents
     public function index()
     {
+        
         // Récupérer tous les documents créés par l'utilisateur ou partagés avec lui
         $documents = Document::where('id_creator', auth()->id())  // Documents créés par l'utilisateur
                             ->orWhereIn('id', Share::where('id_user', auth()->id())->pluck('id_document')) // Documents partagés avec l'utilisateur
-                            ->get();
-
+                                               ->paginate(10);
         // Passe les documents à la vue
         return view('documents.index', compact('documents'));
     }
@@ -29,8 +29,8 @@ class DocumentController extends Controller
       public function added()
       {
           $documents = Document::where('id_creator', auth()->id())
-                               ->where('status', 'en attente')
-                               ->get();
+                               ->where('status', 'ajouté')
+                                                  ->paginate(10);
           return view('documents.index', compact('documents'));
       }
   
@@ -39,7 +39,7 @@ class DocumentController extends Controller
       {
           $documents = Document::where('id_creator', auth()->id())
                                ->where('status', 'soumis')
-                               ->get();
+                                                  ->paginate(10);
           return view('documents.index', compact('documents'));
       }
   
@@ -49,7 +49,7 @@ class DocumentController extends Controller
           $documents = Share::where('id_user', auth()->id())
                             ->orWhere('id_group', auth()->id())  // Si l'utilisateur appartient à un groupe partagé
                             ->with(['document', 'user', 'group'])  // Charger les relations (document, user, group)
-                            ->get();
+                                               ->paginate(10);
   
           return view('documents.index', compact('documents'));
       }
@@ -60,7 +60,7 @@ class DocumentController extends Controller
           // Récupérer tous les documents partagés avec l'utilisateur (documents où l'utilisateur est un destinataire)
           $documents = Share::where('id_user', auth()->id())
                             ->with(['document', 'user', 'group'])  // Charger les relations
-                            ->get();
+                                               ->paginate(10);
   
           return view('documents.index', compact('documents'));
       }
@@ -69,7 +69,7 @@ class DocumentController extends Controller
       {
           $documents = Document::where('id_creator', auth()->id())
                                ->where('status', 'en attente')
-                               ->get();
+                                                  ->paginate(10);
           return view('documents.index', compact('documents'));
       }
   
@@ -78,7 +78,7 @@ class DocumentController extends Controller
       {
           $documents = Document::where('id_creator', auth()->id())
                                ->where('status', 'validé')
-                               ->get();
+                                                  ->paginate(10);
           return view('documents.index', compact('documents'));
       }
   
@@ -87,7 +87,7 @@ class DocumentController extends Controller
       {
           $documents = Document::where('id_creator', auth()->id())
                                ->where('status', 'rejeté')
-                               ->get();
+                                                  ->paginate(10);
           return view('documents.index', compact('documents'));
       }
 
@@ -109,7 +109,7 @@ class DocumentController extends Controller
     // Validation des données
     $request->validate([
         'nom' => 'required|string|max:255',
-        'file_url' => 'required|file|mimes:pdf,doc,docx,txt|max:2048', // Vérifie le fichier
+'file_url' => 'required|file|mimes:pdf,doc,docx,txt,ppt,pptx,xls,xlsx,png,jpg,jpeg|max:20048',
         'type_doc' => 'required|in:document,courrier entrant,courrier sortant',
         'type_share' => 'required|in:public,privé,groupe', // Les options de partage
     ]);

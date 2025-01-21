@@ -4,13 +4,27 @@
 
 @push('styles')
 <style>
+    /* Supprimer les soulignements des liens */
+a {
+    text-decoration: none;
+}
+
+/* Uniformiser la hauteur des cartes */
+.dashboard-block {
+    height: 100%; /* Assure que toutes les cartes ont une hauteur égale */
+    display: flex;
+    flex-direction: column;    align-items: left;
+
+    justify-content: space-between;
+}
+
 .dashboard-block {
     background-color: #f8f9fa;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
     display: flex;
-    align-items: center;
+    align-items: left;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .dashboard-block i {
@@ -55,12 +69,12 @@
 }
 
 .statistics-section .dashboard-block {
-    background-color: #eef2f7;
+    background-color: #FAFBFCFF;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
     display: flex;
-    align-items: center;
+    align-items: left;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .statistics-section .dashboard-block i {
@@ -141,40 +155,51 @@
     <div class="quick-action-block mt-5">
         <h4 class="text-left mb-4">Actions rapides</h4>
         <div class="row g-4">
+            
             <div class="col-md-3">
                 <div class="dashboard-block">
+                <a href="{{ route('documents.create')  }}">
                     <i class="bi bi-upload"></i>
                     <div>
                         <h6>Ajouter un document</h6>
                         <p>Envoyez un document pour validation.</p>
                     </div>
+                    </a>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="dashboard-block">
+                <a href="{{ route('documents.pending') }}" >
+
                     <i class="bi bi-check2-square"></i>
                     <div>
                         <h6>Valider un document</h6>
                         <p>Accédez à la liste des documents en attente de votre validation</p>
-                    </div>
+                    </div></a>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="dashboard-block">
+                <a href="{{ route('archives.index') }}" >
+
                     <i class="bi bi-archive"></i>
                     <div>
                         <h6>Archivage</h6>
                         <p>Organisez et stockez vos documents ajoutés archivés.</p>
                     </div>
+                    </a>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="dashboard-block">
+                <a href="{{ route('archives.index') }}" >
+
                     <i class="bi bi-search"></i>
                     <div>
                         <h6>Recherche</h6>
                         <p>Recherchez un document spécifique dans votre espace.</p>
                     </div>
+                    </a>
                 </div>
             </div>
         </div>

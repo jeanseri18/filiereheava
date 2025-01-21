@@ -50,7 +50,7 @@ Route::get('/courriers/create', [CourrierController::class, 'create'])->name('co
 Route::post('/courriers', [CourrierController::class, 'store'])->name('courriers.store');
 
 // Afficher un courrier spécifique
-Route::get('/courriers/{id}', [CourrierController::class, 'show'])->name('courriers.show');
+Route::get('/courriers/{courrier}', [CourrierController::class, 'show'])->name('courriers.show');
 
 Route::get('/histories', [HistoryController::class, 'index'])->name('histories.index');
 

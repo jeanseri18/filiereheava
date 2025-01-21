@@ -2,11 +2,10 @@
 
 @section('content')
 <div class="container ">
-    <div class="card shadow-sm">
-        <div class="card-header text-black">
-            <h2 class="mb-0">Mettre à jour le document</h2>
-        </div>
-        <div class="card-body">
+    <div class="card custom-card">
+    <div class="card-body">
+            <h2 class="mb-4">Mettre à jour le document</h2>
+       
             @if($errors->any())
                 <div class="alert alert-danger">
                     <ul class="mb-0">
@@ -35,9 +34,10 @@
                     <label for="type_doc" class="form-label">Type de document</label>
                     <select name="type_doc" id="type_doc" class="form-select" required>
                         <option value="document" {{ $document->type_doc === 'document' ? 'selected' : '' }}>Document</option>
-                        <option value="courrier entrant" {{ $document->type_doc === 'courrier entrant' ? 'selected' : '' }}>Courrier entrant</option>
-                        <option value="courrier sortant" {{ $document->type_doc === 'courrier sortant' ? 'selected' : '' }}>Courrier sortant</option>
-                    </select>
+             <option value="image" {{ $document->type_doc === 'image' ? 'selected' : '' }}>image</option>
+            <option value="tableux" {{ $document->type_doc === 'tableux' ? 'selected' : '' }}>Tableux</option>
+            <option value="video" {{ $document->type_doc === 'video' ? 'selected' : '' }}>video</option>
+            <option value="pdf" {{ $document->type_doc === 'pdf' ? 'selected' : '' }}>pdf</option>                    </select>
                 </div>
 
                 <div class="mb-3">
@@ -87,4 +87,46 @@
         </div>
     </div>
 </div>
+
+<!-- Styles personnalisés -->
+<style>
+    .custom-card {
+        border: 2px dashed #038C4F; /* Bordure en traits */
+        border-radius: 8px; /* Coins arrondis */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre */
+        padding: 20px;
+        background-color: #f9f9f9;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .custom-card:hover {
+        transform: translateY(-5px); /* Effet de survol */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-success {
+        background-color: #038C4F;
+        border-color: #038C4F;
+    }
+
+    .btn-success:hover {
+        background-color: #026838;
+        border-color: #026838;
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-control {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .form-control:focus {
+        border-color: #038C4F;
+        box-shadow: 0 0 5px rgba(3, 140, 79, 0.5);
+    }
+</style>
 @endsection

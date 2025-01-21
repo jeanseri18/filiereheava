@@ -17,6 +17,7 @@ class CreateDocumentsTable extends Migration
             $table->enum('type_doc', ['document', 'courrier entrant', 'courrier sortant']);
             $table->enum('type_share', ['public', 'privé', 'groupe']);
             $table->enum('status', ['ajouté','soumis','en attente', 'validé', 'rejeté', 'archivé'])->default('en attente');
+            $table->string('oldstatus')->nullable();
             $table->timestamps();
         });
     }
