@@ -268,4 +268,23 @@ public function update(Request $request, Document $document)
 
         return view('documents.sortants', compact('documents'));
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        // Validation des données
+        $request->validate([
+            'status' => 'required|in:ajouté,soumis,en attente,validé,rejeté,archivé',
+        ]);
+
+        // Trouver le document
+        $document = Document::findOrFail($id);
+
+        // Mettre à jour le statut
+        $document->oldstatus = $document->status; // Sauvegarder l'ancien statut
+        $document->status = $request->status;
+        $document->save();
+
+        return redirect()->route('documents.index')->with('success', 'Statut mis à jour avec succès.');
+    }
+
 }

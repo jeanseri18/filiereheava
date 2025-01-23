@@ -62,6 +62,7 @@ Route::get('documents/{document}', [DocumentController::class, 'show'])->name('d
 Route::get('documents/{document}/edit', [DocumentController::class, 'edit'])->name('documents.edit'); // Formulaire de modification
 Route::put('documents/{document}', [DocumentController::class, 'update'])->name('documents.update'); // Mise à jour d'un document
 Route::delete('documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy'); // Suppression d'un document
+Route::post('/documents/{id}/update-status', [DocumentController::class, 'updateStatus'])->name('documents.updateStatus');
 
 // Routes pour la gestion des utilisateurs
 Route::prefix('users')->name('users.')->group(function () {

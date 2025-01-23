@@ -54,7 +54,10 @@
         background-color: #17a2b8;
         color: white;
     }
-
+    .badge-secondary {
+        background-color: #5A5C5CFF;
+        color: white;
+    }
     .card-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -128,6 +131,7 @@
                             <a href="{{ asset('storage/' . $document->file_url) }}"class="btn  btn-sm text-white" >
 
                             <i class="bi bi-download"  style="color:black;font-size:20px;"></i>        </a>
+                         
                             <form action="{{ route('documents.destroy', $document->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
@@ -167,11 +171,51 @@
                         <p class="card-text">
                             <span class="badge-status @if($document->status == 'validé') badge-success
                                 @elseif($document->status == 'rejeté') badge-danger
+                                @elseif($document->status == 'en attente') badge-secondary
                                 @elseif($document->status == 'ajouté') badge-warning
                                 @elseif($document->status == 'soumis') badge-info
                                 @else badge-secondary @endif">{{ $document->status }}</span>
                         </p>
-                </div>
+                    <hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form action="{{ route('documents.updateStatus', $document->id) }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" name="status" value="en attente" class="btn btn-secondary attente">
+                Soumettre
+            </button>
+        </form>
+    </div>
+    @if(auth()->user()->role==='manager')
+
+    <div class="col-md-4">
+        <form action="{{ route('documents.updateStatus', $document->id) }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" name="status" value="soumis" class="btn btn-success soumis">
+             Valider
+            </button>
+        </form>
+    </div>@endif
+    
+    @if(auth()->user()->role==='admin')
+
+    <div class="col-md-4">
+        <form action="{{ route('documents.updateStatus', $document->id) }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" name="status" value="validé" class="btn  btn-success valide">
+                 Valider
+            </button>
+        </form>
+    </div>@endif
+    <div class="col-md-4">
+        <form action="{{ route('documents.updateStatus', $document->id) }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" name="status" value="rejeté" class="btn  btn-danger rejete">
+                 Rejeter
+            </button>
+        </form>
+    </div>
+</div>               </div>
                 
             @endforeach
         </div>
