@@ -14,6 +14,7 @@ class CreateCourriersTable extends Migration
             $table->string('sender'); // Expéditeur
             $table->string('receiver'); // Destinataire
             $table->string('attachment')->nullable(); // Pièce jointe
+            $table->string('id_user')->nullable(); // Pièce jointe
             $table->timestamps();
         });
     }

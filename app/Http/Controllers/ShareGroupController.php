@@ -7,12 +7,27 @@ use App\Models\User;
 use Illuminate\Http\Request;
 
 class ShareGroupController extends Controller
-{
-    public function index()
+{public function index()
     {
-        $groups = ShareGroup::all();
+        $user = auth()->user(); // Utilisateur connecté
+    
+        // Vérifiez si l'utilisateur a un rôle global
+        if (in_array($user->role, ['admin', 'pca', 'vise', 'directeurexecutif'])) {
+            // Récupérer tous les groupes
+            $groups = ShareGroup::with('creator', 'members')->get();
+        } else {
+            // Récupérer les groupes créés par l'utilisateur ou dont il est membre
+            $groups = ShareGroup::with('creator', 'members')
+                ->where('id_user', $user->id) // Groupes créés par l'utilisateur
+                ->orWhereHas('members', function ($query) use ($user) {
+                    $query->where('id_user', $user->id); // Groupes où l'utilisateur est membre
+                })
+                ->get();
+        }
+    
         return view('share_groups.index', compact('groups'));
     }
+    
 
     public function create()
     {
@@ -21,8 +36,13 @@ class ShareGroupController extends Controller
 
     public function store(Request $request)
     {
+        $user = auth()->user(); // Utilisateur connecté
+
         $request->validate(['nom' => 'required|string|max:255']);
-        ShareGroup::create(['nom' => $request->nom]);
+        ShareGroup::create([
+            'nom' => $request->nom,
+            'id_user' =>   $user->id
+    ]);
 
         return redirect()->route('share_groups.index')->with('success', 'Groupe créé avec succès.');
     }

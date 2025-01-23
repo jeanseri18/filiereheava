@@ -34,6 +34,10 @@
                     <label for="role" class="form-label">Rôle</label>
                     <select class="form-select" id="role" name="role" required>
                         <option value="">Sélectionner un rôle</option>
+                        <option value="vise">vise president </option>
+                        <option value="directeurexecutif">directeur executif </option>
+                        <option value="pca">PCA </option>
+                        <option value="secretariat">Secretariat </option>
                         <option value="admin">Administrateur</option>
                         <option value="user">Utilisateur</option>
                         <option value="manager">Responsable</option>

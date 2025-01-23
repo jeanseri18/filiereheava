@@ -51,28 +51,32 @@
                     </li>
                     <!--end::Fullscreen Toggle-->
                     <!--begin::User Menu Dropdown-->
-                    <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
-                            data-bs-toggle="dropdown"> <img src="../../dist/assets/img/user2-160x160.jpg"
-                                class="user-image rounded-circle shadow" alt="User Image"><span
-                                class="d-none d-md-inline">Alexander Pierce</span> </a>
-                        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                            <!--begin::User Image-->
-                            <li class="user-header text-bg-primary"> <img src="../../dist/assets/img/user2-160x160.jpg"
-                                    class="rounded-circle shadow" alt="User Image">
-                                <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2023</small>
-                                </p>
-                            </li>
-                            <!--end::User Image-->
-                            <!--begin::Menu Body-->
-                            <!--end::Menu Body-->
-                            <!--begin::Menu Footer-->
-                            <li class="user-footer"> <a href="{{ route('profile.edit') }}" class="btn btn-default btn-flat">Profile</a> <a
-                                    href="{{ route('logout') }}" class="btn btn-default btn-flat float-end">Deconnexion</a> </li>
-                            <!--end::Menu Footer-->
-                        </ul>
-                    </li>
+                    <li class="nav-item dropdown user-menu">
+    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+        <!-- Utilisation de l'icône Font Awesome pour l'utilisateur -->
+        <i class="bi bi-person-circle text-black" style="font-size: 1.5rem;color:black"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+        <!--begin::User Header-->
+        <li class="user-header bg-secondary">
+            <!-- Utilisation de l'icône Font Awesome pour l'utilisateur -->
+            <i class="bi bi-person-circle " style="font-size: 3rem;color:white"></i>
+            <p>
+                {{ auth()->user()->nom }}
+              
+                <small>  {{ auth()->user()->role }}</small>
+            </p>
+        </li>
+        <!--end::User Header-->
+        <!--begin::Menu Footer-->
+        <li class="user-footer">
+            <a href="{{ route('profile.edit') }}" class="btn btn-default btn-flat">Profile</a>
+            <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-end">Deconnexion</a>
+        </li>
+        <!--end::Menu Footer-->
+    </ul>
+</li>
+
                     <!--end::User Menu Dropdown-->
                 </ul>
                 <!--end::End Navbar Links-->
@@ -112,19 +116,21 @@
                                 <p>Directions</p>
                             </a>
                         </li-->
+                        @if(auth()->user()->role==='admin')
                         <li class="nav-item">
                             <a href="{{ route('services.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-speedometer2 text-white"></i>
                                 <p>Directions</p>
                             </a>
-                        </li>
+                        </li>@endif
+                        @if(auth()->user()->role==='secretariat')
                         <li class="nav-item">
                             <a href="{{ route('courriers.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-speedometer2 text-white"></i>
                                 <p>Courriers</p>
                             </a>
-                        </li>
-
+                        </li>@endif
+                
                                 <!-- Mes documents -->
                                 <li class="nav-item">
                                     <a href="{{ route('documents.index') }}" class="nav-link" style="color:white">
@@ -132,19 +138,21 @@
                                         <p>Mes documents</p>
                                     </a>
                                 </li> 
+                                @if(auth()->user()->role==='admin')
                                 <!-- Documents en attente de validation -->
                                 <li class="nav-item">
                             <a href="{{ route('archives.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-clock text-white"></i>
                                 <p>Archivages</p>
                             </a>
-                        </li>
+                        </li>@endif
                         <li class="nav-item">
                             <a href="{{ route('share_groups.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-clock text-white"></i>
                                 <p>Groupe de partage</p>
                             </a>
                         </li>
+                        @if(auth()->user()->role==='admin')
                         <!-- Historique -->
                         <li class="nav-item">
                             <a href="{{ route('histories.index') }}" class="nav-link" style="color:white">
@@ -152,6 +160,7 @@
                                 <p>Historique</p>
                             </a>
                         </li>
+                       
                         <!-- Utilisateur -->
                         <li class="nav-item">
                             <a href="{{ route('users.index') }}" class="nav-link" style="color:white">
@@ -159,7 +168,7 @@
                                 <p>Utilisateur</p>
                             </a>
                         </li>
-               
+               @endif
                         <!-- Paramètres -->
                         <li class="nav-item">
                             <a href="{{ route('profile.edit') }}" class="nav-link" style="color:white">

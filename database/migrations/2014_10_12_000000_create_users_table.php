@@ -12,7 +12,7 @@ class CreateUsersTable extends Migration
             $table->string('nom');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', ['admin', 'employe', 'manager']);
+            $table->enum('role', ['vise', 'directeurexecutif', 'pca','secretariat','admin','user','manager']);
             $table->string('id_service');  // Assurez-vous que c'est un "unsignedBigInteger"
             $table->boolean('is_validator')->default(false);
             $table->enum('status', ['actif', 'inactif']);

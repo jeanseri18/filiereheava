@@ -34,25 +34,46 @@ class AuthController extends Controller
     }
     public function dashboard()
     {
-        // Récupérez les statistiques
-        $totalDocuments = Document::count();
-        $validatedDocuments = Document::where('status', 'validé')->count();
-        $pendingDocuments = Document::where('status', 'en attente')->count();
-        $rejectedDocuments = Document::where('status', 'rejeté')->count();
-        $archivedDocuments = Document::where('status', 'archivé')->count();
-        $recentActions = History::with(['user', 'document'])
-        ->orderBy('action_date', 'desc')
-        ->limit(10)
-        ->get();
+        // Récupérez l'utilisateur connecté
+        $user = auth()->user();
+    
+        // Vérifiez si l'utilisateur a un rôle avec accès global
+        if (in_array($user->role, ['admin', 'pca', 'vise', 'directeurexecutif'])) {
+            // Statistiques globales
+            $totalDocuments = Document::count();
+            $validatedDocuments = Document::where('status', 'validé')->count();
+            $pendingDocuments = Document::where('status', 'en attente')->count();
+            $rejectedDocuments = Document::where('status', 'rejeté')->count();
+            $archivedDocuments = Document::where('status', 'archivé')->count();
+            $recentActions = History::with(['user', 'document'])
+                ->orderBy('action_date', 'desc')
+                ->limit(10)
+                ->get();
+        } else {
+            // Statistiques spécifiques à l'utilisateur connecté
+            $totalDocuments = Document::where('id_creator', $user->id)->count();
+            $validatedDocuments = Document::where('id_creator', $user->id)->where('status', 'validé')->count();
+            $pendingDocuments = Document::where('id_creator', $user->id)->where('status', 'en attente')->count();
+            $rejectedDocuments = Document::where('id_creator', $user->id)->where('status', 'rejeté')->count();
+            $archivedDocuments = Document::where('id_creator', $user->id)->where('status', 'archivé')->count();
+            $recentActions = History::with(['user', 'document'])
+                ->where('id_user', $user->id)
+                ->orderBy('action_date', 'desc')
+                ->limit(10)
+                ->get();
+        }
+    
+        // Retourner la vue avec les données
         return view('dashboard.index', compact(
             'totalDocuments',
             'validatedDocuments',
             'pendingDocuments',
             'rejectedDocuments',
             'archivedDocuments',
-        'recentActions'
+            'recentActions'
         ));
     }
+    
     
 
     // Déconnexion

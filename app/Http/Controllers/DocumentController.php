@@ -184,6 +184,9 @@ class DocumentController extends Controller
 
 public function update(Request $request, Document $document)
 {
+
+
+
     // Validation des données
     $request->validate([
         'nom' => 'required|string|max:255',
@@ -216,7 +219,7 @@ public function update(Request $request, Document $document)
             Share::create([
                 'id_user' => $userId,
                 'id_document' => $document->id,
-                'type_share' => 'utilisateur',
+                'type_share' => 'privé',
             ]);
         }
     } elseif ($request->type_share === 'groupe' && $request->has('groups')) {

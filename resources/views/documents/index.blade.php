@@ -16,7 +16,7 @@
     }
 
     .upload-box:hover {
-        background-color: #e9f7ef;
+        background-color: #01C96FFF;
     }
 
     .upload-box p {
@@ -96,10 +96,10 @@
         <h1>Liste des Documents</h1>
         <h5>Filtre</h5>
         <div class="mb-3">
+
             <a href="{{ route('archives.index') }}" class="btn btn-primary btn-sm">Tous les documents</a>
             <a href="{{ route('documents.added') }}" class="btn btn-warning btn-sm">Ajoutés</a>
             <a href="{{ route('documents.pending') }}" class="btn btn-secondary btn-sm">En Attente</a>
-
             <a href="{{ route('documents.submitted') }}" class="btn btn-info btn-sm">Soumis</a>
             <a href="{{ route('documents.validated') }}" class="btn btn-success btn-sm">Validés</a>
             <a href="{{ route('documents.rejected') }}" class="btn btn-danger btn-sm">Rejetés</a>
@@ -125,6 +125,9 @@
                             <a href="{{ route('documents.edit', $document->id) }}"  class="btn  btn-sm text-white" >
                                 <i class="bi bi-pencil" style="color:black;font-size:20px;"></i>
                             </a>
+                            <a href="{{ asset('storage/' . $document->file_url) }}"class="btn  btn-sm text-white" >
+
+                            <i class="bi bi-download"  style="color:black;font-size:20px;"></i>        </a>
                             <form action="{{ route('documents.destroy', $document->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
@@ -160,7 +163,7 @@
                     <h3 class="card-title"><strong>{{ $document->nom }}</strong></h3>
                         <p class="card-text" style="font-size:13px">Type de partage: {{ $document->type_share }}
                         <br>Ajouté le : {{ $document->created_at }}
-                        <br> Par : {{ $document->creator->nom }}
+                        <br> Par : {{ optional($document->creator)->nom ?? 'Moi' }}
                         <p class="card-text">
                             <span class="badge-status @if($document->status == 'validé') badge-success
                                 @elseif($document->status == 'rejeté') badge-danger

@@ -10,6 +10,7 @@ class CreateShareGroupsTable extends Migration
         Schema::create('share_groups', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
+            $table->string('id_user');
             $table->timestamps();
         });
     }
