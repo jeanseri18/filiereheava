@@ -71,8 +71,14 @@
         <!--begin::Menu Footer-->
         <li class="user-footer">
             <a href="{{ route('profile.edit') }}" class="btn btn-default btn-flat">Profile</a>
-            <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-end">Deconnexion</a>
-        </li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+
+<a href="#" class="btn btn-default btn-flat float-end" 
+   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    Déconnexion
+</a>        </li>
         <!--end::Menu Footer-->
     </ul>
 </li>
