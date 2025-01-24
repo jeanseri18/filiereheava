@@ -7,6 +7,8 @@ use Illuminate\Validation\Rules;
 use App\Models\User;
 use App\Models\Direction;
 use App\Models\Service;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -66,5 +68,27 @@ class ProfileController extends Controller
         ]);
 
         return redirect()->route('profile.edit')->with('success', 'Mot de passe mis à jour avec succès.');
+    }
+    public function updatePhoto(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Max 2 MB
+        ]);
+
+        $user = Auth::user();
+
+        // Supprimer l'ancienne photo si elle existe
+        if ($user->file_url && Storage::exists($user->file_url)) {
+            Storage::delete($user->file_url);
+        }
+
+        // Enregistrer la nouvelle photo
+        $path = $request->file('photo')->store('profile_photos', 'public');
+
+        // Mettre à jour le champ `file_url`
+        $user->file_url = $path;
+        $user->save();
+
+        return redirect()->route('profile.edit')->with('success', 'Photo de profil mise à jour avec succès.');
     }
 }

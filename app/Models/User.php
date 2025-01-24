@@ -23,6 +23,7 @@ class User extends Authenticatable
         'nom',
         'email',
         'password',
+        'file_url',
         'role',
         'id_service',
         'is_validator',

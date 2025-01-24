@@ -19,6 +19,7 @@ use App\Http\Controllers\ShareGroupController;
 Route::middleware(['auth'])->group(function () {
     // Afficher les documents partagés avec l'utilisateur
     Route::get('/documents/shared-with-me', [DocumentController::class, 'sharedWithMe'])->name('documents.sharedWithMe');
+    Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.updatePhoto');
 
     // Afficher les documents partagés par l'utilisateur
     Route::get('/documents/shared-by-me', [DocumentController::class, 'sharedByMe'])->name('documents.sharedByMe');

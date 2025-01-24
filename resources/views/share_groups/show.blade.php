@@ -37,8 +37,17 @@
         <div class="col-md-3">
             <div class="card custom-card text-center mb-3">
                 <div class="card-body">
-                    <i class="bi bi-person-square " style="font-size: 100px; color: green;"></i>
-                    <h5 class="mt-3">{{ $member->nom }}</h5>
+                @if(Auth::user()->file_url)
+            <img src="{{ asset('storage/' . Auth::user()->file_url) }}" 
+                 alt="Photo de profil" 
+                 class="rounded-circle" 
+                 style="width: 150px; height: 150px; object-fit: cover;">
+        @else
+            <!-- Si aucune photo n'est définie, une photo par défaut -->
+            <i class="bi bi-person-circle " class="rounded-circle" 
+
+                 style="font-size: 120px;color:green"></i>
+        @endif                    <h5 class="mt-3">{{ $member->nom }}</h5>
                     <form action="{{ route('share_groups.removeMember', [$group->id, $member->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')

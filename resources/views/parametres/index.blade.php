@@ -4,10 +4,46 @@
 
 @section('content')
 <div class="container">
-<div class="callout ">
-        <h2>Gestion de votre profile</h2>
-        <p>Attention ! les informations une fois modifié seront .....</p>
-    </div><br>
+
+
+  
+
+    <div class=" text-center  card custom-card">
+
+    @if(session('success'))
+        <div class="alert alert-success mt-3">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <div class="position-relative d-inline-block mt-4">
+        <!-- Affiche la photo de profil -->
+        @if(Auth::user()->file_url)
+            <img src="{{ asset('storage/' . Auth::user()->file_url) }}" 
+                 alt="Photo de profil" 
+                 class="rounded-circle" 
+                 style="width: 150px; height: 150px; object-fit: cover;">
+        @else
+            <!-- Si aucune photo n'est définie, une photo par défaut -->
+            <i class="bi bi-person-circle " class="rounded-circle" 
+
+                 style="font-size: 120px;color:green"></i>
+        @endif
+<br>
+        <!-- Icône pour modifier -->
+        <button class="btn btn-success mt-3" id="change-photo-btn" onclick="document.getElementById('photo-input').click();">
+            <i class="bi bi-pencil-square"></i> Modifier
+        </button>
+    </div>
+
+    <!-- Formulaire pour envoyer la photo -->
+    <form action="{{ route('profile.updatePhoto') }}" method="POST" enctype="multipart/form-data" style="display: none;">
+        @csrf
+        <input type="file" name="photo" id="photo-input" class="d-none" accept="image/*" 
+               onchange="this.form.submit();">
+    </form>
+</div>
+<br>
     <div class="row">
         {{-- Section : Informations sur le compte --}}
         <!--div class="col-md-12">
