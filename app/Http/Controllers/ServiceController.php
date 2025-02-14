@@ -10,7 +10,7 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $services = Service::with('direction')->get();
+        $services = Service::all();
         return view('services.index', compact('services'));
     }
 

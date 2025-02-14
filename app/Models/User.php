@@ -25,6 +25,9 @@ class User extends Authenticatable
         'password',
         'file_url',
         'role',
+        'permissionrh',
+        'fonction',
+        'matricule',
         'id_service',
         'is_validator',
         'status',
@@ -58,6 +61,40 @@ class User extends Authenticatable
      public function shareGroups()
 {
     return $this->belongsToMany(ShareGroup::class, 'share_lists', 'id_user', 'id_group')->withTimestamps();
+}
+
+public function AttestationStages()
+{
+    return $this->hasMany(AttestationStage::class, 'id_user');
+}
+public function autorisationsAbsences()
+{
+    return $this->hasMany(AutorisationAbsence::class, 'id_user');
+}
+
+public function certificatsTravail()
+{
+    return $this->hasMany(CertificatTravail::class, 'id_user');
+}
+
+public function attestationsStages()
+{
+    return $this->hasMany(AttestationStage::class, 'id_user');
+}
+
+public function attestationsTravail()
+{
+    return $this->hasMany(AttestationTravail::class, 'id_user');
+}
+
+public function demandesAbsences()
+{
+    return $this->hasMany(DemandeAbsence::class, 'id_user');
+}
+
+public function demandesDepartConges()
+{
+    return $this->hasMany(DemandeDepartConges::class, 'id_user');
 }
 
 }

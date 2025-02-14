@@ -113,7 +113,7 @@
                         data-accordion="false">
                         <!-- Tableau de bord -->
                         <li class="nav-item">
-                            <a href="{{ route('dashboard') }}" class="nav-link" style="color:white">
+                            <a href="{{ route('dashboardrh') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-speedometer2 text-white"></i>
                                 <p>Tableau de bord</p>
                             </a>
@@ -124,60 +124,66 @@
                                 <p>Directions</p>
                             </a>
                         </li-->
-                        @if(auth()->user()->role==='admin')
-                        <li class="nav-item">
-                            <a href="{{ route('services.index') }}" class="nav-link" style="color:white">
-                                <i class="nav-icon bi bi-speedometer2 text-white"></i>
-                                <p>Directions</p>
-                            </a>
-                        </li>@endif
-                        @if(auth()->user()->role==='secretariat')
-                        <li class="nav-item">
-                            <a href="{{ route('courriers.index') }}" class="nav-link" style="color:white">
-                                <i class="nav-icon bi bi-speedometer2 text-white"></i>
-                                <p>Courriers</p>
-                            </a>
-                        </li>@endif
 
-                        <!-- Mes documents -->
-                        <li class="nav-item">
-                            <a href="{{ route('documents.index') }}" class="nav-link" style="color:white">
-                                <i class="nav-icon bi bi-folder text-white"></i>
-                                <p>Mes documents</p>
-                            </a>
-                        </li>
-                        @if(auth()->user()->role==='admin')
-                        <!-- Documents en attente de validation -->
-                        <li class="nav-item">
-                            <a href="{{ route('archives.index') }}" class="nav-link" style="color:white">
-                                <i class="nav-icon bi bi-clock text-white"></i>
-                                <p>Archivages</p>
-                            </a>
-                        </li>@endif
-                        <li class="nav-item">
-                            <a href="{{ route('share_groups.index') }}" class="nav-link" style="color:white">
-                                <i class="nav-icon bi bi-clock text-white"></i>
-                                <p>Groupe de partage</p>
-                            </a>
-                        </li>
-                        @if(auth()->user()->role==='admin')
-                        <!-- Historique -->
-                        <li class="nav-item">
-                            <a href="{{ route('histories.index') }}" class="nav-link" style="color:white">
-                                <i class="nav-icon bi bi-clock text-white"></i>
-                                <p>Historique</p>
-                            </a>
-                        </li>
 
-                        <!-- Utilisateur -->
+
+                        @php
+                        $permission = Auth::user()->permissionrh ?? null;
+                        @endphp
+
+                        @if(in_array($permission, ['rh', 'valideur']))
                         <li class="nav-item">
-                            <a href="{{ route('users.index') }}" class="nav-link" style="color:white">
-                                <i class="nav-icon bi bi-person text-white"></i>
-                                <p>Utilisateur</p>
+                            <a href="{{ route('autorisations.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Autorisation d'absence</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('attestations_travail.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Attestation de travail</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('certificats.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Certificat de travail</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('attestations_stage.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Attestation de stage</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('demandes_absence.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Demande d'absence</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('demandes.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Demande départ congé</p>
                             </a>
                         </li>
                         @endif
 
+                        @if(in_array($permission, ['demandeur', 'superieur']))
+                        <li class="nav-item">
+                            <a href="{{ route('demandes_absence.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Demande d'absence</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('demandes.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Demande départ congé</p>
+                            </a>
+                        </li>
+                        @endif
 
 
                         <!-- Paramètres -->
@@ -213,7 +219,7 @@
                             </ol>
                         </div>
                     </div>
-                </div> end::Row-->
+                </div> 
             </div>
             <div class="app-content">
                 <!--begin::Container-->

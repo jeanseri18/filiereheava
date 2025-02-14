@@ -10,10 +10,7 @@ class Service extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nom', 'id_direction'];
+    protected $fillable = ['nom'];
 
-    public function direction()
-    {
-        return $this->belongsTo(Direction::class, 'id_direction');
-    }
+   
 }

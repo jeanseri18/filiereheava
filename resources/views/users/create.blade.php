@@ -29,6 +29,14 @@
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" required placeholder="Entrez l'email">
                 </div>
+                <div class="mb-3">
+                    <label for="matricule" class="form-label">Matricule</label>
+                    <input type="matricule" class="form-control" id="matricule" name="matricule" required placeholder="Entrez le matricule">
+                </div>
+                <div class="mb-3">
+                    <label for="fonction" class="form-label">Fonction</label>
+                    <input type="fonction" class="form-control" id="fonction" name="fonction" required placeholder="Entrez la fonction">
+                </div>
 
                 <div class="mb-3">
                     <label for="role" class="form-label">Rôle</label>
@@ -39,27 +47,46 @@
                         <option value="pca">PCA </option>
                         <option value="secretariat">Secretariat </option>
                         <option value="admin">Administrateur</option>
-                        <option value="user">Utilisateur</option>
+                        <option value="employe">Utilisateur</option>
                         <option value="manager">Responsable</option>
                     </select>
                 </div>
-
                 <div class="mb-3">
-                    <label for="service" class="form-label">Service</label>
-                    <select class="form-select" id="service" name="service" required>
-                        <option value="">Sélectionner un service</option>
-                        <option value="finance">Finance</option>
-                        <option value="marketing">Marketing</option>
-                        <option value="hr">Ressources humaines</option>
-                        <option value="it">Informatique</option>
+                    <label for="permission" class="form-label">Permission RH</label>
+                    <select class="form-select" id="permission" name="permission" required>
+                        <option value="">Sélectionner un permission</option>
+                        <option value="rh">rh </option>
+                        <option value="demandeur">demandeur</option>
+                        <option value="valideur">valideur </option>
+                        <option value="superieur">Superieur </option>
+
                     </select>
                 </div>
 
+                <div class="form-group mb-3">
+    <label for="id_service">Service</label>
+    <select name="id_service" id="id_service" class="form-control" required>
+        @foreach($services as $service)
+            <option value="{{ $service->id }}" >{{ $service->nom }}</option>
+        @endforeach
+    </select>
+</div>
+<div class="mb-3">
+                    <label for="is_validator" class="form-label">Peut il valider des documents</label>
+                    <select class="form-select" id="is_validator" name="is_validator" required>
+                    <option value="1">Oui</option>
+                    <option value="0">Non</option>
+                    </select>
+                </div>
+<div class="mb-3">
+                    <label for="password" class="form-label">Mot de passe </label>
+                    <input type="text" class="form-control" id="password" name="password" required placeholder="Entrez le mot de passe">
+                </div>
                 <div class="mb-3">
                     <label for="status" class="form-label">Statut</label>
                     <select class="form-select" id="status" name="status" required>
-                        <option value="active">Actif</option>
-                        <option value="inactive">Inactif</option>
+                        <option value="1">Actif</option>
+                        <option value="0">Inactif</option>
                     </select>
                 </div>
 

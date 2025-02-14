@@ -22,6 +22,7 @@
                         <th>Nom</th>
                         <th>Email</th>
                         <th>Rôle</th>
+                        <th>Permission</th>
                         <th>Service</th>
                         <th>Statut</th>
                         <th>Actions</th>
@@ -34,6 +35,7 @@
                             <td>{{ $user->nom }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->role }}</td>
+                            <td>{{ $user->permissionrh }}</td>
                             <td>{{ $user->service->nom ?? 'Aucun' }}</td>
                             <td>
                                 <span class="badge {{ $user->status == 'Actif' ? 'bg-success' : 'bg-secondary' }}">

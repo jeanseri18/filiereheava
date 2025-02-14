@@ -27,10 +27,13 @@ class UserController extends Controller
             'nom' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8',
-            'role' => 'required|in:admin,employe,manager',
+            'role' => 'required|in:admin,user,manager,directeurexecutif,vise,pca,secretariat',
+            'permission' => 'required|in:rh,demandeur,valideur,superieur',
+            'matricule' => 'required|string',
+            'fonction' => 'required|string',
             'id_service' => 'required|exists:services,id',
-            'is_validator' => 'boolean',
-            'status' => 'required|in:actif,inactif',
+            'is_validator' => 'required|boolean',
+            'status' => 'required',
         ]);
 
         User::create([
@@ -38,6 +41,9 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'permissionrh' => $request->permission,
+            'matricule' => $request->matricule,
+            'fonction' => $request->fonction,
             'id_service' => $request->id_service,
             'is_validator' => $request->is_validator,
             'status' => $request->status,
@@ -57,13 +63,16 @@ class UserController extends Controller
         $request->validate([
             'nom' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required|in:admin,employe,manager',
+            'role' => 'required|in:admin,user,manager,directeurexecutif,vise,pca,secretariat',
+            'permissionrh' => 'required|in:rh,demandeur,valideur,superieur',
+            'matricule' => 'required|string|max:255',
+            'fonction' => 'required|string|max:255',
             'id_service' => 'required|exists:services,id',
             'is_validator' => 'boolean',
             'status' => 'required|in:actif,inactif',
         ]);
 
-        $user->update($request->only(['nom', 'email', 'role', 'id_service', 'is_validator', 'status']));
+        $user->update($request->only(['nom', 'email', 'role','permissionrh', 'id_service', 'is_validator', 'status']));
 
         return redirect()->route('users.index')->with('success', 'Utilisateur mis à jour avec succès.');
     }

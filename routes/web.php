@@ -15,7 +15,132 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\CourrierController;
 use App\Http\Controllers\ShareGroupController;
 // routes/web.php
+use App\Http\Controllers\AttestationStageController;
+use App\Http\Controllers\AutorisationAbsenceController;
+use App\Http\Controllers\CertificatTravailController;
+use App\Http\Controllers\AttestationTravailController;
 
+use App\Http\Controllers\DemandeAbsenceController;
+use App\Http\Controllers\DemandeDepartCongesController;
+
+Route::get('/demandes', [DemandeDepartCongesController::class, 'index'])->name('demandes.index');
+Route::get('/demandes/create', [DemandeDepartCongesController::class, 'create'])->name('demandes.create');
+Route::post('/demandes', [DemandeDepartCongesController::class, 'store'])->name('demandes.store');
+Route::get('/demandes/{id}', [DemandeDepartCongesController::class, 'show'])->name('demandes.show');
+Route::get('/demandes/{id}/edit', [DemandeDepartCongesController::class, 'edit'])->name('demandes.edit');
+Route::put('/demandes/{id}', [DemandeDepartCongesController::class, 'update'])->name('demandes.update');
+Route::delete('/demandes/{id}', [DemandeDepartCongesController::class, 'destroy'])->name('demandes.destroy');
+
+Route::middleware('auth')->group(function () {
+    // Liste des demandes (toutes)
+    Route::get('demandes_absence', [DemandeAbsenceController::class, 'index'])->name('demandes_absence.index');
+
+    // Liste des demandes du user connecté
+    Route::get('mes_demandes_absence', [DemandeAbsenceController::class, 'userDemandes'])->name('demandes_absence.user');
+
+    // Formulaire de création
+    Route::get('demandes_absence/create', [DemandeAbsenceController::class, 'create'])->name('demandes_absence.create');
+
+    // Enregistrer une nouvelle demande
+    Route::post('demandes_absence', [DemandeAbsenceController::class, 'store'])->name('demandes_absence.store');
+
+    // Afficher une demande
+    Route::get('demandes_absence/{id}', [DemandeAbsenceController::class, 'show'])->name('demandes_absence.show');
+
+    // Formulaire d'édition
+    Route::get('demandes_absence/{id}/edit', [DemandeAbsenceController::class, 'edit'])->name('demandes_absence.edit');
+
+    // Mettre à jour une demande
+    Route::put('demandes_absence/{id}', [DemandeAbsenceController::class, 'update'])->name('demandes_absence.update');
+
+    // Supprimer une demande
+    Route::delete('demandes_absence/{id}', [DemandeAbsenceController::class, 'destroy'])->name('demandes_absence.destroy');
+     // Valider une demande d'absence
+     Route::post('demandes_absence/{id}/validate', [DemandeAbsenceController::class, 'validateDemande'])->name('demandes_absence.validate');
+
+     // Rejeter une demande d'absence
+     Route::post('demandes_absence/{id}/reject', [DemandeAbsenceController::class, 'rejectDemande'])->name('demandes_absence.reject');
+ 
+});
+
+Route::middleware('auth')->group(function () {
+    // Afficher toutes les attestations
+    Route::get('attestations_travail', [AttestationTravailController::class, 'index'])->name('attestations_travail.index');
+
+    // Afficher le formulaire de création
+    Route::get('attestations_travail/create', [AttestationTravailController::class, 'create'])->name('attestations_travail.create');
+
+    // Enregistrer une nouvelle attestation
+    Route::post('attestations_travail', [AttestationTravailController::class, 'store'])->name('attestations_travail.store');
+
+    // Afficher une attestation spécifique
+    Route::get('attestations_travail/{id}', [AttestationTravailController::class, 'show'])->name('attestations_travail.show');
+
+    // Afficher le formulaire d'édition
+    Route::get('attestations_travail/{id}/edit', [AttestationTravailController::class, 'edit'])->name('attestations_travail.edit');
+
+    // Mettre à jour une attestation
+    Route::put('attestations_travail/{id}', [AttestationTravailController::class, 'update'])->name('attestations_travail.update');
+
+    // Supprimer une attestation
+    Route::delete('attestations_travail/{id}', [AttestationTravailController::class, 'destroy'])->name('attestations_travail.destroy');
+
+    // Valider une attestation
+    Route::post('attestations_travail/{id}/validate', [AttestationTravailController::class, 'validateAttestation'])->name('attestations_travail.validate');
+
+    // Rejeter une attestation
+    Route::post('attestations_travail/{id}/reject', [AttestationTravailController::class, 'rejectAttestation'])->name('attestations_travail.reject');
+});
+
+
+Route::prefix('certificats')->name('certificats.')->group(function() {
+    // Afficher la liste des certificats
+    Route::get('/', [CertificatTravailController::class, 'index'])->name('index');
+    
+    // Créer un certificat
+    Route::get('/create', [CertificatTravailController::class, 'create'])->name('create');
+    Route::post('/', [CertificatTravailController::class, 'store'])->name('store');
+    
+    // Afficher un certificat spécifique
+    Route::get('{id}', [CertificatTravailController::class, 'show'])->name('show');
+    
+    // Modifier un certificat
+    Route::get('{id}/edit', [CertificatTravailController::class, 'edit'])->name('edit');
+    Route::put('{id}', [CertificatTravailController::class, 'update'])->name('update');
+    
+    // Supprimer un certificat
+    Route::delete('{id}', [CertificatTravailController::class, 'destroy'])->name('destroy');
+    
+    // Valider un certificat
+    Route::post('{id}/valider', [CertificatTravailController::class, 'valider'])->name('valider');
+    
+    // Rejeter un certificat
+    Route::post('{id}/rejeter', [CertificatTravailController::class, 'rejeter'])->name('rejeter');
+});
+
+
+Route::post('autorisations/{id}/valider', [AutorisationAbsenceController::class, 'valider'])->name('autorisations.valider');
+Route::post('autorisations/{id}/rejeter', [AutorisationAbsenceController::class, 'rejeter'])->name('autorisations.rejeter');
+
+Route::get('autorisations', [AutorisationAbsenceController::class, 'index'])->name('autorisations.index'); // Liste
+Route::get('autorisations/create', [AutorisationAbsenceController::class, 'create'])->name('autorisations.create'); // Formulaire de création
+Route::post('autorisations', [AutorisationAbsenceController::class, 'store'])->name('autorisations.store'); // Enregistrement
+Route::get('autorisations/{id}', [AutorisationAbsenceController::class, 'show'])->name('autorisations.show'); // Afficher
+Route::get('autorisations/{id}/edit', [AutorisationAbsenceController::class, 'edit'])->name('autorisations.edit'); // Formulaire de modification
+Route::put('autorisations/{id}', [AutorisationAbsenceController::class, 'update'])->name('autorisations.update'); // Mise à jour
+Route::delete('autorisations/{id}', [AutorisationAbsenceController::class, 'destroy'])->name('autorisations.destroy'); // Suppression
+
+Route::get('attestations_stage', [AttestationStageController::class, 'index'])->name('attestations_stage.index');
+Route::get('attestations_stage/create', [AttestationStageController::class, 'create'])->name('attestations_stage.create');
+Route::post('attestations_stage', [AttestationStageController::class, 'store'])->name('attestations_stage.store');
+Route::get('attestations_stage/{id}', [AttestationStageController::class, 'show'])->name('attestations_stage.show');
+Route::get('attestations_stage/{id}/edit', [AttestationStageController::class, 'edit'])->name('attestations_stage.edit');
+Route::put('attestations_stage/{id}', [AttestationStageController::class, 'update'])->name('attestations_stage.update');
+Route::delete('attestations_stage/{id}', [AttestationStageController::class, 'destroy'])->name('attestations_stage.destroy');
+Route::post('attestations_stage/{id}/validate', [AttestationStageController::class, 'validated'])->name('attestations_stage.validate');
+    
+// Route pour rejeter une attestation
+Route::post('attestations_stage/{id}/reject', [AttestationStageController::class, 'reject'])->name('attestations_stage.reject');
 Route::middleware(['auth'])->group(function () {
     // Afficher les documents partagés avec l'utilisateur
     Route::get('/documents/shared-with-me', [DocumentController::class, 'sharedWithMe'])->name('documents.sharedWithMe');
@@ -66,14 +191,7 @@ Route::delete('documents/{document}', [DocumentController::class, 'destroy'])->n
 Route::post('/documents/{id}/update-status', [DocumentController::class, 'updateStatus'])->name('documents.updateStatus');
 
 // Routes pour la gestion des utilisateurs
-Route::prefix('users')->name('users.')->group(function () {
-    Route::get('/', [UserController::class, 'index'])->name('index');
-    Route::get('/create', [UserController::class, 'create'])->name('create');
-    Route::post('/', [UserController::class, 'store'])->name('store');
-    Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
-    Route::put('/{user}', [UserController::class, 'update'])->name('update');
-    Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
-});
+
 
 // Routes RESTful pour les directions
 Route::prefix('directions')->name('directions.')->group(function () {
@@ -118,6 +236,14 @@ Route::prefix('services')->name('services.')->group(function () {
 });
 
 });
+Route::prefix('users')->name('users.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/create', [UserController::class, 'create'])->name('create');
+    Route::post('/', [UserController::class, 'store'])->name('store');
+    Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
+    Route::put('/{user}', [UserController::class, 'update'])->name('update');
+    Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -150,6 +276,14 @@ Route::get('/action', function () {
     return view('action.index');
 })->name('tab');
 
+Route::get('/dashboardrh', function () {
+    return view('dashboard.indexrh');
+})->name('dashboardrh');
+
+
+Route::get('/menu', function () {
+    return view('dashboard.menu');
+})->name('menu');
 
 
 //

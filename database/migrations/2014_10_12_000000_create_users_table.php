@@ -13,8 +13,14 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('file_url')->nullable();
+
             $table->enum('role', ['vise', 'directeurexecutif', 'pca','secretariat','admin','user','manager']);
-            $table->string('id_service');  // Assurez-vous que c'est un "unsignedBigInteger"
+           
+            $table->enum('permissionrh', ['rh', 'demandeur', 'valideur','superieur']);
+            $table->string('fonction')->nullable();
+            $table->string('matricule')->nullable();
+
+            $table->foreignId('id_service')->constrained('services')->onDelete('cascade');
             $table->boolean('is_validator')->default(false);
             $table->enum('status', ['actif', 'inactif']);
             $table->timestamps();
