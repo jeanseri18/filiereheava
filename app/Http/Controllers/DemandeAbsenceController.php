@@ -47,7 +47,7 @@ class DemandeAbsenceController extends Controller
             'id_superieur' => 'required|exists:users,id',
         ]);
 
-        DemandeAbsence::create([
+       $demande= DemandeAbsence::create([
             'id_user' => Auth::id(),
             'nombre_jours' => $request->nombre_jours,
             'date_debut' => $request->date_debut,
@@ -105,7 +105,7 @@ class DemandeAbsenceController extends Controller
         }
 
         // Mettre à jour la demande pour la valider
-        $demande->validation_superieur = true;
+        $demande->validation_superieur = 1;
         $demande->date_validation = now();
         $demande->save();
 

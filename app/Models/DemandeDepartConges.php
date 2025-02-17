@@ -25,6 +25,8 @@ class DemandeDepartConges extends Model
         'fonction_interimaire',
         'signature_demandeur',
         'avis_superieur',
+        'id_superieur',
+        'date_validation',
         'date_creation',
     ];
 

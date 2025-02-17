@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('fonction_interimaire')->nullable();
             $table->string('signature_demandeur')->nullable();
             $table->string('avis_superieur')->nullable();
+             $table->string('id_superieur',)->nullable();
+            $table->string('date_validation')->nullable();
             $table->timestamps();
         });
     }

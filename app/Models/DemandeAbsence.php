@@ -16,6 +16,7 @@ class DemandeAbsence extends Model
         'date_fin',
         'objet_demande',
         'date_creation',
+        'id_superieur',
         'validation_superieur',
         'signature_demandeur',
     ];
