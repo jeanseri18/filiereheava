@@ -43,7 +43,11 @@
                 <td class="d-flex gap-2">
                     <a href="{{ route('attestations_travail.show', $attestation->id) }}" class="btn btn-info btn-sm">Voir</a>
                     <a href="{{ route('attestations_travail.edit', $attestation->id) }}" class="btn btn-warning btn-sm">Éditer</a>
-                    
+                    @php
+                        $permission = Auth::user()->permissionrh ?? null;
+                        @endphp
+
+    @if(in_array($permission, ['valideur']))
                     @if(!$attestation->date_validation)
                         <form action="{{ route('attestations_travail.validate', $attestation->id) }}" method="POST" class="d-inline">
                             @csrf
@@ -54,7 +58,7 @@
                             <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
                         </form>
                     @endif
-
+@endif
                     <form action="{{ route('attestations_travail.destroy', $attestation->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')

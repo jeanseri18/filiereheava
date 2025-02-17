@@ -29,6 +29,7 @@
                 <th>Fonction</th>
                 <th>Date début</th>
                 <th>Date fin</th>
+                <th>Statut</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -41,8 +42,25 @@
                     <td>{{ $demande->date_debut }}</td>
                     <td>{{ $demande->date_fin }}</td>
                     <td>
+                    @if($demande->avis_superieur)
+                        <span class="text-success">Validée</span>
+                    @else
+                        <span class="text-danger">Non validée</span>
+                    @endif
+                </td>
+                    <td>
                         <a href="{{ route('demandes.show', $demande) }}" class="btn btn-info">Voir</a>
                         <a href="{{ route('demandes.edit', $demande) }}" class="btn btn-warning">Modifier</a>
+                        @if(in_array($permission, ['rh', 'superieur','valideur']))
+                        <form action="{{ route('demandes.validate', $demande->id) }}" method="POST" style="display:inline;">
+    @csrf
+    <button type="submit" class="btn btn-success btn-sm">Valider</button>
+</form>
+
+<form action="{{ route('demandes.reject', $demande->id) }}" method="POST" style="display:inline;">
+    @csrf
+    <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
+</form>@endif
                         <form action="{{ route('demandes.destroy', $demande) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-danger">Supprimer</button>

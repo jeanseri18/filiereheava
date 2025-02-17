@@ -15,7 +15,7 @@ class DemandeAbsenceController extends Controller
 
     $demandes = in_array($user->permissionrh, ['rh', 'validateur'])
         ? DemandeAbsence::all()
-        : DemandeAbsence::where('id_user', $user->id)->get();
+        : DemandeAbsence::where('id_user', $user->id)->orwhere('id_superieur', $user->id)->get();
 
     return view('demandes_absence.index', compact('demandes'));
     }

@@ -56,7 +56,11 @@
                         <td>
                             <a href="{{ route('certificats.show', $certificat->id) }}" class="btn btn-info btn-sm">Afficher</a>
                             <a href="{{ route('certificats.edit', $certificat->id) }}" class="btn btn-warning btn-sm">Modifier</a>
-                            
+                            @php
+                        $permission = Auth::user()->permissionrh ?? null;
+                        @endphp
+
+    @if(in_array($permission, ['valideur']))
                             @if(!$certificat->validation_directeur)
                                 <form action="{{ route('certificats.valider', $certificat->id) }}" method="POST" style="display:inline;">
                                     @csrf
@@ -68,7 +72,7 @@
                                     <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
                                 </form>
                             @endif
-
+@endif
                             <form action="{{ route('certificats.destroy', $certificat->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')

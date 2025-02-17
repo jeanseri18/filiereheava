@@ -52,7 +52,10 @@ Route::get('/demandes/{id}', [DemandeDepartCongesController::class, 'show'])->na
 Route::get('/demandes/{id}/edit', [DemandeDepartCongesController::class, 'edit'])->name('demandes.edit');
 Route::put('/demandes/{id}', [DemandeDepartCongesController::class, 'update'])->name('demandes.update');
 Route::delete('/demandes/{id}', [DemandeDepartCongesController::class, 'destroy'])->name('demandes.destroy');
+Route::post('demandes/{id}/validate', [DemandeDepartCongesController::class, 'validateDemande'])->name('demandes.validate');
 
+// Rejeter une demande d'absence
+Route::post('demandes/{id}/reject', [DemandeDepartCongesController::class, 'rejectDemande'])->name('demandes.reject');
 Route::middleware('auth')->group(function () {
     // Liste des demandes (toutes)
     Route::get('demandes_absence', [DemandeAbsenceController::class, 'index'])->name('demandes_absence.index');

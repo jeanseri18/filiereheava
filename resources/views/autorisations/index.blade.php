@@ -54,6 +54,11 @@
                     <a href="{{ route('autorisations.edit', $autorisation->id) }}"
                         class="btn btn-warning btn-sm">Modifier</a>
                     <!-- Formulaire pour la validation -->
+                    @php
+                        $permission = Auth::user()->permissionrh ?? null;
+                        @endphp
+
+    @if(in_array($permission, ['valideur']))
                     @if(!$autorisation->validation_directeur)
                     <form action="{{ route('autorisations.valider', $autorisation->id) }}" method="POST"
                         style="display:inline;">
@@ -67,7 +72,7 @@
                         <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
                     </form>
                     @endif
-
+                    @endif
                     <form action="{{ route('autorisations.destroy', $autorisation->id) }}" method="POST"
                         style="display:inline;">
                         @csrf

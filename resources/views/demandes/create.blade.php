@@ -53,7 +53,15 @@
             <label>Adresse de séjour</label>
             <input type="text" name="adresse_sejour" class="form-control" required>
         </div>
-
+        <div class="mb-3">
+            <label for="id_superieur" class="form-label">Supérieur Hiérarchique</label>
+            <select class="form-control" name="id_superieur" id="id_superieur">
+                <option value="">Choisir un supérieur</option>
+                @foreach($superieurs as $superieur)
+                    <option value="{{ $superieur->id }}">{{ $superieur->nom }}</option>
+                @endforeach
+            </select>
+        </div>
         <button type="submit" class="btn btn-success">Soumettre</button>
     </form>
     </div>

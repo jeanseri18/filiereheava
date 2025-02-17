@@ -57,7 +57,11 @@
                                     class="btn btn-info btn-sm">Voir</a>
                                 <a href="{{ route('attestations_stage.edit', $attestation->id) }}"
                                     class="btn btn-warning btn-sm">Éditer</a>
+                                    @php
+                        $permission = Auth::user()->permissionrh ?? null;
+                        @endphp
 
+    @if(in_array($permission, ['valideur']))
                                 @if(!$attestation->validation_directeur)
                                 <form action="{{ route('attestations_stage.validate', $attestation->id) }}"
                                     method="POST">
@@ -70,7 +74,7 @@
                                     <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
                                 </form>
                                 @endif
-
+@endif
                                 <form action="{{ route('attestations_stage.destroy', $attestation->id) }}"
                                     method="POST">
                                     @csrf

@@ -5,6 +5,15 @@
     <div class="row">
     <div class="col-md-9">
     <h1>Liste des Demandes d'Absence</h1> </div>
+    @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
     <div  class="col-md-3">
     @php
                         $permission = Auth::user()->permissionrh ?? null;
@@ -50,6 +59,7 @@
                 <td>
                     <a href="{{ route('demandes_absence.show', $demande->id) }}" class="btn btn-info btn-sm">Voir</a>
                     <a href="{{ route('demandes_absence.edit', $demande->id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    @if(in_array($permission, ['rh', 'superieur','valideur']))
                     <form action="{{ route('demandes_absence.validate', $demande->id) }}" method="POST" style="display:inline;">
     @csrf
     <button type="submit" class="btn btn-success btn-sm">Valider</button>
@@ -58,7 +68,7 @@
 <form action="{{ route('demandes_absence.reject', $demande->id) }}" method="POST" style="display:inline;">
     @csrf
     <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
-</form>
+</form>@endif
 
                     <form action="{{ route('demandes_absence.destroy', $demande->id) }}" method="POST" class="d-inline">
                         @csrf
