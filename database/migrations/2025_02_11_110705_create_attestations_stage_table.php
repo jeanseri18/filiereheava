@@ -20,7 +20,8 @@ return new class extends Migration
             $table->date('date_fin');
             $table->string('lieu');
             $table->boolean('validation_directeur')->default(false);
-            $table->date('date_validation')->nullable();
+            $table->boolean('validation_directeur')->default(false);
+            $table->date('type_contrat')->nullable();
             $table->timestamps();
         });
     }

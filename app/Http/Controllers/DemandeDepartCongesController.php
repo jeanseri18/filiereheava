@@ -57,15 +57,17 @@ class DemandeDepartCongesController extends Controller
     /**
      * Affiche une demande spécifique.
      */
-    public function show(DemandeDepartConges $demande)
+    public function show( $id)
     {
+        $demande = DemandeDepartConges::findOrFail($id);
+
         return view('demandes.show', compact('demande'));
     }
 
     /**
      * Affiche le formulaire d'édition d'une demande.
      */
-    public function edit(DemandeDepartConges $demande)
+    public function edit( $id)
     {
         return view('demandes.edit', compact('demande'));
     }
@@ -73,8 +75,10 @@ class DemandeDepartCongesController extends Controller
     /**
      * Met à jour une demande.
      */
-    public function update(Request $request, DemandeDepartConges $demande)
+    public function update(Request $request,  $id)
     {
+        $demande = DemandeDepartConges::findOrFail($id);
+
         if ($demande->id_user !== Auth::id()) {
             return redirect()->route('demandes.index')->with('error', 'Action non autorisée.');
         }
@@ -97,8 +101,10 @@ class DemandeDepartCongesController extends Controller
     /**
      * Supprime une demande.
      */
-    public function destroy(DemandeDepartConges $demande)
+    public function destroy( $id)
     {
+        $demande = DemandeDepartConges::findOrFail($id);
+
         $demande->delete();
         return redirect()->route('demandes.index')->with('success', 'Demande supprimée avec succès.');
     }

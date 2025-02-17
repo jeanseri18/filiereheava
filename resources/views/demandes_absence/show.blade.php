@@ -1,64 +1,36 @@
-@extends('layouts.apprh')
+
+@extends('layouts.appprint')
 
 @section('content')
-<div class="container">
-    <h1>Demande d'Absence - #{{ $demande->id }}</h1>
+    <div class="text-center mb-4">
+        <h3><strong><u> DEMANDE D’ABSENCE <br>     N° {{ $demande->id }} </u></strong></h3>
+    </div>
+    
+    <div class="text-left">
+   
+        <br>M/Mme/Mlle : <strong>{{ $demande->user->nom ?? '' }} {{ $demande->user->prenom ?? '' }}</strong>  
+        Fonction : <strong>{{ $demande->user->fonction ?? '' }}</strong>  
+        N° Matricule : <strong>{{ $demande->user->matricule ?? '' }}</strong>  
+        
+        <br>Sollicite une permission de <strong>{{ $demande->nombre_jours }}</strong> jours,  
+        du <strong>{{ \Carbon\Carbon::parse($demande->date_debut)->format('d/m/Y') }}</strong>  
+        au <strong>{{ \Carbon\Carbon::parse($demande->date_fin)->format('d/m/Y') }}</strong>  
 
-    <table class="table mt-3">
-        <tbody>
-            <tr>
-                <th>Numéro de Demande</th>
-                <td>{{ $demande->num_demande }}</td>
-            </tr>
-            <tr>
-                <th>Matricule</th>
-                <td>{{ $demande->user->matricule }}</td>
-            </tr>
-            <tr>
-                <th>Poste</th>
-                <td>{{ $demande->user->fonction }}</td>
-            </tr>
-            <tr>
-                <th>Nombre de Jours</th>
-                <td>{{ $demande->nombre_jours }}</td>
-            </tr>
-            <tr>
-                <th>Dates</th>
-                <td>{{ $demande->date_debut }} - {{ $demande->date_fin }}</td>
-            </tr>
-            <tr>
-                <th>Objet de la Demande</th>
-                <td>{{ $demande->objet_demande }}</td>
-            </tr>
-            <tr>
-                <th>Supérieur</th>
-                <td>{{ $demande->id_superieur ? App\Models\User::find($demande->id_superieur)->name : 'Non spécifié' }}</td>
-            </tr>
-            <tr>
-                <th>Statut</th>
-                <td>
-                    @if($demande->validation_superieur)
-                        <span class="text-success">Validée</span>
-                    @else
-                        <span class="text-danger">Non validée</span>
-                    @endif
-                </td>
-            </tr>
-            <tr>
-                <th>Date de Création</th>
-                <td>{{ $demande->date_creation }}</td>
-            </tr>
-            <tr>
-                <th>Date de Validation</th>
-                <td>{{ $demande->date_validation ?? 'Non validée' }}</td>
-            </tr>
-            <tr>
-                <th>Signature du Demandeur</th>
-                <td>{{ $demande->signature_demandeur ?? 'Non signée' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <br>Objet de la demande : <strong>{{ $demande->objet_demande }}</strong>  
 
-    <a href="{{ route('demandes_absence.index') }}" class="btn btn-secondary">Retour à la liste</a>
-</div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        Abidjan, le <strong>{{ \Carbon\Carbon::parse($demande->date_creation)->format('d/m/Y') }}</strong>  
+
+        <div class="row">
+        <div class="col-md-6">        <p class="text-start"><strong>Signature du demandeur :</strong> <br>{{ $demande->signature_demandeur ?? 'Non signée' }}</p>
+        </div>
+        <div class="col-md-6">        <p class="text-end"><strong>Avis du supérieur :</strong> <br>{{ $demande->avis_superieur ?? 'Non renseigné' }}</p>
+        </div>
+     </div>
+    </div>
 @endsection
+

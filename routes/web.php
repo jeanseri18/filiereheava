@@ -22,6 +22,28 @@ use App\Http\Controllers\AttestationTravailController;
 
 use App\Http\Controllers\DemandeAbsenceController;
 use App\Http\Controllers\DemandeDepartCongesController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\SousCategorieController;
+use App\Http\Controllers\DocumentRhController;
+
+Route::resource('document_rh', DocumentRhController::class);
+
+Route::get('categories', [CategorieController::class, 'index'])->name('categories.index');
+Route::get('categories/create', [CategorieController::class, 'create'])->name('categories.create');
+Route::post('categories', [CategorieController::class, 'store'])->name('categories.store');
+Route::get('categories/{id}/edit', [CategorieController::class, 'edit'])->name('categories.edit');
+Route::put('categories/{id}', [CategorieController::class, 'update'])->name('categories.update');
+Route::delete('categories/{id}', [CategorieController::class, 'destroy'])->name('categories.destroy');
+
+Route::get('sous-categories', [SousCategorieController::class, 'index'])->name('sous-categories.index');
+Route::get('sous-categories/create', [SousCategorieController::class, 'create'])->name('sous-categories.create');
+Route::post('sous-categories', [SousCategorieController::class, 'store'])->name('sous-categories.store');
+Route::get('sous-categories/{id}/edit', [SousCategorieController::class, 'edit'])->name('sous-categories.edit');
+Route::put('sous-categories/{id}', [SousCategorieController::class, 'update'])->name('sous-categories.update');
+Route::delete('sous-categories/{id}', [SousCategorieController::class, 'destroy'])->name('sous-categories.destroy');
+
+Route::get('/dashboardrh', [DashboardController::class, 'index'])->name('dashboardrh');
 
 Route::get('/demandes', [DemandeDepartCongesController::class, 'index'])->name('demandes.index');
 Route::get('/demandes/create', [DemandeDepartCongesController::class, 'create'])->name('demandes.create');
@@ -276,9 +298,6 @@ Route::get('/action', function () {
     return view('action.index');
 })->name('tab');
 
-Route::get('/dashboardrh', function () {
-    return view('dashboard.indexrh');
-})->name('dashboardrh');
 
 
 Route::get('/menu', function () {

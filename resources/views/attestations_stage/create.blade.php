@@ -44,7 +44,14 @@
                 <label for="date_fin">Date de fin</label>
                 <input type="date" name="date_fin" id="date_fin" class="form-control" required>
             </div>
-
+            <div class="mb-3">
+            <label for="type_contrat" class="form-label">Type de contrat</label>
+            <select name="type_contrat" id="type_contrat" class="form-control">
+                <option value="CDI">CDI</option>
+                <option value="CDD">CDD</option>
+                <option value="Autre">Autre</option>
+            </select>
+        </div>
             <div class="form-group">
                 <label for="lieu">Lieu</label>
                 <input type="text" name="lieu" id="lieu" class="form-control" required>

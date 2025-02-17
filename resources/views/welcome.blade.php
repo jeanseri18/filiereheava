@@ -9,12 +9,20 @@
 <body>
   <div class="container-fluid vh-100 d-flex w-100 ">
     <div class="row w-100 rounded">
+      
       <!-- Colonne gauche : texte et logo -->
       <div class="col-md-6 d-flex flex-column " style="background-color:#038C4F; padding:60px;color:white;">
-        <img src="logobg.png" alt="Logo" class="mb-4" style="width: 360px;">
-        <div style="height:350px"></div>
-        <h2 class="text-left">BIENVENUE SUR LA PLATEFORME DE GESTION DE FICHIER</h2>
-        <p class="text-left text-muted">Connectez-vous pour accéder à votre espace personnel.</p>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <center>  <img src="logobg.png" alt="Logo" class="mb-4" style="width: 360px;"></center>
       </div>
       
       <!-- Colonne droite : formulaire de connexion -->

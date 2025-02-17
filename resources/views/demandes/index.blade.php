@@ -6,7 +6,14 @@
     <div class="col-md-9">
     <h1>Liste des demandes de congés</h1> </div>
     <div  class="col-md-3">
+
+    @php
+                        $permission = Auth::user()->permissionrh ?? null;
+                        @endphp
+
+    @if(in_array($permission, ['demandeur', 'superieur','valideur']))
     <a href="{{ route('demandes.create') }}" class="btn btn-success mb-3">Nouvelle demande</a>
+    @endif
     </div>    </div>
 <br>
     @if(session('success'))

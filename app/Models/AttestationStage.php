@@ -19,6 +19,7 @@ class AttestationStage extends Model
         'lieu',
         'validation_directeur',
         'date_validation',
+        'type_contrat'
     ];
 
     protected $casts = [

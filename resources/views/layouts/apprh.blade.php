@@ -132,6 +132,26 @@
                         @endphp
 
                         @if(in_array($permission, ['rh', 'valideur']))
+
+                        <li class="nav-item">
+                            <a href="{{ route('categories.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Categorie</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('sous-categories.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Sous categorie</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('document_rh.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Document uploader</p>
+                            </a>
+                        </li>
+                        
                         <li class="nav-item">
                             <a href="{{ route('autorisations.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-gear text-white"></i>

@@ -6,7 +6,13 @@
     <div class="col-md-9">
     <h1>Liste des Demandes d'Absence</h1> </div>
     <div  class="col-md-3">
+    @php
+                        $permission = Auth::user()->permissionrh ?? null;
+                        @endphp
+
+    @if(in_array($permission, ['demandeur', 'superieur','valideur']))
     <a href="{{ route('demandes_absence.create') }}" class="btn btn-success">Nouvelle Demande</a>
+    @endif
     </div>    </div>
 <br>
 

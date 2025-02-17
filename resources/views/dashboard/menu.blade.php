@@ -1,60 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire de Connexion</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-success bg-success">
-    <div class="container-fluid">
-        <a class="navbar-brand text-white" href="#">Filiere Hevea</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-   
-                <li class="nav-item">
-                    <form action="{{ route('logout') }}" method="POST">
+
+  <div class="container-fluid vh-100 d-flex align-items-center">
+    <div class="row w-100">
+
+      <!-- Colonne gauche : Texte et Logo -->
+      <div class="col-md-6 d-flex flex-column  align-text-center justify-content-center text-white" style="background-color:#038C4F; height: 850px;">
+      <div style="padding-top:50px;">
+       <center><img src="logobg.png" alt="Logo" class="mb-4" style="width: 350px;"></center>
+      </div>
+<div style="padding-top:450px;">
+      <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-danger">Déconnexion <i class="bi bi-box-arrow-right"></i></button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+                        <button type="submit" class="btn btn-lg form-control btn-dark text-white">Déconnexion <i class="bi bi-box-arrow-right"></i></button>
+                    </form></div>
+      </div>
 
-<!-- Contenu -->
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <i class="bi bi-folder-fill fs-1 text-success"></i>
-                    <h5 class="card-title mt-2">Gestion des documents</h5>
-                    <a href="{{ route('dashboard') }}" class="btn btn-success">Accéder</a>
+      <!-- Colonne droite : Formulaire et cartes -->
+      <div class="col-md-6 bg-white d-flex flex-column "style="padding-top:150px;" >
+   <center>   <h3 class="card-title mt-2 align-item-center text-align-center">Choissisez une session pour demarrer</h3></center>
+<br/>
+<br/>
+<br/>
+<br/>
+        <div class="container">
+            <div class="row">
+                <!-- Gestion des documents -->
+                <div class="col-md-12 mb-4">
+                    <div class="card shadow-sm text-center">
+                        <div class="card-body">
+                            <i class="bi bi-folder-fill fs-1 text-success"></i>
+                            <h5 class="card-title mt-2">Gestion des documents</h5>
+                            <a href="{{ route('dashboard') }}" class="btn btn-success">Accéder</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Gestion des demandes -->
+                <div class="col-md-12">
+                    <div class="card shadow-sm text-center">
+                        <div class="card-body">
+                            <i class="bi bi-file-earmark-text-fill fs-1 text-success"></i>
+                            <h5 class="card-title mt-2">Gestion des demandes</h5>
+                            <a href="{{ route('dashboardrh') }}" class="btn btn-success">Accéder</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <i class="bi bi-file-earmark-text-fill fs-1 text-success"></i>
-                    <h5 class="card-title mt-2">Gestion des demandes</h5>
-                    <a href="{{ route('dashboardrh') }}" class="btn btn-success">Accéder</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

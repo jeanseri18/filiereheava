@@ -54,6 +54,14 @@
                 <label for="lieu">Lieu</label>
                 <input type="text" name="lieu" id="lieu" class="form-control" value="{{ $attestation->lieu }}" required>
             </div>
+            <div class="mb-3">
+            <label for="type_contrat" class="form-label">Type de contrat</label>
+            <select name="type_contrat" id="type_contrat" class="form-control">
+                <option value="CDI" {{ $attestation->type_contrat == 'CDI' ? 'selected' : '' }}>CDI</option>
+                <option value="CDD" {{ $attestation->type_contrat == 'CDD' ? 'selected' : '' }}>CDD</option>
+                <option value="Autre" {{ $attestation->type_contrat == 'Autre' ? 'selected' : '' }}>Autre</option>
+            </select>
+        </div>
             <br>
             <button type="submit" class="btn btn-success">Mettre à jour l'attestation</button>
         </form>
