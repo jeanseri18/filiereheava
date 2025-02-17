@@ -4,16 +4,21 @@ namespace App\Http\Controllers;
 use App\Models\AttestationTravail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttestationTravailController extends Controller
 {
     // Afficher la liste des attestations de travail
     public function index()
     {
-        $attestations = AttestationTravail::all();
-        return view('attestations_travail.index', compact('attestations'));
-    }
+        $user = Auth::user();
 
+    $attestations = in_array($user->permissionrh, ['rh', 'validateur'])
+        ? AttestationTravail::all()
+        : AttestationTravail::where('id_user', $user->id)->get();
+
+    return view('attestations_travail.index', compact('attestations'));
+}
     // Afficher le formulaire de création
     public function create()
     {

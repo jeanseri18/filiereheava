@@ -9,13 +9,19 @@ use App\Models\SousCategorie;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentRhController extends Controller
 {
     // Afficher la liste des documents RH
     public function index()
     {
-        $documents = DocumentRh::all();
+        $user = Auth::user();
+
+        $documents = in_array($user->permissionrh, ['rh', 'validateur'])
+            ? DocumentRh::all()
+            : DocumentRh::where('id_user', $user->id)->get();
+    
         return view('document_rh.index', compact('documents'));
     }
 

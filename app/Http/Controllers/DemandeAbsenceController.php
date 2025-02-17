@@ -11,8 +11,13 @@ class DemandeAbsenceController extends Controller
     // Afficher toutes les demandes d'absence
     public function index()
     {
-        $demandes = DemandeAbsence::all();
-        return view('demandes_absence.index', compact('demandes'));
+        $user = Auth::user();
+
+    $demandes = in_array($user->permissionrh, ['rh', 'validateur'])
+        ? DemandeAbsence::all()
+        : DemandeAbsence::where('id_user', $user->id)->get();
+
+    return view('demandes_absence.index', compact('demandes'));
     }
 
     // Afficher les demandes d'absence de l'utilisateur connecté

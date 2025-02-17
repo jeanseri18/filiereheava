@@ -13,7 +13,12 @@ class DemandeDepartCongesController extends Controller
      */
     public function index()
     {
-        $demandes = DemandeDepartConges::all();
+        $user = Auth::user();
+
+        $demandes = in_array($user->permissionrh, ['rh', 'validateur'])
+            ? DemandeDepartConges::all()
+            : DemandeDepartConges::where('id_user', $user->id)->get();
+    
         return view('demandes.index', compact('demandes'));
     }
 

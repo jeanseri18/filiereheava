@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\AutorisationAbsence;
 use App\Models\User; // Pour récupérer les utilisateurs
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AutorisationAbsenceController extends Controller
 {
     public function index()
     {
-        $autorisations = AutorisationAbsence::all();
+        $user = Auth::user();
+
+        $autorisations = in_array($user->permissionrh, ['rh', 'validateur'])
+            ? AutorisationAbsence::all()
+            : AutorisationAbsence::where('id_user', $user->id)->get();
+    
         return view('autorisations.index', compact('autorisations'));
     }
 

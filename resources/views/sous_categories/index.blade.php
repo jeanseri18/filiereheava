@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Liste des Sous-Catégories</h2>
 
-    <a href="{{ route('sous-categories.create') }}" class="btn btn-primary mb-3">Ajouter une Sous-Catégorie</a>
+    <a href="{{ route('sous-categories.create') }}" class="btn btn-success mb-3">Ajouter une Sous-Catégorie</a>
 
     <div class="card custom-card">
         <div class="card-body">

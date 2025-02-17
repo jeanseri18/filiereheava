@@ -8,7 +8,7 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Ajouter une Catégorie</a>
+    <a href="{{ route('categories.create') }}" class="btn btn-success mb-3">Ajouter une Catégorie</a>
 
     <div class="card custom-card">
         <div class="card-body">

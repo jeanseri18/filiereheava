@@ -6,13 +6,19 @@ namespace App\Http\Controllers;
 use App\Models\CertificatTravail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CertificatTravailController extends Controller
 {
     // Afficher la liste des certificats
     public function index()
     {
-        $certificats = CertificatTravail::all();
+        $user = Auth::user();
+
+        $certificats = in_array($user->permissionrh, ['rh', 'validateur'])
+            ? CertificatTravail::all()
+            : CertificatTravail::where('id_user', $user->id)->get();
+    
         return view('certificats.index', compact('certificats'));
     }
 

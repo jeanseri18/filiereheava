@@ -5,15 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\AttestationStage;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttestationStageController extends Controller
 {
     // Afficher la liste des attestations de stage
+
     public function index()
     {
-        $attestations = AttestationStage::all();
-        return view('attestations_stage.index', compact('attestations'));
-    }
+        
+            $user = Auth::user();
+        
+            $attestations = in_array($user->permissionrh, ['rh', 'validateur'])
+                ? AttestationStage::all()
+                : AttestationStage::where('id_user', $user->id)->get();
+        
+            return view('attestations_stage.index', compact('attestations'));
+    
+}
+    
 
     // Afficher le formulaire de création
     public function create()

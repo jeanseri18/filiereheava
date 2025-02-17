@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Liste des Documents RH</h2>
-    <a href="{{ route('document_rh.create') }}" class="btn btn-primary mb-3">Ajouter un Document</a>
+    <a href="{{ route('document_rh.create') }}" class="btn btn-success mb-3">Ajouter un Document</a>
 
     <div class="card custom-card">
         <div class="card-body">
