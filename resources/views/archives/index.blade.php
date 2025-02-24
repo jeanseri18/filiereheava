@@ -80,7 +80,7 @@
                                 @elseif($document->status == 'soumis') badge-info
                                 @else badge-secondary @endif">{{ $document->status }}</span></span></td>
                         <td>
-                            <a href="{{ route('archives.download', $document) }}" class="btn btn-success btn-sm">Télécharger</a>
+                            <a href="{{ asset('storage/' . $document->file_url) }}" class="btn btn-success btn-sm" target="blank">Télécharger</a>
                             @if($document->status === 'archivé')
     <form method="POST" action="{{ route('archives.unarchive', $document) }}" style="display:inline;">
         @csrf

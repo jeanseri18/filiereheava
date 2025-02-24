@@ -128,7 +128,7 @@
                             <a href="{{ route('documents.edit', $document->id) }}"  class="btn  btn-sm text-white" >
                                 <i class="bi bi-pencil" style="color:black;font-size:20px;"></i>
                             </a>
-                            <a href="{{ asset('storage/' . $document->file_url) }}"class="btn  btn-sm text-white" >
+                            <a href="{{ asset('storage/' . $document->file_url) }}"class="btn  btn-sm text-white" target="blank">
 
                             <i class="bi bi-download"  style="color:black;font-size:20px;"></i>        </a>
                          
