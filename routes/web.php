@@ -28,6 +28,7 @@ use App\Http\Controllers\SousCategorieController;
 use App\Http\Controllers\DocumentRhController;
 
 Route::resource('document_rh', DocumentRhController::class);
+Route::get('/get-sous-categories/{id}', [DocumentRhController::class, 'getSousCategories']);
 
 Route::get('categories', [CategorieController::class, 'index'])->name('categories.index');
 Route::get('categories/create', [CategorieController::class, 'create'])->name('categories.create');

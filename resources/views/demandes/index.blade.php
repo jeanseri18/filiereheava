@@ -49,8 +49,8 @@
                     @endif
                 </td>
                     <td>
-                        <a href="{{ route('demandes.show', $demande) }}" class="btn btn-info">Voir</a>
-                        <a href="{{ route('demandes.edit', $demande) }}" class="btn btn-warning">Modifier</a>
+                        <a href="{{ route('demandes.show', $demande) }}" class="btn btn-info btn-sm">Voir</a>
+                        <a href="{{ route('demandes.edit', $demande) }}" class="btn btn-warning btn-sm">Modifier</a>
                         @if(in_array($permission, ['rh', 'superieur','valideur']))
                         <form action="{{ route('demandes.validate', $demande->id) }}" method="POST" style="display:inline;">
     @csrf
@@ -63,7 +63,7 @@
 </form>@endif
                         <form action="{{ route('demandes.destroy', $demande) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
                         </form>
                     </td>
                 </tr>

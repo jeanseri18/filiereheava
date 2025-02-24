@@ -29,7 +29,7 @@ class DemandeDepartCongesController extends Controller
     {
         $superieurs = \App\Models\User::where('role', 'manager')->get(); // Tu peux ajuster cela
 
-        return view('demandes.create', compact('demande','superieurs'));
+        return view('demandes.create', compact('superieurs'));
     }
 
     /**

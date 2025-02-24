@@ -31,7 +31,7 @@
         <label for="file_url" class="form-label">Fichier</label>
         <input type="file" name="file_url" id="file_url" class="form-control" placeholder="Entrez l'URL du fichier" required>
     </div>
-
+    <!--
     <div class="mb-3">
         <label for="type_doc" class="form-label">Type de document</label>
         <select name="type_doc" id="type_doc" class="form-select" required>
@@ -40,9 +40,9 @@
             <option value="tableux">Tableux</option>
             <option value="video">video</option>
             <option value="pdf">pdf</option>
-            <!-- Option pour le courrier -->
+         Option pour le courrier 
         </select>
-    </div>
+    </div>-->
 
     <div class="mb-3">
         <label for="type_share" class="form-label">Type de partage</label>

@@ -110,7 +110,7 @@ class DocumentController extends Controller
     $request->validate([
         'nom' => 'required|string|max:255',
 'file_url' => 'required|file|mimes:pdf,doc,docx,txt,ppt,pptx,xls,xlsx,png,jpg,jpeg|max:20048',
-        'type_doc' => 'required|in:document,courrier entrant,courrier sortant',
+//'type_doc' => 'required|in:document,courrier entrant,courrier sortant',
         'type_share' => 'required|in:public,privé,groupe', // Les options de partage
     ]);
 
@@ -135,6 +135,11 @@ class DocumentController extends Controller
     // Gestion du partage selon le type
     if ($request->type_share === 'privé' && $request->has('users')) {
         // Partage avec des utilisateurs spécifiques
+        Share::create([
+            'id_user' => auth()->id(),
+            'id_document' => $document->id,
+            'type_share' => 'utilisateur',
+        ]);
         foreach ($request->users as $userId) {
             Share::create([
                 'id_user' => $userId,
@@ -191,7 +196,7 @@ public function update(Request $request, Document $document)
     $request->validate([
         'nom' => 'required|string|max:255',
         'file_url' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048', // Vérifie le fichier
-        'type_doc' => 'required|in:document,courrier entrant,courrier sortant',
+        //'type_doc' => 'required|in:document,courrier entrant,courrier sortant',
         'type_share' => 'required|in:public,privé,groupe', // Les options de partage
     ]);
 

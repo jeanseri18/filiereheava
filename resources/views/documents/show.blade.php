@@ -10,7 +10,7 @@
                 <div class="col-md-6">
                     <ul class="list-group">
                         <li class="list-group-item"><strong>Nom : </strong>{{ $document->nom }}</li>
-                        <!--li class="list-group-item"><strong>Fichier : </strong><a href="{{ Storage::url($document->file_url) }}" target="_blank">Voir le fichier</a></li-->
+                        <li class="list-group-item"><strong>Fichier : </strong><a href="{{ Storage::url($document->file_url) }}" target="_blank">Voir le fichier</a></li>
                         <li class="list-group-item"><strong>Type de document : </strong>{{ $document->type_doc }}</li>
                         <li class="list-group-item"><strong>Type de partage : </strong>{{ $document->type_share }}</li>
                         <li class="list-group-item"><strong>Statut : </strong>{{ $document->status }}</li>
@@ -33,7 +33,9 @@
         <iframe src="{{ Storage::url($document->file_url) }}" width="100%" height="400px" frameborder="0"></iframe>
     @elseif (in_array($extension, ['doc', 'docx', 'xlsx', 'xls']))
         <!-- Lien pour ouvrir le fichier Office -->
-        <p>Ce fichier n'est pas prévisualisable ici. <a href="{{ Storage::url($document->file_url) }}" target="_blank">Télécharger le fichier</a></p>
+        <p>        <iframe src="{{ Storage::url($document->file_url) }}" width="100%" height="400px" frameborder="0"></iframe>
+
+             <a href="{{ Storage::url($document->file_url) }}" target="_blank">Télécharger le fichier</a></p>
     @else
         <!-- Message par défaut pour les types non pris en charge -->
         <p>Prévisualisation non disponible pour ce type de fichier. <a href="{{ Storage::url($document->file_url) }}" target="_blank">Télécharger le fichier</a></p>

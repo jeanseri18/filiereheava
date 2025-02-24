@@ -28,6 +28,26 @@
                 <td>{{ $document->famille }}</td>
                 <td>{{ $document->sous_famille }}</td>
                 <td>
+
+                @php
+    $extension = pathinfo('storage/'.$document->file_url, PATHINFO_EXTENSION);
+@endphp
+
+@if(in_array($extension, ['jpg', 'jpeg', 'png', 'gif']))
+    <a href="{{ asset('storage/'.$document->file_url) }}" target="_blank">
+        <button class="btn btn-primary btn-sm">Voir l’image</button>
+    </a>
+@elseif($extension == 'pdf')
+    <a href="{{ asset('storage/'.$document->file_url) }}" target="_blank">
+        
+        <button class="btn btn-danger btn-sm">Voir le PDF</button>
+    </a>
+@else
+    <a href="{{ asset('storage/'.$document->file_url) }}" download>
+        <button class="btn btn-success btn-sm">Télécharger</button>
+    </a>
+@endif
+
                     <a href="{{ route('document_rh.edit', $document->id) }}" class="btn btn-warning">Modifier</a>
                     <form action="{{ route('document_rh.destroy', $document->id) }}" method="POST" style="display:inline;">
                         @csrf

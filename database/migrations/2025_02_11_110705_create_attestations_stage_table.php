@@ -19,10 +19,9 @@ return new class extends Migration
             $table->date('date_debut');
             $table->date('date_fin');
             $table->string('lieu');
-
+            $table->enum('type_contrat', ['CDI', 'CDD', 'Autre'])->default('CDI');
             $table->boolean('validation_directeur')->default(false);
             $table->date('date_validation')->nullable();
-            $table->enum('type_contrat', ['CDI', 'CDD', 'Autre'])->default('CDI');
 
             $table->timestamps();
         });

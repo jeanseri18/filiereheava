@@ -164,20 +164,22 @@
                        
                         
                     </div><br>
-                    <h3 class="card-title"><strong>{{ $document->nom }}</strong></h3>
+                    <h3 class="card-title"><strong>{{ $document->nom ?? $document->document->nom }}</strong></h3>
                         <p class="card-text" style="font-size:13px">Type de partage: {{ $document->type_share }}
                         <br>Ajouté le : {{ $document->created_at }}
                         <br> Par : {{ optional($document->creator)->nom ?? 'Moi' }}
                         <p class="card-text">
-                            <span class="badge-status @if($document->status == 'validé') badge-success
-                                @elseif($document->status == 'rejeté') badge-danger
-                                @elseif($document->status == 'en attente') badge-secondary
-                                @elseif($document->status == 'ajouté') badge-warning
-                                @elseif($document->status == 'soumis') badge-info
-                                @else badge-secondary @endif">{{ $document->status }}</span>
+                            <span class="badge-status @if($document->status ?? $document->document->status == 'validé') badge-success
+                                @elseif($document->status ?? $document->document->status == 'rejeté') badge-danger
+                                @elseif($document->status ?? $document->document->status == 'en attente') badge-secondary
+                                @elseif($document->status ?? $document->document->status == 'ajouté') badge-warning
+                                @elseif($document->status ?? $document->document->status == 'soumis') badge-info
+                                @else badge-secondary @endif">{{ $document->status ?? $document->document->status }}</span>
                         </p>
                     <hr/>
 <div class="row">
+@if($document->status == 'ajouté') 
+
     <div class="col-md-4">
         <form action="{{ route('documents.updateStatus', $document->id) }}" method="POST" style="display: inline;">
             @csrf
@@ -186,7 +188,8 @@
             </button>
         </form>
     </div>
-    @if(auth()->user()->role==='manager')
+    @endif
+    @if(auth()->user()->role==='manager' && $document->status == 'en attente')
 
     <div class="col-md-4">
         <form action="{{ route('documents.updateStatus', $document->id) }}" method="POST" style="display: inline;">
@@ -195,9 +198,17 @@
              Valider
             </button>
         </form>
+    </div>
+    <div class="col-md-4">
+        <form action="{{ route('documents.updateStatus', $document->id) }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" name="status" value="rejeté" class="btn  btn-danger rejete">
+                 Rejeter
+            </button>
+        </form>
     </div>@endif
     
-    @if(auth()->user()->role==='admin')
+    @if(auth()->user()->role==='admin' && $document->status == 'soumis' ) 
 
     <div class="col-md-4">
         <form action="{{ route('documents.updateStatus', $document->id) }}" method="POST" style="display: inline;">
@@ -206,7 +217,7 @@
                  Valider
             </button>
         </form>
-    </div>@endif
+    </div>
     <div class="col-md-4">
         <form action="{{ route('documents.updateStatus', $document->id) }}" method="POST" style="display: inline;">
             @csrf
@@ -214,7 +225,8 @@
                  Rejeter
             </button>
         </form>
-    </div>
+    </div>@endif
+   
 </div>               </div>
                 
             @endforeach

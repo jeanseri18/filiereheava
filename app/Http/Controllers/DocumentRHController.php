@@ -20,7 +20,7 @@ class DocumentRhController extends Controller
 
         $documents = in_array($user->permissionrh, ['rh', 'validateur'])
             ? DocumentRh::all()
-            : DocumentRh::where('id_user', $user->id)->get();
+            : DocumentRh::where('user_id', $user->id)->get();
     
         return view('document_rh.index', compact('documents'));
     }
@@ -39,8 +39,8 @@ class DocumentRhController extends Controller
     {
         $request->validate([
             'nom_document' => 'required|string',
-            'famille' => 'required|string',
-            'sous_famille' => 'nullable|string',
+            'categorie_id' => 'required|string',
+            'sous_categorie_id' => 'nullable|string',
             'user_id' => 'required|exists:users,id',
             'file_url' => 'required',
         ]);
@@ -50,8 +50,8 @@ class DocumentRhController extends Controller
 
         DocumentRh::create([
             'nom_document' => $request->nom_document,
-            'famille' => $request->famille,
-            'sous_famille' => $request->sous_famille,
+            'famille' => $request->categorie_id,
+            'sous_famille' => $request->sous_categorie_id,
             'user_id' => $request->user_id,
             'file_url' => $filePath,
         ]);
@@ -79,4 +79,9 @@ class DocumentRhController extends Controller
 
         return redirect()->route('document_rh.index');
     }
+    public function getSousCategories($id)
+{
+    $sousCategories = SousCategorie::where('categorie_id', $id)->get();
+    return response()->json($sousCategories);
+}
 }

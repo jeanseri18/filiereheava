@@ -10,7 +10,12 @@
             <a href="{{ route('services.create') }}" class="btn " style="background-color:#038C4F;color:white">                <i class="bi bi-plus-circle me-2"></i>Ajouter
                 une direction</a>
         </div>
-    </div><br>
+    </div><br>@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+<br>
     <div class="card custom-card">
         <div class="card-body">
             <table id="Table" class="table table-bordered table-striped">

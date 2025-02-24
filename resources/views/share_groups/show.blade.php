@@ -48,13 +48,18 @@
 
                  style="font-size: 120px;color:green"></i>
         @endif                    <h5 class="mt-3">{{ $member->nom }}</h5>
+        @if(auth()->user()->id==$member->id ||$group->creator->id==auth()->user()->id  )
                     <form action="{{ route('share_groups.removeMember', [$group->id, $member->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">
                             <i class="bi bi-trash3"></i>
                         </button>
-                    </form>
+                    </form>@else
+                    <a href="#" class="btn btn-secondary btn-sm " readonly>
+                            <i class="bi bi-trash3"></i>
+</a>
+                    @endif
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@
 
         <button type="submit" class="btn btn-success mt-3">Ajouter</button>
         <a href="{{ route('categories.index') }}" class="btn btn-secondary mt-3">Retour</a>
-        /div>
+
     </div>
 </div>
 

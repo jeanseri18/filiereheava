@@ -1,32 +1,9 @@
-@extends('layouts.apprh')
+@extends('layouts.appprint')
 
 @section('content')
-<div class="container">
-    <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal;"><span
-            style="height:0pt; display:block; position:absolute; z-index:3;"><img
-                src="https://myfiles.space/user_files/258325_0814ee78b0547536/1739287656_fiche-d-attestation-de-travail/1739287656_fiche-d-attestation-de-travail-2.jpeg"
-                width="184" height="88" alt="C:\Users\SECRETARIAT\Downloads\IMG-20200624-WA0006.jpg"
-                style="margin: 0 0 0 auto; display: block; "></span><span
-            style="height:0pt; display:block; position:absolute; z-index:0;"><img
-                src="https://myfiles.space/user_files/258325_0814ee78b0547536/1739287656_fiche-d-attestation-de-travail/1739287656_fiche-d-attestation-de-travail-1.png"
-                width="345" height="70" alt="" style="margin: 0 0 0 auto; display: block; "></span><strong><span
-                style="font-family:'Arial Narrow';">&nbsp;</span></strong></p>
-    <p style="margin-top:0pt; margin-bottom:10pt;"><span
-            style="width:35.4pt; font-family:'Arial Narrow'; display:inline-block;">&nbsp;</span></p>
-    <p style="margin-top:0pt; margin-bottom:10pt; line-height:115%; font-size:14pt;"><span
-            style="height:0pt; display:block; position:absolute; z-index:1;"><img
-                src="https://myfiles.space/user_files/258325_0814ee78b0547536/1739287656_fiche-d-attestation-de-travail/1739287656_fiche-d-attestation-de-travail-3.png"
-                width="258" height="4" alt="" style="margin: 0 0 0 auto; display: block; "></span><span
-            style="font-family:'Arial Narrow';">&nbsp;</span></p>
-    <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt;"><span
-            style="height:0pt; display:block; position:absolute; z-index:2;"><img
-                src="https://myfiles.space/user_files/258325_0814ee78b0547536/1739287656_fiche-d-attestation-de-travail/1739287656_fiche-d-attestation-de-travail-4.png"
-                width="155" height="3" alt="" style="margin: 0 0 0 auto; display: block; "></span><span
-            style="font-family:'Arial Black';">DIRECTION EXECUTIVE</span><span
-            style="width:11.6pt; font-family:'Arial Black'; font-size:8pt; display:inline-block;">&nbsp;</span><span
-            style="width:35.4pt; font-family:'Arial Black'; font-size:8pt; display:inline-block;">&nbsp;</span><span
-            style="width:35.4pt; font-family:'Arial Black'; font-size:8pt; display:inline-block;">&nbsp;</span><span
-            style="font-family:'Arial Black'; font-size:8pt;">&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+<div >
+
+
     <p style="margin-top:0pt; margin-bottom:0pt; line-height:normal; font-size:14pt;"><span
             style="font-family:'Brush Script MT';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
     </p>
@@ -102,20 +79,6 @@
         <strong><span style="font-family:'Arial Narrow';">&nbsp;</span></strong></p>
     <p style="margin-top:0pt; margin-bottom:10pt;">&nbsp;</p>
     <p style="margin-top:0pt; margin-bottom:10pt;">&nbsp;</p>
-   <hr/> <div style="clear:both;">
-        <p style="margin-top:0pt; margin-bottom:0pt; text-align: center; line-height:normal; font-size:10pt;"><span
-                style="height:0pt; text-align:left; display:block; position:absolute; z-index:-65536;"><img
-                    src="https://myfiles.space/user_files/258325_0814ee78b0547536/1739287656_fiche-d-attestation-de-travail/1739287656_fiche-d-attestation-de-travail-5.png"
-                    width="1039" height="4" alt="" style="margin: 0 0 0 auto; display: block; "></span><strong><span
-                    style="font-family:'Arial Narrow'; font-size:9pt;">Si&egrave;ge social</span></strong><strong><span
-                    style="font-family:'Arial Narrow'; font-size:9pt;">&nbsp;</span></strong><strong><span
-                    style="font-family:'Arial Narrow'; font-size:9pt;">: ******* Cocody Angr&eacute;, Terminus 81-82,
-                    entre le coll&egrave;** ********** Cousteau et la ********* du Jubil&eacute;,
-                    28</span></strong><strong><span style="font-family:'Arial Narrow'; font-size:9pt; color:#ff0000;">
-                </span></strong><strong><span style="font-family:'Arial Narrow'; font-size:9pt;">BP 9** Abidjan 28,
-                    T&eacute;l : 27-22-47-59-62, </span></strong><strong><span
-                    style="font-family:'Arial Narrow';">E-mail: info@fphci.com</span></strong></p>
-        <p style="margin-top:0pt; margin-bottom:10pt;">&nbsp;</p>
-    </div>
+   
 </div>
 @endsection

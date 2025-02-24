@@ -30,7 +30,7 @@
                     <input type="file" name="file_url" id="file_url" class="form-control">
                 </div>
 
-                <div class="mb-3">
+           <!--     <div class="mb-3">
                     <label for="type_doc" class="form-label">Type de document</label>
                     <select name="type_doc" id="type_doc" class="form-select" required>
                         <option value="document" {{ $document->type_doc === 'document' ? 'selected' : '' }}>Document</option>
@@ -38,7 +38,7 @@
             <option value="tableux" {{ $document->type_doc === 'tableux' ? 'selected' : '' }}>Tableux</option>
             <option value="video" {{ $document->type_doc === 'video' ? 'selected' : '' }}>video</option>
             <option value="pdf" {{ $document->type_doc === 'pdf' ? 'selected' : '' }}>pdf</option>                    </select>
-                </div>
+                </div>-->
 
                 <div class="mb-3">
                     <label for="type_share" class="form-label">Type de partage</label>
