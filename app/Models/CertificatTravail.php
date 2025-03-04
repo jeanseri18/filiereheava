@@ -11,7 +11,7 @@ class CertificatTravail extends Model
     protected $table="certificats_travail";
     protected $fillable = [
         'id_user',
-        'numero_cnps',
+    
         'date_debut',
         'date_fin',
         'type_contrat',

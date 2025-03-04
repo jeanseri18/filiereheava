@@ -9,7 +9,7 @@ class Courrier extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'sender', 'receiver', 'attachment','id_user'];
+    protected $fillable = ['title', 'content', 'type', 'attachment','id_user'];
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');

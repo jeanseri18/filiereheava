@@ -28,6 +28,7 @@ class User extends Authenticatable
         'permissionrh',
         'fonction',
         'matricule',
+        'numcnps',
         'id_service',
         'is_validator',
         'status',

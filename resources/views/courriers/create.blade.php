@@ -27,14 +27,13 @@
                     <label for="content" class="form-label">Contenu</label>
                     <textarea name="content" id="content" class="form-control" rows="5" required>{{ old('content') }}</textarea>
                 </div>
+             
                 <div class="mb-3">
-                    <label for="sender" class="form-label">Expéditeur</label>
-                    <input type="text" name="sender" id="sender" class="form-control" value="{{ old('sender') }}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="receiver" class="form-label">Destinataire</label>
-                    <input type="text" name="receiver" id="receiver" class="form-control" value="{{ old('receiver') }}" required>
-                </div>
+                    <label for="receiver" class="form-label">Type </label>
+<select name="type" class="form-control">
+    <option value="Courrier entrant">Courrier entrant</option>
+    <option value="Courrier sortant">Courrier sortant</option>
+</select>                </div>
                 <div class="mb-3">
                     <label for="attachment" class="form-label">Pièce jointe</label>
                     <input type="file" name="attachment" id="attachment" class="form-control">

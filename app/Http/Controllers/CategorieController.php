@@ -29,4 +29,20 @@ class CategorieController extends Controller
         Categorie::findOrFail($id)->delete();
         return redirect()->route('categories.index')->with('success', 'Catégorie supprimée avec succès.');
     }
+    public function edit($id)
+{
+    $categorie = Categorie::findOrFail($id);
+    return view('categories.edit', compact('categorie'));
+}
+
+public function update(Request $request, $id)
+{
+    $request->validate(['nom' => 'required|unique:categories,nom,'.$id]);
+    
+    $categorie = Categorie::findOrFail($id);
+    $categorie->update($request->all());
+
+    return redirect()->route('categories.index')->with('success', 'Catégorie mise à jour avec succès.');
+}
+
 }

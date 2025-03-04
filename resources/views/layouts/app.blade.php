@@ -38,11 +38,18 @@
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary" style="background-color:WHITE">
     <div class="app-wrapper" style="background-color:white">
         <nav class="app-header navbar navbar-expand bg-body" style="background-color:white">
+   
             <!--begin::Container-->
             <div class="container-fluid">
                 <!--begin::Start Navbar Links-->
-
+<ul class="navbar-nav">
+<li class="nav-item"> <a class="nav-link"  data-lte-toggle="sidebar" href="#" role="button" > <i
+                                data-lte-icon="menu" class="bi bi-list"></i> </a>
+                    </li>
+                   
+</ul>
                 <ul class="navbar-nav ms-auto">
+                    
                     <!--begin::Navbar Search-->
                     <li class="nav-item"> <a class=" btn btn-success" href="{{ route('dashboardrh') }}" > basculer
 </a>
@@ -113,6 +120,7 @@
                 <nav class="mt-2">
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
+                        
                         <!-- Tableau de bord -->
                         <li class="nav-item">
                             <a href="{{ route('dashboard') }}" class="nav-link" style="color:white">

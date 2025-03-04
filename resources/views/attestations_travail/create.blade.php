@@ -26,10 +26,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="mb-3">
-            <label for="numero_cnps" class="form-label">Numéro CNPS</label>
-            <input type="text" name="numero_cnps" id="numero_cnps" class="form-control" required>
-        </div>
+  
 
         <div class="mb-3">
             <label>Date d'embauche</label>

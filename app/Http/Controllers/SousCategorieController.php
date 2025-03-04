@@ -35,4 +35,24 @@ class SousCategorieController extends Controller
         SousCategorie::findOrFail($id)->delete();
         return redirect()->route('sous-categories.index')->with('success', 'Sous-catégorie supprimée avec succès.');
     }
+    public function edit($id)
+{
+    $sousCategorie = SousCategorie::findOrFail($id);
+    $categories = Categorie::all();
+    return view('sous_categories.edit', compact('sousCategorie', 'categories'));
+}
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'nom' => 'required',
+        'categorie_id' => 'required|exists:categories,id'
+    ]);
+
+    $sousCategorie = SousCategorie::findOrFail($id);
+    $sousCategorie->update($request->all());
+
+    return redirect()->route('sous-categories.index')->with('success', 'Sous-catégorie mise à jour avec succès.');
+}
+
 }

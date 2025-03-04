@@ -31,7 +31,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="matricule" class="form-label">Matricule</label>
-                    <input type="matricule" class="form-control" id="matricule" name="matricule" required placeholder="Entrez le matricule">
+                    <input type="text" class="form-control" id="matricule" name="matricule" required placeholder="Entrez le matricule">
+                </div>
+                <div class="mb-3">
+                    <label for="numcnps" class="form-label">num cnps/ num de paie</label>
+                    <input type="text" class="form-control" id="numcnps" name="numcnps" required placeholder="Entrez le matricule">
                 </div>
                 <div class="mb-3">
                     <label for="fonction" class="form-label">Fonction</label>
@@ -47,7 +51,7 @@
                         <option value="pca">PCA </option>
                         <option value="secretariat">Secretariat </option>
                         <option value="admin">Administrateur</option>
-                        <option value="employe">Utilisateur</option>
+                        <option value="user">Utilisateur</option>
                         <option value="manager">Responsable</option>
                     </select>
                 </div>

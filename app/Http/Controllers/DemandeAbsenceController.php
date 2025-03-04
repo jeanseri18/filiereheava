@@ -37,28 +37,40 @@ class DemandeAbsenceController extends Controller
 
     // Enregistrer une nouvelle demande d'absence
     public function store(Request $request)
-    {
-        $request->validate([
-          
-            'nombre_jours' => 'required|integer',
-            'date_debut' => 'required|date',
-            'date_fin' => 'required|date',
-            'objet_demande' => 'required|string',
-            'id_superieur' => 'required|exists:users,id',
-        ]);
+{
+    // Validation des données
+    $request->validate([
+        'nombre_jours' => 'required|integer',
+        'date_debut' => 'required|date',
+        'date_fin' => 'required|date|after_or_equal:date_debut', // Vérification si la date de fin est après ou égale à la date de début
+        'objet_demande' => 'required|string',
+        'id_superieur' => 'required|exists:users,id',
+    ]);
 
-       $demande= DemandeAbsence::create([
-            'id_user' => Auth::id(),
-            'nombre_jours' => $request->nombre_jours,
-            'date_debut' => $request->date_debut,
-            'date_fin' => $request->date_fin,
-            'objet_demande' => $request->objet_demande,
-            'date_creation' => now(),
-            'id_superieur' => $request->id_superieur,
-        ]);
+    // Vérifier le nombre de demandes d'absence de l'utilisateur pour l'année en cours
+    $currentYear = now()->year; // Obtenir l'année actuelle
+    $demandesCount = DemandeAbsence::where('id_user', Auth::id())
+        ->whereYear('date_debut', $currentYear)
+        ->count(); // Compter les demandes de l'utilisateur dans l'année en cours
 
-        return redirect()->route('demandes_absence.user')->with('success', 'Demande d\'absence créée avec succès');
+    // Limiter à 5 demandes par an
+    if ($demandesCount >= 5) {
+        return redirect()->route('demandes_absence.user')->with('error', 'Vous avez atteint la limite de 5 demandes d\'absence par an.');
     }
+
+    // Créer la demande d'absence si la limite n'est pas atteinte
+    DemandeAbsence::create([
+        'id_user' => Auth::id(),
+        'nombre_jours' => $request->nombre_jours,
+        'date_debut' => $request->date_debut,
+        'date_fin' => $request->date_fin,
+        'objet_demande' => $request->objet_demande,
+        'date_creation' => now(),
+        'id_superieur' => $request->id_superieur,
+    ]);
+
+    return redirect()->route('demandes_absence.user')->with('success', 'Demande d\'absence créée avec succès.');
+}
 
     // Afficher les détails d'une demande
     public function show($id)
@@ -100,7 +112,7 @@ class DemandeAbsenceController extends Controller
         $demande = DemandeAbsence::findOrFail($id);
 
         // Vérifier si l'utilisateur connecté est bien le supérieur
-        if ($demande->id_superieur != Auth::id()) {
+        if ($demande->id_superieur != Auth::id() && !in_array(Auth::user()->permissionrh, ['rh', 'valideur'])) {
             return redirect()->route('demandes_absence.index')->with('error', 'Vous n\'êtes pas autorisé à valider cette demande.');
         }
 
@@ -118,7 +130,7 @@ class DemandeAbsenceController extends Controller
         $demande = DemandeAbsence::findOrFail($id);
 
         // Vérifier si l'utilisateur connecté est bien le supérieur
-        if ($demande->id_superieur != Auth::id()) {
+        if ($demande->id_superieur != Auth::id() && !in_array(Auth::user()->permissionrh, ['rh', 'valideur'])) {
             return redirect()->route('demandes_absence.index')->with('error', 'Vous n\'êtes pas autorisé à rejeter cette demande.');
         }
 

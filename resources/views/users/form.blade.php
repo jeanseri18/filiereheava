@@ -8,13 +8,31 @@
         required>
 </div>
 <div class="form-group mb-3">
+                    <label for="matricule" class="form-label">Matricule</label>
+                    <input type="text" class="form-control" id="matricule" name="matricule"  value="{{ old('matricule', $user->matricule ?? '') }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="fonction" class="form-label">Fonction</label>
+                    <input type="text" class="form-control" id="fonction" name="fonction"  value="{{ old('fonction', $user->fonction ?? '') }}">
+                </div>
+<div class="form-group mb-3">
+                    <label for="numcnps" class="form-label">num cnps/ num de paie</label>
+                    <input type="text" class="form-control" id="numcnps" name="numcnps"  value="{{ old('numcnps', $user->numcnps ?? '') }}">
+                </div>
+                <div class="form-group mb-3">
     <label for="role">Rôle</label>
     <select name="role" id="role" class="form-control" required>
-        <option value="admin" {{ old('role', $user->role ?? '') == 'admin' ? 'selected' : '' }}>Admin</option>
-        <option value="employe" {{ old('role', $user->role ?? '') == 'employe' ? 'selected' : '' }}>Employé</option>
-        <option value="manager" {{ old('role', $user->role ?? '') == 'manager' ? 'selected' : '' }}>Manager</option>
+        <option value="">Sélectionner un rôle</option>
+        <option value="admin" {{ old('role', $user->role ?? '') == 'admin' ? 'selected' : '' }}>Administrateur</option>
+        <option value="user" {{ old('role', $user->role ?? '') == 'user' ? 'selected' : '' }}>Utilisateur</option>
+        <option value="manager" {{ old('role', $user->role ?? '') == 'manager' ? 'selected' : '' }}>Responsable</option>
+        <option value="vise" {{ old('role', $user->role ?? '') == 'vise' ? 'selected' : '' }}>Vice-président</option>
+        <option value="directeurexecutif" {{ old('role', $user->role ?? '') == 'directeurexecutif' ? 'selected' : '' }}>Directeur exécutif</option>
+        <option value="pca" {{ old('role', $user->role ?? '') == 'pca' ? 'selected' : '' }}>PCA</option>
+        <option value="secretariat" {{ old('role', $user->role ?? '') == 'secretariat' ? 'selected' : '' }}>Secrétariat</option>
     </select>
 </div>
+
 <div class="mb-3">
     <label for="permissionrh" class="form-label">Permission RH</label>
     <select class="form-select" id="permissionrh" name="permissionrh" required>

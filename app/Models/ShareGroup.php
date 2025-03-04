@@ -29,6 +29,8 @@ class ShareGroup extends Model
     {
         return $this->belongsToMany(User::class, 'share_lists', 'id_group', 'id_user')->withTimestamps();
     }
+
+    
     
 }
 

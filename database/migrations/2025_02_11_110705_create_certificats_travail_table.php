@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('certificats_travail', function (Blueprint $table) {
             $table->id();
             $table->string('id_user');
-            $table->string('numero_cnps');
             $table->date('date_debut');
             $table->date('date_fin');
             $table->enum('type_contrat', ['CDI', 'CDD', 'Autre'])->default('CDI');

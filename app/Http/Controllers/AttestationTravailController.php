@@ -31,9 +31,10 @@ class AttestationTravailController extends Controller
     {
         $request->validate([
             'id_user' => 'required|string',
-            'numero_cnps' => 'required|string',
             'date_embauche' => 'required|date',
             'lieu_travail' => 'required|string',
+            'type_contrat' => 'required|string',
+
         ]);
 
         AttestationTravail::create($request->all());
@@ -61,9 +62,10 @@ class AttestationTravailController extends Controller
     {
         $request->validate([
             'id_user' => 'required|string',
-            'numero_cnps' => 'required|string',
             'date_embauche' => 'required|date',
             'lieu_travail' => 'required|string',
+            'type_contrat' => 'required|string',
+
         ]);
 
         $attestation = AttestationTravail::findOrFail($id);

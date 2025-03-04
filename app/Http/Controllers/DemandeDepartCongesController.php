@@ -38,7 +38,6 @@ class DemandeDepartCongesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-          
             'service_secteur' => 'required|string|max:100',
             'motif' => 'required|string',
             'date_debut' => 'required|date',
@@ -47,9 +46,20 @@ class DemandeDepartCongesController extends Controller
             'nombre_jours_calendaires' => 'required|integer|min:1',
             'adresse_sejour' => 'required|string',
             'id_superieur' => 'required|exists:users,id',
-
         ]);
-
+    
+        // Vérifier le nombre de demandes de congé de l'utilisateur dans l'année en cours
+        $currentYear = now()->year;
+        $demandesCount = DemandeDepartConges::where('id_user', Auth::id())
+            ->whereYear('date_debut', $currentYear)
+            ->count();
+    
+        // Limiter à 5 demandes par an
+        if ($demandesCount >= 5) {
+            return redirect()->route('demandes.index')->with('error', 'Vous avez atteint la limite de 5 demandes de congé par an.');
+        }
+    
+        // Créer la demande si la limite n'est pas atteinte
         DemandeDepartConges::create([
             'id_user' => Auth::id(),
             'service_secteur' => $request->service_secteur,
@@ -59,12 +69,12 @@ class DemandeDepartCongesController extends Controller
             'nombre_jours_ouvrables' => $request->nombre_jours_ouvrables,
             'nombre_jours_calendaires' => $request->nombre_jours_calendaires,
             'adresse_sejour' => $request->adresse_sejour,
-            'id_superieur' =>$request->id_superieur,
-
+            'id_superieur' => $request->id_superieur,
         ]);
-
+    
         return redirect()->route('demandes.index')->with('success', 'Demande créée avec succès.');
     }
+    
     /**
      * Affiche une demande spécifique.
      */
@@ -128,7 +138,7 @@ class DemandeDepartCongesController extends Controller
      $demande = DemandeDepartConges::findOrFail($id);
 
      // Vérifier si l'utilisateur connecté est bien le supérieur
-     if ($demande->id_superieur != Auth::id()) {
+     if ($demande->id_superieur != Auth::id()  && !in_array(Auth::user()->permissionrh, ['rh', 'valideur'])) {
          return redirect()->route('demandes.index')->with('error', 'Vous n\'êtes pas autorisé à valider cette demande.');
      }
 
@@ -146,7 +156,7 @@ class DemandeDepartCongesController extends Controller
      $demande = DemandeDepartConges::findOrFail($id);
 
      // Vérifier si l'utilisateur connecté est bien le supérieur
-     if ($demande->id_superieur != Auth::id()) {
+     if ($demande->id_superieur != Auth::id() && !in_array(Auth::user()->permissionrh, ['rh', 'valideur'])) {
          return redirect()->route('demandes.index')->with('error', 'Vous n\'êtes pas autorisé à rejeter cette demande.');
      }
 

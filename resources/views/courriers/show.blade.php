@@ -10,8 +10,7 @@
 <i class="bi bi-journal-minus" style="font-size:50px;color:#038C4F;"></i>
 
     <h1>{{ $courrier->title }}</h1>
-    <p><strong>Expéditeur :</strong> {{ $courrier->sender }}</p>
-    <p><strong>Destinataire :</strong> {{ $courrier->receiver }}</p>
+    <p><strong>Type :</strong> {{ $courrier->type }}</p>
     <p><strong>Contenu :</strong></p>
     <p>{{ $courrier->content }}</p>
 

@@ -18,8 +18,8 @@
                     <tr>
                 <th>#</th>
                 <th>Titre</th>
-                <th>Expéditeur</th>
-                <th>Destinataire</th>
+                <th>Type</th>
+            
                 <th>Action</th>
             </tr>
         </thead>
@@ -28,8 +28,7 @@
             <tr>
                 <td>{{ $courrier->id }}</td>
                 <td>{{ $courrier->title }}</td>
-                <td>{{ $courrier->sender }}</td>
-                <td>{{ $courrier->receiver }}</td>
+                <td>{{ $courrier->type }}</td>
                 <td>
                 <a href="{{ route('courriers.show', $courrier->id) }}" class="btn btn-info btn-sm">                                <i class="bi bi-eye me-1"></i>Voir le courrier</a>
                 </td>

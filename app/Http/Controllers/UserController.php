@@ -30,6 +30,7 @@ class UserController extends Controller
             'role' => 'required|in:admin,user,manager,directeurexecutif,vise,pca,secretariat',
             'permission' => 'required|in:rh,demandeur,valideur,superieur',
             'matricule' => 'required|string',
+            'numcnps' => 'required|string',
             'fonction' => 'required|string',
             'id_service' => 'required|exists:services,id',
             'is_validator' => 'required|boolean',
@@ -43,6 +44,7 @@ class UserController extends Controller
             'role' => $request->role,
             'permissionrh' => $request->permission,
             'matricule' => $request->matricule,
+            'numcnps' => $request->numcnps,
             'fonction' => $request->fonction,
             'id_service' => $request->id_service,
             'is_validator' => $request->is_validator,
@@ -58,22 +60,28 @@ class UserController extends Controller
         return view('users.edit', compact('user', 'services'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request,  $id)
     {
         $request->validate([
             'nom' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'email' => 'required|email',
             'role' => 'required|in:admin,user,manager,directeurexecutif,vise,pca,secretariat',
             'permissionrh' => 'required|in:rh,demandeur,valideur,superieur',
-            'matricule' => 'required|string|max:255',
             'fonction' => 'required|string|max:255',
+
+            'matricule' => 'required|string|max:255',
+            'numcnps' => 'required|string',
+
             'id_service' => 'required|exists:services,id',
             'is_validator' => 'boolean',
             'status' => 'required|in:actif,inactif',
         ]);
 
-        $user->update($request->only(['nom', 'email', 'role','permissionrh', 'id_service', 'is_validator', 'status']));
+        $user = User::findOrFail($id);
 
+        // Mise à jour des informations de l'utilisateur
+        $user->update($request->only(['nom', 'email', 'role', 'permissionrh', 'id_service', 'is_validator', 'status']));
+    
         return redirect()->route('users.index')->with('success', 'Utilisateur mis à jour avec succès.');
     }
 

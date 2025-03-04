@@ -45,9 +45,8 @@ class CourrierController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'sender' => 'required|string|max:255',
-            'receiver' => 'required|string|max:255',
-            'attachment' => 'nullable|file|mimes:pdf,jpg,png,docx',
+            'type' => 'required|string|max:255',
+            'attachment' => 'nullable|file|mimes:pdf,doc,docx,txt,ppt,pptx,xls,xlsx,png,jpg,jpeg|max:200048',
         ]);
 
         $attachmentPath = null;
@@ -58,8 +57,7 @@ class CourrierController extends Controller
         Courrier::create([
             'title' => $request->title,
             'content' => $request->content,
-            'sender' => $request->sender,
-            'receiver' => $request->receiver,
+            'type' => $request->type,
             'attachment' => $attachmentPath,
             'id_user' =>  $userId,
         ]);

@@ -109,7 +109,7 @@ class DocumentController extends Controller
     // Validation des données
     $request->validate([
         'nom' => 'required|string|max:255',
-'file_url' => 'required|file|mimes:pdf,doc,docx,txt,ppt,pptx,xls,xlsx,png,jpg,jpeg|max:20048',
+'file_url' => 'required|file|mimes:pdf,doc,docx,txt,ppt,pptx,xls,xlsx,png,jpg,jpeg|max:200048',
 //'type_doc' => 'required|in:document,courrier entrant,courrier sortant',
         'type_share' => 'required|in:public,privé,groupe', // Les options de partage
     ]);
@@ -172,6 +172,11 @@ class DocumentController extends Controller
     // Affiche un document spécifique
     public function show(Document $document)
     {
+          // Charger les utilisateurs et groupes associés au document
+    $users = $document->sharedUsers;   // Récupérer les utilisateurs associés
+    $groups = $document->sharedGroups; // Récupérer les groupes associés
+
+    return view('documents.show', compact('document', 'users', 'groups'));
         return view('documents.show', compact('document'));
     }
 
@@ -195,7 +200,7 @@ public function update(Request $request, Document $document)
     // Validation des données
     $request->validate([
         'nom' => 'required|string|max:255',
-        'file_url' => 'nullable|file|mimes:pdf,doc,docx,txt|max:2048', // Vérifie le fichier
+        'file_url' => 'nullable|file|mimes:pdf,doc,docx,txt,ppt,pptx,xls,xlsx,png,jpg,jpeg|max:200048', // Vérifie le fichier
         //'type_doc' => 'required|in:document,courrier entrant,courrier sortant',
         'type_share' => 'required|in:public,privé,groupe', // Les options de partage
     ]);

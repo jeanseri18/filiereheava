@@ -19,11 +19,6 @@
     <form action="{{ route('attestations_travail.update', $attestation->id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="mb-3">
-            <label for="numero_cnps" class="form-label">Numéro CNPS</label>
-            <input type="text" name="numero_cnps" id="numero_cnps" class="form-control" value="{{ $certificat->numero_cnps }}" required>
-        </div>
-
 
         <div class="mb-3">
             <label>Date d'embauche</label>

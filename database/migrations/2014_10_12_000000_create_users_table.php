@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->enum('permissionrh', ['rh', 'demandeur', 'valideur','superieur']);
             $table->string('fonction')->nullable();
             $table->string('matricule')->nullable();
+            $table->string('numcnps')->nullable();
 
             $table->foreignId('id_service')->constrained('services')->onDelete('cascade');
             $table->boolean('is_validator')->default(false);

@@ -9,7 +9,7 @@
     </p>
     <h1 style="margin-top:0pt; margin-bottom:10pt; page-break-after:avoid; line-height:115%; font-size:14pt;"><span
             style="font-family:'Arial Narrow';">N&deg;CNPS EMPLOYEUR</span><span
-            style="font-family:'Arial Narrow';">&nbsp;</span><span style="font-family:'Arial Narrow';">: {{ $attestation->numero_cnps }} </span>
+            style="font-family:'Arial Narrow';">&nbsp;</span><span style="font-family:'Arial Narrow';">: 374353 </span>
     </h1>
     <p style="margin-top:0pt; margin-bottom:0pt; text-align:justify; line-height:115%; font-size:14pt;"><span
             style="font-family:'Arial Narrow';">&nbsp;</span></p>

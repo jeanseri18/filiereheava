@@ -2,7 +2,12 @@
 
 
 @section('content')
+<h1 style="margin-top:0pt; margin-bottom:10pt; page-break-after:avoid; line-height:115%; font-size:14pt;"><span
+            style="font-family:'Arial Narrow';">N&deg;CNPS EMPLOYEUR</span><span
+            style="font-family:'Arial Narrow';">&nbsp;</span><span style="font-family:'Arial Narrow';">: 374353 </span>
+    </h1>
 <div class=" mt-5">
+
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class=" p-4">

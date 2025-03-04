@@ -34,7 +34,6 @@ class CertificatTravailController extends Controller
     {
         $request->validate([
             'id_user' => 'required|exists:users,id',
-            'numero_cnps' => 'required',
             'date_debut' => 'required|date',
             'date_fin' => 'required|date',
             'type_contrat' => 'required|in:CDI,CDD,Autre',
@@ -42,7 +41,6 @@ class CertificatTravailController extends Controller
 
         CertificatTravail::create([
             'id_user' => $request->id_user,
-            'numero_cnps' => $request->numero_cnps,
             'date_debut' => $request->date_debut,
             'date_fin' => $request->date_fin,
             'type_contrat' => $request->type_contrat,
@@ -71,7 +69,6 @@ class CertificatTravailController extends Controller
     {
         $request->validate([
             'id_user' => 'required|exists:users,id',
-            'numero_cnps' => 'required',
             'date_debut' => 'required|date',
             'date_fin' => 'required|date',
             'type_contrat' => 'required|in:CDI,CDD,Autre',
@@ -80,7 +77,6 @@ class CertificatTravailController extends Controller
         $certificat = CertificatTravail::findOrFail($id);
         $certificat->update([
             'id_user' => $request->id_user,
-            'numero_cnps' => $request->numero_cnps,
             'date_debut' => $request->date_debut,
             'date_fin' => $request->date_fin,
             'type_contrat' => $request->type_contrat,

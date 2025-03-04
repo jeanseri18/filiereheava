@@ -49,7 +49,7 @@
                     <div class="card shadow-sm text-center">
                         <div class="card-body">
                             <i class="bi bi-file-earmark-text-fill fs-1 text-success"></i>
-                            <h5 class="card-title mt-2">Gestion des demandes</h5>
+                            <h5 class="card-title mt-2">Services RH</h5>
                             <a href="{{ route('dashboardrh') }}" class="btn btn-success">Accéder</a>
                         </div>
                     </div>
