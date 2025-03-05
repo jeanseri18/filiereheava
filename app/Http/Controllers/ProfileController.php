@@ -32,16 +32,12 @@ class ProfileController extends Controller
 
         $request->validate([
             'full_name' => 'required|string|max:255',
-            'role' => 'required|string',
-            'service' => 'nullable|string|max:255',
-            'direction' => 'nullable|string|max:255',
+      
         ]);
 
         $user->update([
             'nom' => $request->input('full_name'),
-            'role' => $request->input('role'),
-            'id_service' => $request->input('service'),
-            'status' => $request->input('direction'),
+         
         ]);
 
         return redirect()->route('profile.edit')->with('success', 'Informations mises à jour avec succès.');

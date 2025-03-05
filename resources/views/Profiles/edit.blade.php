@@ -39,42 +39,42 @@
 
                         {{-- Nom complet --}}
                         <div class="mb-3">
-                            <label for="full_name" class="form-label">Nom et Prénom</label>
-                            <input type="text" class="form-control" id="full_name" name="full_name" value="{{ old('full_name', $user->nom) }}" required>
-                        </div>
+    <label for="full_name" class="form-label">Nom et Prénom</label>
+    <input type="text" class="form-control" id="full_name" name="full_name" value="{{ old('full_name', $user->nom) }}" readonly>
+</div>
 
-                        {{-- Rôle --}}
-                        <div class="mb-3">
-                            <label for="role" class="form-label">Rôle</label>
-                            <select class="form-select" id="role" name="role" required>
-                                <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>Utilisateur</option>
-                                <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Administrateur</option>
-                            </select>
-                        </div>
+{{-- Rôle --}}
+<div class="mb-3">
+    <label for="role" class="form-label">Rôle</label>
+    <select class="form-select" id="role" name="role" required disabled>
+        <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>Utilisateur</option>
+        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Administrateur</option>
+    </select>
+</div>
 
-                        {{-- Service --}}
-                        <div class="mb-3">
-                            <label for="service" class="form-label">Service</label>
-                            <select class="form-select" id="service" name="service" required>
-                                @foreach ($services as $service)
-                                    <option value="{{ $service->id }}" {{ $user->service_id == $service->id ? 'selected' : '' }}>
-                                        {{ $service->nom }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+{{-- Service --}}
+<div class="mb-3">
+    <label for="service" class="form-label">Service</label>
+    <select class="form-select" id="service" name="service" required disabled>
+        @foreach ($services as $service)
+            <option value="{{ $service->id }}" {{ $user->service_id == $service->id ? 'selected' : '' }}>
+                {{ $service->nom }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
-                        {{-- Direction --}}
-                        <div class="mb-3">
-                            <label for="direction" class="form-label">Direction</label>
-                            <select class="form-select" id="direction" name="direction" required>
-                                @foreach ($directions as $direction)
-                                    <option value="{{ $direction->id }}" {{ $user->direction_id == $direction->id ? 'selected' : '' }}>
-                                        {{ $direction->nom }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+{{-- Direction --}}
+<div class="mb-3">
+    <label for="direction" class="form-label">Direction</label>
+    <select class="form-select" id="direction" name="direction" required disabled>
+        @foreach ($directions as $direction)
+            <option value="{{ $direction->id }}" {{ $user->direction_id == $direction->id ? 'selected' : '' }}>
+                {{ $direction->nom }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
                         {{-- Bouton de validation --}}
                         <button type="submit" class="btn btn-success">Enregistrer les informations</button>
