@@ -206,7 +206,7 @@
         <!--end::Sidebar-->
         <!--begin::App Main-->
 
-        <main class="app-main" style="background-color:white">
+        <main class="app-main pt-0" style="background-color:white">
             <div class="app-content-header">
                 <!--
                 <div class="container-fluid"> 
@@ -225,13 +225,13 @@
                     </div>
                 </div> end::Row-->
             </div>
-            <div class="app-content">
+            <div class="app-content pt-0">
                 <!--begin::Container-->
-                <div class="container-fluid">
+              
                     <!--begin::Row-->
                     @yield('content') {{-- Section pour le contenu principal --}}
 
-                </div>
+          
                 <!--end::Container-->
             </div>
         </main>

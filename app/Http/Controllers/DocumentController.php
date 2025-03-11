@@ -15,81 +15,125 @@ use Illuminate\Http\Request;
 class DocumentController extends Controller
 {
     // Affiche la liste des documents
-    public function index()
+    public function index(Request $request)
     {
-        
-        // Récupérer tous les documents créés par l'utilisateur ou partagés avec lui
-        $documents = Document::where('id_creator', auth()->id())  // Documents créés par l'utilisateur
-                            ->orWhereIn('id', Share::where('id_user', auth()->id())->pluck('id_document')) // Documents partagés avec l'utilisateur
-                                               ->paginate(10);
-        // Passe les documents à la vue
+       
+        $query = Document::where('id_creator', auth()->id())
+        ->WhereIn('id', Share::where('id_user', auth()->id())->pluck('id_document'));
+    
+        // Appliquer le filtre de recherche si un terme est saisi
+        if ($request->search && !empty($request->search)) {
+            $search = $request->search;
+            $query->Where('nom', 'LIKE', "%{$search}%");
+          
+        }
+    
+        $documents = $query->paginate(10);
+   
         return view('documents.index', compact('documents'));
     }
       // Afficher les documents en ajout
-      public function added()
+      public function added(Request $request)
       {
-          $documents = Document::where('id_creator', auth()->id())
-                               ->where('status', 'ajouté')
-                                                  ->paginate(10);
+          $query = Document::where('id_creator', auth()->id())
+                           ->where('status', 'ajouté');
+      
+          if ($request->search && !empty($request->search)) {
+              $query->where('nom', 'LIKE', "%{$request->search}%");
+          }
+      
+          $documents = $query->paginate(10);
           return view('documents.index', compact('documents'));
       }
+      
   
       // Afficher les documents soumis
-      public function submitted()
+      public function submitted(Request $request)
       {
-          $documents = Document::where('id_creator', auth()->id())
-                               ->where('status', 'soumis')
-                                                  ->paginate(10);
+          $query = Document::where('id_creator', auth()->id())
+                           ->where('status', 'soumis');
+      
+          if ($request->search && !empty($request->search)) {
+              $query->where('nom', 'LIKE', "%{$request->search}%");
+          }
+      
+          $documents = $query->paginate(10);
           return view('documents.index', compact('documents'));
       }
   
-      public function sharedByMe()
+      public function sharedByMe(Request $request)
       {
-          // Récupérer tous les documents partagés par l'utilisateur (documents créés par l'utilisateur ou partagés via un groupe ou un utilisateur spécifique)
-          $documents = Share::where('id_user', auth()->id())
-                            ->orWhere('id_group', auth()->id())  // Si l'utilisateur appartient à un groupe partagé
-                            ->with(['document', 'user', 'group'])  // Charger les relations (document, user, group)
-                                               ->paginate(10);
-  
+          $query = Share::where('id_user', auth()->id())
+                        ->orWhere('id_group', auth()->id())
+                        ->with(['document', 'user', 'group']);
+      
+          if ($request->search && !empty($request->search)) {
+              $query->whereHas('document', function ($q) use ($request) {
+                  $q->where('nom', 'LIKE', "%{$request->search}%");
+              });
+          }
+      
+          $documents = $query->paginate(10);
           return view('documents.index', compact('documents'));
       }
+      
   
       // Afficher les documents partagés avec l'utilisateur
-      public function sharedWithMe()
+      public function sharedWithMe(Request $request)
       {
-          // Récupérer tous les documents partagés avec l'utilisateur (documents où l'utilisateur est un destinataire)
-          $documents = Share::where('id_user', auth()->id())
-                            ->with(['document', 'user', 'group'])  // Charger les relations
-                                               ->paginate(10);
-  
+          $query = Share::where('id_user', auth()->id())->with(['document', 'user', 'group']);
+      
+          if ($request->search && !empty($request->search)) {
+              $query->whereHas('document', function ($q) use ($request) {
+                  $q->where('nom', 'LIKE', "%{$request->search}%");
+              });
+          }
+      
+          $documents = $query->paginate(10);
           return view('documents.index', compact('documents'));
       }
+      
       // Afficher les documents en attente
-      public function pending()
+      public function pending(Request $request)
       {
-          $documents = Document::where('id_creator', auth()->id())
-                               ->where('status', 'en attente')
-                                                  ->paginate(10);
+          $query = Document::where('id_creator', auth()->id())
+                           ->where('status', 'en attente');
+      
+          if ($request->search && !empty($request->search)) {
+              $query->where('nom', 'LIKE', "%{$request->search}%");
+          }
+      
+          $documents = $query->paginate(10);
           return view('documents.index', compact('documents'));
       }
   
       // Afficher les documents validés
-      public function validated()
-      {
-          $documents = Document::where('id_creator', auth()->id())
-                               ->where('status', 'validé')
-                                                  ->paginate(10);
-          return view('documents.index', compact('documents'));
-      }
+      public function validated(Request $request)
+{
+    $query = Document::where('id_creator', auth()->id())
+                     ->where('status', 'validé');
+
+    if ($request->search && !empty($request->search)) {
+        $query->where('nom', 'LIKE', "%{$request->search}%");
+    }
+
+    $documents = $query->paginate(10);
+    return view('documents.index', compact('documents'));
+}
   
-      // Afficher les documents rejetés
-      public function rejected()
-      {
-          $documents = Document::where('id_creator', auth()->id())
-                               ->where('status', 'rejeté')
-                                                  ->paginate(10);
-          return view('documents.index', compact('documents'));
-      }
+public function rejected(Request $request)
+{
+    $query = Document::where('id_creator', auth()->id())
+                     ->where('status', 'rejeté');
+
+    if ($request->search && !empty($request->search)) {
+        $query->where('nom', 'LIKE', "%{$request->search}%");
+    }
+
+    $documents = $query->paginate(10);
+    return view('documents.index', compact('documents'));
+}
+
 
     public function alldoc()
     {
