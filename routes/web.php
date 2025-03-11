@@ -50,6 +50,7 @@ Route::get('/demandes', [DemandeDepartCongesController::class, 'index'])->name('
 Route::get('/demandes/create', [DemandeDepartCongesController::class, 'create'])->name('demandes.create');
 Route::post('/demandes', [DemandeDepartCongesController::class, 'store'])->name('demandes.store');
 Route::get('/demandes/{id}', [DemandeDepartCongesController::class, 'show'])->name('demandes.show');
+Route::get('/demandesvalide/{id}', [DemandeDepartCongesController::class, 'showvalidedoc'])->name('demandes.showvalidedoc');
 Route::get('/demandes/{id}/edit', [DemandeDepartCongesController::class, 'edit'])->name('demandes.edit');
 Route::put('/demandes/{id}', [DemandeDepartCongesController::class, 'update'])->name('demandes.update');
 Route::delete('/demandes/{id}', [DemandeDepartCongesController::class, 'destroy'])->name('demandes.destroy');

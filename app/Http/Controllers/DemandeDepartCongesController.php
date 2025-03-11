@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DemandeDepartConges;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,9 +28,9 @@ class DemandeDepartCongesController extends Controller
      */
     public function create()
     {
-        $superieurs = \App\Models\User::where('role', 'manager')->get(); // Tu peux ajuster cela
-
-        return view('demandes.create', compact('superieurs'));
+        $superieurs = \App\Models\User::where('permissionrh', 'superieur')->get(); // Tu peux ajuster cela
+        $services = Service::all();
+        return view('demandes.create', compact('superieurs','services'));
     }
 
     /**
@@ -84,13 +85,19 @@ class DemandeDepartCongesController extends Controller
 
         return view('demandes.show', compact('demande'));
     }
+    public function showvalidedoc( $id)
+    {
+        $demande = DemandeDepartConges::findOrFail($id);
+
+        return view('demandes.validedoc', compact('demande'));
+    }
 
     /**
      * Affiche le formulaire d'édition d'une demande.
      */
     public function edit( $id)
     {
-        $superieurs = \App\Models\User::where('role', 'manager')->get(); // Tu peux ajuster cela
+        $superieurs = \App\Models\User::where('permissionrh', 'superieur')->get(); // Tu peux ajuster cela
 
         return view('demandes.edit', compact('demande','superieurs'));
     }

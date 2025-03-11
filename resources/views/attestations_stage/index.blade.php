@@ -17,11 +17,15 @@
         </div>
     </div>
     <br>
-    @if (session('success'))
-    <div class="alert alert-success mt-3">
-        {{ session('success') }}
-    </div>
-    @endif
+    @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
     <div class="card custom-card">
         <div class="card-body">
             <table id="Table" class="table table-bordered table-striped">

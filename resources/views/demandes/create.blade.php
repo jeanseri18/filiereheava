@@ -21,7 +21,11 @@
      
         <div class="mb-3">
             <label>Service / Secteur</label>
-            <input type="text" name="service_secteur" class="form-control" required>
+            <select name="service_secteur" id="service_secteur" class="form-control" required>
+        @foreach($services as $service)
+            <option value="{{ $service->id }}" >{{ $service->nom }}</option>
+        @endforeach
+    </select>
         </div>
 
         <div class="mb-3">

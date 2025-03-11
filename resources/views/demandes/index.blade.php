@@ -52,6 +52,11 @@
                         <a href="{{ route('demandes.show', $demande) }}" class="btn btn-info btn-sm">Voir</a>
                         <a href="{{ route('demandes.edit', $demande) }}" class="btn btn-warning btn-sm">Modifier</a>
                         @if(in_array($permission, ['rh', 'superieur','valideur']))
+                        @if($demande->avis_superieur)
+                    
+                        <a href="{{ route('demandes.showvalidedoc', $demande) }}" class="btn btn-info btn-sm">    imprimer l'autorisation</a>
+
+                        @else
                         <form action="{{ route('demandes.validate', $demande->id) }}" method="POST" style="display:inline;">
     @csrf
     <button type="submit" class="btn btn-success btn-sm">Valider</button>
@@ -60,7 +65,9 @@
 <form action="{{ route('demandes.reject', $demande->id) }}" method="POST" style="display:inline;">
     @csrf
     <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
-</form>@endif
+</form>
+@endif
+@endif
                         <form action="{{ route('demandes.destroy', $demande) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>

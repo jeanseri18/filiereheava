@@ -96,6 +96,14 @@
         </a>
 
         <br>
+        <form method="GET" action="{{ url()->current() }}" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Rechercher un document..." value="{{ request('search') }}">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </div>
+</form>
+
+
         <h1>Liste des Documents</h1>
         <h5>Filtre</h5>
         <div class="mb-3">

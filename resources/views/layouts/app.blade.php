@@ -106,7 +106,7 @@
             <!--begin::Sidebar Brand-->
             <div class="sidebar-brand">
                 <!--begin::Brand Link--> <a href="#" class="brand-link">
-                    <!--begin::Brand Image--> <img src="logobg.png" alt="AdminLTE Logo"
+                    <!--begin::Brand Image--> <img src="{{asset('logobg.png')}}" alt="AdminLTE Logo"
                         class="brand-image opacity-75 shadow">
                     <!--end::Brand Image-->
                     <!--begin::Brand Text-->

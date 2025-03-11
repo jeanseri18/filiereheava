@@ -31,7 +31,7 @@ class DemandeAbsenceController extends Controller
     public function create()
     {
         // Récupérer les utilisateurs supérieurs pour la sélection
-        $superieurs = \App\Models\User::where('role', 'manager')->get(); // Tu peux ajuster cela
+        $superieurs = \App\Models\User::where('permissionrh', 'superieur')->get(); // Tu peux ajuster cela
         return view('demandes_absence.create', compact('superieurs'));
     }
 
@@ -54,9 +54,9 @@ class DemandeAbsenceController extends Controller
         ->count(); // Compter les demandes de l'utilisateur dans l'année en cours
 
     // Limiter à 5 demandes par an
-    if ($demandesCount >= 5) {
-        return redirect()->route('demandes_absence.user')->with('error', 'Vous avez atteint la limite de 5 demandes d\'absence par an.');
-    }
+  //  if ($demandesCount >= 5) {
+        //return redirect()->route('demandes_absence.user')->with('error', 'Vous avez atteint la limite de 5 demandes d\'absence par an.');
+   // }
 
     // Créer la demande d'absence si la limite n'est pas atteinte
     DemandeAbsence::create([
@@ -83,7 +83,7 @@ class DemandeAbsenceController extends Controller
     public function edit($id)
     {
         $demande = DemandeAbsence::findOrFail($id);
-        $superieurs = \App\Models\User::where('role', 'manager')->get(); // Adapter à tes besoins
+        $superieurs = \App\Models\User::where('permissionrh', 'superieur')->get(); // Adapter à tes besoins
         return view('demandes_absence.edit', compact('demande', 'superieurs'));
     }
 
