@@ -6,12 +6,17 @@
   <title>Formulaire de Connexion</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>@media (max-width: 768px) {
+    .hidden-on-mobile {
+        display: none !important;
+    }
+}</style>
 <body>
   <div class="container-fluid vh-100 d-flex w-100 ">
     <div class="row w-100 rounded">
       
       <!-- Colonne gauche : texte et logo -->
-      <div class="col-md-6 d-flex flex-column " style="background-color:#038C4F; padding:60px;color:white;">
+      <div class="col-md-6 d-flex flex-column  hidden-on-mobile" style="background-color:#038C4F; padding:60px;color:white;">
       <br/>
       <br/>
       <br/>

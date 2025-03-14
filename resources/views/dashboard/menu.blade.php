@@ -8,13 +8,25 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 <body>
-
+<style>@media (max-width: 768px) {
+    .hidden-on-mobile {
+        display: none !important;
+    }
+}@media (min-width: 768px) {
+    .hidden-two-on-mobile {
+      padding-top:150px;
+    }
+    .logout {
+        display: none !important;
+    }
+}
+</style>
 
   <div class="container-fluid vh-100 d-flex align-items-center">
     <div class="row w-100">
 
       <!-- Colonne gauche : Texte et Logo -->
-      <div class="col-md-6 d-flex flex-column  align-text-center justify-content-center text-white" style="background-color:#038C4F; height: 850px;">
+      <div class="col-md-6 d-flex hidden-on-mobile flex-column  align-text-center justify-content-center text-white" style="background-color:#038C4F; height: 850px;">
       <div style="padding-top:50px;">
        <center><img src="logobg.png" alt="Logo" class="mb-4" style="width: 350px;"></center>
       </div>
@@ -26,10 +38,11 @@
       </div>
 
       <!-- Colonne droite : Formulaire et cartes -->
-      <div class="col-md-6 bg-white d-flex flex-column "style="padding-top:150px;" >
+      <div class="col-md-6 bg-white d-flex flex-column hidden-two-on-mobile" >
    <center>   <h3 class="card-title mt-2 align-item-center text-align-center">Choissisez une session pour demarrer</h3></center>
 <br/>
 <br/>
+
 <br/>
 <br/>
         <div class="container">
@@ -56,8 +69,17 @@
                 </div>
             </div>
         </div>
+        <br>
+<br>
+<br>
+<br>
+      <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-lg  logout form-control btn-dark text-white">Déconnexion <i class="bi bi-box-arrow-right"></i></button>
+                    </form>
 
       </div>
+
 
     </div>
   </div>
