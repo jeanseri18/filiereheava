@@ -26,7 +26,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\SousCategorieController;
 use App\Http\Controllers\DocumentRhController;
-
+Route::middleware('auth')->group(function () {
 Route::resource('document_rh', DocumentRhController::class);
 Route::get('/get-sous-categories/{id}', [DocumentRhController::class, 'getSousCategories']);
 
@@ -58,7 +58,7 @@ Route::post('demandes/{id}/validate', [DemandeDepartCongesController::class, 'va
 
 // Rejeter une demande d'absence
 Route::post('demandes/{id}/reject', [DemandeDepartCongesController::class, 'rejectDemande'])->name('demandes.reject');
-Route::middleware('auth')->group(function () {
+
     // Liste des demandes (toutes)
     Route::get('demandes_absence', [DemandeAbsenceController::class, 'index'])->name('demandes_absence.index');
 
@@ -117,7 +117,6 @@ Route::middleware('auth')->group(function () {
 
     // Rejeter une attestation
     Route::post('attestations_travail/{id}/reject', [AttestationTravailController::class, 'rejectAttestation'])->name('attestations_travail.reject');
-});
 
 
 Route::prefix('certificats')->name('certificats.')->group(function() {
@@ -168,6 +167,8 @@ Route::post('attestations_stage/{id}/validate', [AttestationStageController::cla
     
 // Route pour rejeter une attestation
 Route::post('attestations_stage/{id}/reject', [AttestationStageController::class, 'reject'])->name('attestations_stage.reject');
+});
+
 Route::middleware(['auth'])->group(function () {
     // Afficher les documents partagés avec l'utilisateur
     Route::get('/documents/shared-with-me', [DocumentController::class, 'sharedWithMe'])->name('documents.sharedWithMe');
@@ -262,7 +263,7 @@ Route::prefix('services')->name('services.')->group(function () {
     Route::delete('/{service}', [ServiceController::class, 'destroy'])->name('destroy');
 });
 
-});
+
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::get('/create', [UserController::class, 'create'])->name('create');
@@ -270,6 +271,7 @@ Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
     Route::put('/{id}', [UserController::class, 'update'])->name('update');
     Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+});
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -283,6 +285,19 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/archives/unarchive/{id}', [ArchiveController::class, 'unarchiveDocument'])->name('archives.unarchive');
 
     Route::get('/archives/download/{id}', [ArchiveController::class, 'downloadDocument'])->name('archives.download');
+
+
+    Route::get('/documentss', [DocumentsController::class, 'index'])->name('documentss.index');
+Route::get('/documentss/attente', [DocumentsController::class, 'attente'])->name('documents.attente');
+Route::get('/documentss/valide', [DocumentsController::class, 'valide'])->name('documents.valide');
+Route::get('/documentss/partages', [DocumentsController::class, 'partages'])->name('documents.partages');
+Route::get('/documentss/recherche', [DocumentsController::class, 'recherche'])->name('documents.recherche');
+Route::get('/documentss/archives', [DocumentsController::class, 'archives'])->name('documents.archives');
+Route::get('/documentss/verification', [DocumentsController::class, 'verification'])->name('documents.verification');
+Route::get('/documentss/historique', [DocumentsController::class, 'historique'])->name('documents.historique');
+Route::get('/utilisateur', [DocumentsController::class, 'utilisateur'])->name('utilisateur.index');
+Route::get('/ressources-humaines', [DocumentsController::class, 'ressourcesHumaines'])->name('ressources.humaines');
+Route::get('/parametres', [DocumentsController::class, 'parametres'])->name('parametres.index');
 });
 
 
@@ -311,14 +326,3 @@ Route::get('/menu', function () {
 
 
 //
-Route::get('/documentss', [DocumentsController::class, 'index'])->name('documentss.index');
-Route::get('/documentss/attente', [DocumentsController::class, 'attente'])->name('documents.attente');
-Route::get('/documentss/valide', [DocumentsController::class, 'valide'])->name('documents.valide');
-Route::get('/documentss/partages', [DocumentsController::class, 'partages'])->name('documents.partages');
-Route::get('/documentss/recherche', [DocumentsController::class, 'recherche'])->name('documents.recherche');
-Route::get('/documentss/archives', [DocumentsController::class, 'archives'])->name('documents.archives');
-Route::get('/documentss/verification', [DocumentsController::class, 'verification'])->name('documents.verification');
-Route::get('/documentss/historique', [DocumentsController::class, 'historique'])->name('documents.historique');
-Route::get('/utilisateur', [DocumentsController::class, 'utilisateur'])->name('utilisateur.index');
-Route::get('/ressources-humaines', [DocumentsController::class, 'ressourcesHumaines'])->name('ressources.humaines');
-Route::get('/parametres', [DocumentsController::class, 'parametres'])->name('parametres.index');

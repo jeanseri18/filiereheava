@@ -1,9 +1,20 @@
 @extends('layouts.apprh')
 
+@section('content')
+
 <div class="container">
     <div class="card custom-card">
         <div class="card-body">
     <h1>Modifier la demande de congé</h1>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <form action="{{ route('demandes.update', $demande->id) }}" method="POST">
         @csrf
@@ -23,13 +34,13 @@
 
         <div class="mb-3">
             <label>Date de début</label>
-            <input type="date" name="date_debut" class="form-control" value="{{ $demande->date_debut }}" required>
-        </div>
+            <input type="date" name="date_debut" class="form-control" value="{{ $demande->date_debut ? $demande->date_debut->format('Y-m-d') : '' }}" required>
+            </div>
 
         <div class="mb-3">
             <label>Date de fin</label>
-            <input type="date" name="date_fin" class="form-control" value="{{ $demande->date_fin }}" required>
-        </div>
+            <input type="date" name="date_fin" class="form-control" value="{{ $demande->date_fin ? $demande->date_fin->format('Y-m-d') : '' }}" required>
+            </div>
 
         <div class="mb-3">
             <label>Nombre de jours ouvrables</label>

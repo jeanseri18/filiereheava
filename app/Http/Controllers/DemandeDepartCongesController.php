@@ -97,6 +97,7 @@ class DemandeDepartCongesController extends Controller
      */
     public function edit( $id)
     {
+        $demande = DemandeDepartConges::findOrFail($id);
         $superieurs = \App\Models\User::where('permissionrh', 'superieur')->get(); // Tu peux ajuster cela
 
         return view('demandes.edit', compact('demande','superieurs'));
@@ -105,30 +106,40 @@ class DemandeDepartCongesController extends Controller
     /**
      * Met à jour une demande.
      */
-    public function update(Request $request,  $id)
-    {
-        $demande = DemandeDepartConges::findOrFail($id);
+    public function update(Request $request, $id)
+{
+    $demande = DemandeDepartConges::findOrFail($id);
 
-        if ($demande->id_user !== Auth::id()) {
-            return redirect()->route('demandes.index')->with('error', 'Action non autorisée.');
-        }
-
-        $request->validate([
-            'motif' => 'required|string',
-            'date_debut' => 'required|date',
-            'date_fin' => 'required|date|after_or_equal:date_debut',
-            'nombre_jours_ouvrables' => 'required|integer|min:1',
-            'nombre_jours_calendaires' => 'required|integer|min:1',
-            'adresse_sejour' => 'required|string',
-            'id_superieur'=> 'required|exists:users,id',
-        ]);
-
-        $demande->update($request->only([
-            'motif', 'date_debut', 'date_fin', 'nombre_jours_ouvrables', 'nombre_jours_calendaires', 'adresse_sejour'
-        ]));
-
-        return redirect()->route('demandes.index')->with('success', 'Demande mise à jour avec succès.');
+    // Vérifie si la demande appartient à l'utilisateur connecté
+    if ($demande->id_user !== Auth::id()) {
+        return redirect()->route('demandes.index')->with('error', 'Action non autorisée.');
     }
+
+    // Validation des champs du formulaire
+    $request->validate([
+        'motif' => 'required|string',
+        'date_debut' => 'required|date',
+        'date_fin' => 'required|date|after_or_equal:date_debut',
+        'nombre_jours_ouvrables' => 'required|integer|min:1',
+        'nombre_jours_calendaires' => 'required|integer|min:1',
+        'adresse_sejour' => 'required|string',
+        'id_superieur' => 'required|exists:users,id',
+    ]);
+
+    // Mise à jour de la demande
+    $demande->update($request->only([
+        'motif', 
+        'date_debut', 
+        'date_fin', 
+        'nombre_jours_ouvrables', 
+        'nombre_jours_calendaires', 
+        'adresse_sejour',
+    ]));
+
+    // Redirection avec message de succès
+    return redirect()->route('demandes.index')->with('success', 'Demande mise à jour avec succès.');
+}
+
     /**
      * Supprime une demande.
      */
