@@ -15,6 +15,6 @@ class HistoryController extends Controller
                             ->get();
 
         // Passer les données à la vue
-        return view('history.index', compact('histories')); 
+        return view('history.index', compact('histories'));
     }
 }
