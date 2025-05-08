@@ -4,7 +4,7 @@
 <div class="container">
     <div class="card custom-card">
         <div class="card-body">
-            <h1 class="text-2xl font-bold mb-4">Créer un Ordre de Mission 🆕</h1>
+            <h1 class="text-2xl font-bold mb-4">Créer un Ordre de Mission </h1>
 
             @if($errors->any())
                 <div class="alert alert-danger">

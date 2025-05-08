@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row mb-4">
         <div class="col-md-9">
-            <h1 class="text-2xl font-bold">Mes Attestations 📄</h1>
+            <h1 class="text-2xl font-bold">Mes Attestations </h1>
         </div>
         <div class="col-md-3 text-end">
         @php
