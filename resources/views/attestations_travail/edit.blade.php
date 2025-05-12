@@ -27,9 +27,9 @@
         <div class="mb-3">
             <label for="type_contrat" class="form-label">Type de contrat</label>
             <select name="type_contrat" id="type_contrat" class="form-control">
-                <option value="CDI" {{ $certificat->type_contrat == 'CDI' ? 'selected' : '' }}>CDI</option>
-                <option value="CDD" {{ $certificat->type_contrat == 'CDD' ? 'selected' : '' }}>CDD</option>
-                <option value="Autre" {{ $certificat->type_contrat == 'Autre' ? 'selected' : '' }}>Autre</option>
+                <option value="CDI" {{ $attestation->type_contrat == 'CDI' ? 'selected' : '' }}>CDI</option>
+                <option value="CDD" {{ $attestation->type_contrat == 'CDD' ? 'selected' : '' }}>CDD</option>
+                <option value="Autre" {{ $attestation->type_contrat == 'Autre' ? 'selected' : '' }}>Autre</option>
             </select>
         </div>
   
