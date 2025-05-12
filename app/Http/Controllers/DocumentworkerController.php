@@ -67,7 +67,46 @@ class DocumentworkerController extends Controller
             $document = DocumentRh::findOrFail($id);
             return response()->file(storage_path("app/public/{$document->file_url}"));
         }
-    
+        public function edit($id)
+        {
+            $document = DocumentRh::findOrFail($id);
+            $categories = Categorie::all();
+            $sousCategories = SousCategorie::where('categorie_id', $document->famille)->get();
+            $users = User::all();
+        
+            return view('document_rh.edit', compact('document', 'categories', 'sousCategories', 'users'));
+        }
+        public function update(Request $request, $id)
+        {
+            $request->validate([
+                'nom_document' => 'required|string',
+                'categorie_id' => 'required|string',
+                'sous_categorie_id' => 'nullable|string',
+                'user_id' => 'required|exists:users,id',
+                'file_url' => 'nullable|file',
+            ]);
+        
+            $document = DocumentRh::findOrFail($id);
+        
+            if ($request->hasFile('file_url')) {
+                // Supprimer l'ancien fichier
+                Storage::delete('public/' . $document->file_url);
+        
+                // Enregistrer le nouveau
+                $filePath = $request->file('file_url')->store('documents_rh', 'public');
+                $document->file_url = $filePath;
+            }
+        
+            $document->update([
+                'nom_document' => $request->nom_document,
+                'famille' => $request->categorie_id,
+                'sous_famille' => $request->sous_categorie_id,
+                'user_id' => $request->user_id,
+                'file_url' => $document->file_url,
+            ]);
+        
+            return redirect()->route('document_rh.index')->with('success', 'Document mis à jour avec succès.');
+        }
         // Supprimer un document RH
         public function destroy($id)
         {
