@@ -25,7 +25,7 @@ use App\Http\Controllers\DemandeDepartCongesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\SousCategorieController;
-use App\Http\Controllers\DocumentRhController;
+use App\Http\Controllers\DocumentRhContoller;
 use App\Http\Controllers\AttestationController;
 use App\Http\Controllers\OrdreMissionController;
 use App\Http\Controllers\DemandeSpecialeController;
@@ -41,8 +41,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-Route::resource('document_rh', DocumentRhController::class);
-Route::get('/get-sous-categories/{id}', [DocumentRhController::class, 'getSousCategories']);
+Route::resource('document_rh', DocumentRhContoller::class);
+Route::get('/get-sous-categories/{id}', [DocumentRhContoller::class, 'getSousCategories']);
 
 Route::get('categories', [CategorieController::class, 'index'])->name('categories.index');
 Route::get('categories/create', [CategorieController::class, 'create'])->name('categories.create');
