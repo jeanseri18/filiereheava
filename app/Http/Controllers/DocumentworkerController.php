@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SousCategorie;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 use App\Models\DocumentRh;
-use App\Models\Categorie;
-use App\Models\SousCategorie;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-class DocumentrhContoller extends Controller
+class DocumentworkerController extends Controller
 {
-    //
-    
-    
-
-
-        // Afficher la liste des documents RH
+// Afficher la liste des documents RH
         public function index()
         {
             $user = Auth::user();
@@ -91,5 +86,4 @@ class DocumentrhContoller extends Controller
         $sousCategories = SousCategorie::where('categorie_id', $id)->get();
         return response()->json($sousCategories);
     }
-    }
-    
+}
