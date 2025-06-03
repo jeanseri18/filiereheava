@@ -79,12 +79,24 @@ class DemandeDepartCongesController extends Controller
     /**
      * Affiche une demande spécifique.
      */
-    public function show( $id)
-    {
-        $demande = DemandeDepartConges::findOrFail($id);
+public function show($id)
+{
+        set_time_limit(300);
 
-        return view('demandes.show', compact('demande'));
-    }
+    $demande = DemandeDepartConges::findOrFail($id);
+    $pdf = \PDF::loadView('demandes.show', compact('demande'));
+    $pdf->setPaper('a4');
+    // Réduire la qualité pour améliorer les performances
+    $pdf->setPaper('a4');
+    $pdf->setOption('dpi', 96); // Réduire la résolution
+    $pdf->setOption('defaultFont', 'DejaVu Sans');
+    $pdf->setOption('isRemoteEnabled', false); // Désactiver les ressources distantes
+    $pdf->setOption('debugKeepTemp', false);
+    $pdf->setOption('debugCss', false);
+    $pdf->setOption('debugLayout', false);
+    
+    return $pdf->stream('demande_conge_'.$id.'.pdf');
+}
     public function showvalidedoc( $id)
     {
         $demande = DemandeDepartConges::findOrFail($id);

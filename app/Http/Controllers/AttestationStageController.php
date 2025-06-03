@@ -54,11 +54,23 @@ class AttestationStageController extends Controller
     }
 
     // Afficher une attestation spécifique
-    public function show($id)
-    {
-        $attestation = AttestationStage::findOrFail($id);
-        return view('attestations_stage.show', compact('attestation'));
-    }
+public function show($id)
+{
+        set_time_limit(300);
+
+    $attestation = AttestationStage::findOrFail($id);
+    $pdf = \PDF::loadView('attestations_stage.show', compact('attestation'));
+      // Réduire la qualité pour améliorer les performances
+    $pdf->setPaper('a4');
+    $pdf->setOption('dpi', 96); // Réduire la résolution
+    $pdf->setOption('defaultFont', 'DejaVu Sans');
+    $pdf->setOption('isRemoteEnabled', false); // Désactiver les ressources distantes
+    $pdf->setOption('debugKeepTemp', false);
+    $pdf->setOption('debugCss', false);
+    $pdf->setOption('debugLayout', false);
+    
+    return $pdf->stream('attestation_stage_'.$id.'.pdf');
+}
 
     // Afficher le formulaire d'édition
     public function edit($id)

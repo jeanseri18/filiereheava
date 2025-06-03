@@ -21,38 +21,38 @@
 
     @stack('styles') {{-- Inclure les styles spécifiques à une page --}}
     <style>
-    .sidebar-brand {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 3.5rem;
-        padding: 0.8125rem 0.5rem;
-        overflow: hidden;
-        font-size: 1.25rem;
-        white-space: nowrap;
-        transition: width 0.3s ease-in-out;
-    }
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 3.5rem;
+            padding: 0.8125rem 0.5rem;
+            overflow: hidden;
+            font-size: 1.25rem;
+            white-space: nowrap;
+            transition: width 0.3s ease-in-out;
+        }
     </style>
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary" style="background-color:WHITE">
     <div class="app-wrapper" style="background-color:white">
         <nav class="app-header navbar navbar-expand bg-body" style="background-color:white">
-   
+
             <!--begin::Container-->
             <div class="container-fluid">
                 <!--begin::Start Navbar Links-->
-<ul class="navbar-nav">
-<li class="nav-item"> <a class="nav-link"  data-lte-toggle="sidebar" href="#" role="button" > <i
+                <ul class="navbar-nav">
+                    <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i
                                 data-lte-icon="menu" class="bi bi-list"></i> </a>
                     </li>
-                   
-</ul>
+
+                </ul>
                 <ul class="navbar-nav ms-auto">
-                    
+
                     <!--begin::Navbar Search-->
-                    <li class="nav-item"> <a class=" btn btn-success" href="{{ route('dashboardrh') }}" > basculer
-</a>
+                    <li class="nav-item"> <a class=" btn btn-success" href="{{ route('dashboardrh') }}"> basculer
+                        </a>
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i
                                 data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
@@ -120,7 +120,7 @@
                 <nav class="mt-2">
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
-                        
+
                         <!-- Tableau de bord -->
                         <li class="nav-item">
                             <a href="{{ route('dashboard') }}" class="nav-link" style="color:white">
@@ -227,11 +227,11 @@
             </div>
             <div class="app-content pt-0">
                 <!--begin::Container-->
-              
-                    <!--begin::Row-->
-                    @yield('content') {{-- Section pour le contenu principal --}}
 
-          
+                <!--begin::Row-->
+                @yield('content') {{-- Section pour le contenu principal --}}
+
+
                 <!--end::Container-->
             </div>
         </main>

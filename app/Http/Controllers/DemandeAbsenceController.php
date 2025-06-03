@@ -73,11 +73,39 @@ class DemandeAbsenceController extends Controller
 }
 
     // Afficher les détails d'une demande
+    // public function show($id)
+    // {
+    //     $demande = DemandeAbsence::findOrFail($id);
+    //     return view('demandes_absence.show', compact('demande'));
+    // }
+
     public function show($id)
-    {
-        $demande = DemandeAbsence::findOrFail($id);
-        return view('demandes_absence.show', compact('demande'));
-    }
+{
+   // Augmenter la limite de temps d'exécution
+    set_time_limit(300);
+    
+    $demande = DemandeAbsence::findOrFail($id);
+    
+    // Optimiser la génération du PDF
+    $pdf = \PDF::loadView('demandes_absence.show', compact('demande'));
+    
+    // Réduire la qualité pour améliorer les performances
+    $pdf->setPaper('a4');
+    $pdf->setOption('dpi', 96); // Réduire la résolution
+    $pdf->setOption('defaultFont', 'DejaVu Sans');
+    $pdf->setOption('isRemoteEnabled', false); // Désactiver les ressources distantes
+    $pdf->setOption('debugKeepTemp', false);
+    $pdf->setOption('debugCss', false);
+    $pdf->setOption('debugLayout', false);
+    
+    // Nom de fichier personnalisé
+    $filename = 'demande_absence_'.$demande->id.'_'.date('Ymd').'.pdf';
+    
+    // Télécharger le PDF
+    // return $pdf->download($filename);
+    // Alternative: Afficher le PDF dans le navigateur
+    return $pdf->stream($filename);
+}
 
     // Modifier une demande d'absence
     public function edit($id)

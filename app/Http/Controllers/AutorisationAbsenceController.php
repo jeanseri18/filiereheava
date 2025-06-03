@@ -40,11 +40,24 @@ class AutorisationAbsenceController extends Controller
         return redirect()->route('autorisations.index');
     }
 
-    public function show($id)
-    {
-        $autorisation = AutorisationAbsence::findOrFail($id);
-        return view('autorisations.show', compact('autorisation'));
-    }
+public function show($id)
+{
+        set_time_limit(300);
+
+    $autorisation = AutorisationAbsence::findOrFail($id);
+    $pdf = \PDF::loadView('autorisations.show', compact('autorisation'));
+    
+    // Optional: Set custom header/footer options if needed
+    $pdf->setPaper('a4');
+    $pdf->setOption('dpi', 96); // Réduire la résolution
+    $pdf->setOption('defaultFont', 'DejaVu Sans');
+    $pdf->setOption('isRemoteEnabled', false); // Désactiver les ressources distantes
+    $pdf->setOption('debugKeepTemp', false);
+    $pdf->setOption('debugCss', false);
+    $pdf->setOption('debugLayout', false);
+    
+    return $pdf->stream('autorisation_absence_'.$id.'.pdf');
+}
 
     public function edit($id)
     {

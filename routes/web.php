@@ -40,7 +40,32 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('attestations', AttestationController::class);
 });
 
+Route::middleware(['auth'])->group(function () {
+    // Liste des employés
+    Route::get('/personnel', [App\Http\Controllers\PersonnelController::class, 'index'])->name('personnel.index');
+    
+    // Afficher le formulaire de création
+    Route::get('/personnel/create', [App\Http\Controllers\PersonnelController::class, 'create'])->name('personnel.create');
+    
+    // Enregistrer un nouvel employé
+    Route::post('/personnel', [App\Http\Controllers\PersonnelController::class, 'store'])->name('personnel.store');
+    
+    // Afficher les détails d'un employé
+    Route::get('/personnel/{id}', [App\Http\Controllers\PersonnelController::class, 'show'])->name('personnel.show');
+    
+    // Afficher le formulaire d'édition
+    Route::get('/personnel/{id}/edit', [App\Http\Controllers\PersonnelController::class, 'edit'])->name('personnel.edit');
+    
+    // Mettre à jour un employé
+    Route::put('/personnel/{id}', [App\Http\Controllers\PersonnelController::class, 'update'])->name('personnel.update');
+    
+    // Supprimer un employé
+    Route::delete('/personnel/{id}', [App\Http\Controllers\PersonnelController::class, 'destroy'])->name('personnel.destroy');
+});
+
 Route::middleware('auth')->group(function () {
+
+    
 Route::resource('document_rh', DocumentworkerController::class);
 Route::get('/get-sous-categories/{id}', [DocumentworkerController::class, 'getSousCategories']);
 

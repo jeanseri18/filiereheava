@@ -136,6 +136,7 @@
 
                         @php
                         $permission = Auth::user()->permissionrh ?? null;
+                        $role = Auth::user()->role ?? null;
                         @endphp
 
                         @if(in_array($permission, ['rh', 'valideur']))
@@ -158,7 +159,13 @@
                                 <p>Document employé</p>
                             </a>
                         </li>
-                        
+                        <li class="nav-item">
+    <a href="{{ route('personnel.index') }}" class="nav-link" style="color:white">
+        <i class="nav-icon bi bi-people text-white"></i>
+        <p>Personnel</p>
+    </a>
+</li>
+
                         <li class="nav-item">
                             <a href="{{ route('autorisations.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-gear text-white"></i>
@@ -218,6 +225,15 @@
                      
                         
                         @if(in_array($permission, ['demandeur', 'superieur']))
+
+@if(in_array($role, ['manager', 'secretariat']))
+                                   <li class="nav-item">
+                            <a href="{{ route('attestations_travail.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-gear text-white"></i>
+                                <p>Attestation de travail</p>
+                            </a>
+                        </li>
+                        @endif
                         <li class="nav-item">
                             <a href="{{ route('demandes_absence.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-gear text-white"></i>

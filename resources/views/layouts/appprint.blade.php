@@ -1,95 +1,161 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="Test">
-    <meta name="author" content="ColorlibHQ">
-    <meta name="description" content="AdminLTE is a Free Bootstrap 5 Admin Dashboard.">
-    <meta name="keywords" content="bootstrap 5, admin dashboard, etc.">
-    <title>@yield('title', 'Dashboard')</title>
+    <meta name="title" content="FPH-CI Documents">
+    <meta name="author" content="FPH-CI">
+    <meta name="description" content="Documents officiels FPH-CI">
+    <title>@yield('title', 'Document FPH-CI')</title>
+    
+    <style>
+        @page {
+            margin: 1cm;
+        }
+        body {
+            font-family: 'Arial Narrow', Arial, sans-serif;
+            line-height: 1.3;
+            color: #000;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        .container-fluid {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        .col-md-2 {
+            flex: 0 0 16.666667%;
+            max-width: 16.666667%;
+        }
+        .col-md-5 {
+            flex: 0 0 41.666667%;
+            max-width: 41.666667%;
+        }
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+        .col-md-12 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-left {
+            text-align: left;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-end {
+            text-align: right;
+        }
+        .text-start {
+            text-align: left;
+        }
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
+        .mt-4 {
+            margin-top: 1.5rem;
+        }
+        .mt-5 {
+            margin-top: 3rem;
+        }
+        .py-3 {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        hr {
+            border: none;
+            height: 2px;
+            background-color: black;
+            margin: 0;
+            margin-top: 20px;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 10pt;
+        }
+        u {
+            text-decoration: underline;
+        }
+        strong {
+            font-weight: bold;
+        }
+        h3 {
+            font-size: 16pt;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        h5 {
+            font-size: 14pt;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-top: 5px;
+            margin-bottom: 8px;
+        }
+        .header-container {
+            margin-bottom: 20px;
+        }
+        .signature-container {
+            margin-top: 20px;
+        }
+        .content-container {
+            margin-bottom: 60px; /* Pour éviter que le contenu ne chevauche le footer */
+        }
+    </style>
 
-    <!-- Global styles -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/styles/overlayscrollbars.min.css"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="../../dist/css/adminlte.css">
-
-    @stack('styles') {{-- Inclure les styles spécifiques à une page --}}
-
-  
+    @stack('styles')
 </head>
-
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary" style="background-color:WHITE">
-    <div class="app-wrapper" style="background-color:white">
-       
-        <main class="app-main" style="background-color:white">
-            <div class="app-content-header"></div>
-            <div class="app-content">
-                <!--begin::Container-->
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-5">
-                        <img
-                src="https://myfiles.space/user_files/258325_0814ee78b0547536/1739287656_fiche-d-attestation-de-travail/1739287656_fiche-d-attestation-de-travail-2.jpeg"
-                width="184" height="88" alt="C:\Users\SECRETARIAT\Downloads\IMG-20200624-WA0006.jpg"
-                >          
-            <br> 
-            <br> 
-            <h5><strong>DIRECTION EXECUTIVE  </strong></h5>            </div>
-                        <div class="col-md-5">
-                        <h5><strong>  FEDERATION DES O.P.A DE PRODUCTEURS <br>DE LA FILIERE HEVEA DE COTE D’IVOIRE </h5></strong>
-                        </div>
-                        <div class="col-md-2"></div>
-                    </div>
-
-                    <!-- Contenu principal -->
-                    @yield('content') 
-
-                </div>
-                <!--end::Container-->
+<body>
+    <div class="container">
+        <div class="row header-container">
+            <div class="col-md-5">
+@if(file_exists(public_path('image.png')))
+    <img src="{{ public_path('image.png') }}" width="120" height="58" alt="Logo FPH-CI">
+@else
+    <!-- Texte alternatif -->
+    <h3>FPH-CI</h3>
+@endif                <h5><strong>DIRECTION EXECUTIVE</strong></h5>
+            </div> 
+            <div class="col-md-12"  style="text-align: right;">
+                <h5><strong>FEDERATION DES O.P.A DE PRODUCTEURS<br>DE LA FILIERE HEVEA DE COTE D'IVOIRE</strong></h5>
             </div>
-        </main>
+           
+        </div>
+
+        <div class="content-container">
+            @yield('content')
+        </div>
     </div>
 
-    <!-- Pied de page -->
-      <!-- Pied de page -->
-      <footer class="text-center mt-4" >
-        <!-- Ligne horizontale pleine largeur -->
-        <hr style="width: 100%; height: 5px; border: none; background-color: black; margin: 0;">
-
-        <div class="container py-3">
-            <p style="font-family: 'Arial Narrow'; font-size: 10pt; margin: 0;">
-                <strong>Siège social :</strong> Abidjan Cocody Angré, Terminus 81-82, entre le
-                collège Commandant Cousteau et la pharmacie du Jubilé,  
-                <strong>BP 910 Abidjan 28</strong>,  
-                <strong>Tél :</strong> 27-22-47-59-62,  
+    <footer>
+        <hr>
+        <div class="container-fluid py-3">
+            <p style="font-size: 9pt; margin: 0;">
+                <strong>Siège social :</strong> Abidjan Cocody Angré, Terminus 81-82, entre le 
+                collège Commandant Cousteau et la pharmacie du Jubilé,
+                <strong>BP 910 Abidjan 28</strong>,
+                <strong>Tél :</strong> 27-22-47-59-62,
                 <strong>Email :</strong> info@fphci.com
             </p>
         </div>
     </footer>
-
-    <!-- Global scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous">
-    </script>
-    <script src="../../dist/js/adminlte.js"></script>
-
-    @stack('scripts') {{-- Inclure les scripts spécifiques à une page --}}
-
-    <!-- Script pour imprimer automatiquement -->
-    <script>
-        window.onload = function() {
-            window.print();
-        };
-    </script>
-
 </body>
 </html>

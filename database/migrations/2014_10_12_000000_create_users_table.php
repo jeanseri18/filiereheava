@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('file_url')->nullable();
 
-            $table->enum('role', ['vise', 'directeurexecutif', 'pca','secretariat','admin','user','manager']);
+            $table->enum('role', ['vise', 'directeurexecutif', 'pca','secretariat','admin','user','manager','stagiaire']);
            
             $table->enum('permissionrh', ['rh', 'demandeur', 'valideur','superieur']);
             $table->string('fonction')->nullable();

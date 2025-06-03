@@ -54,11 +54,22 @@ class AttestationController extends Controller
 
 
     
-    public function show(Attestation $attestation)
-    {
-        // $this->authorize('view', $attestation);
-        return view('attestations.show', compact('attestation'));
-    }
+public function show(Attestation $attestation)
+{
+        set_time_limit(300);
+
+    // $this->authorize('view', $attestation);
+    $pdf = \PDF::loadView('attestations.show', compact('attestation'));
+    // Réduire la qualité pour améliorer les performances
+    $pdf->setPaper('a4');
+    $pdf->setOption('dpi', 96); // Réduire la résolution
+    $pdf->setOption('defaultFont', 'DejaVu Sans');
+    $pdf->setOption('isRemoteEnabled', false); // Désactiver les ressources distantes
+    $pdf->setOption('debugKeepTemp', false);
+    $pdf->setOption('debugCss', false);
+    $pdf->setOption('debugLayout', false);
+    return $pdf->stream('attestation_reprise_'.$attestation->id.'.pdf');
+}
 
     public function destroy(Attestation $attestation)
     {
