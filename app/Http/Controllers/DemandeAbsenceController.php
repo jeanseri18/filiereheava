@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\DemandeAbsence;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DemandeAbsenceController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
     // Afficher toutes les demandes d'absence
     public function index()
     {
@@ -59,7 +66,7 @@ class DemandeAbsenceController extends Controller
    // }
 
     // Créer la demande d'absence si la limite n'est pas atteinte
-    DemandeAbsence::create([
+    $demande = DemandeAbsence::create([
         'id_user' => Auth::id(),
         'nombre_jours' => $request->nombre_jours,
         'date_debut' => $request->date_debut,
@@ -68,6 +75,9 @@ class DemandeAbsenceController extends Controller
         'date_creation' => now(),
         'id_superieur' => $request->id_superieur,
     ]);
+
+    // Envoyer notification aux RH, supérieurs et validateurs
+    $this->notificationService->notifyNewRequest($demande, 'demande d\'absence', Auth::user());
 
     return redirect()->route('demandes_absence.user')->with('success', 'Demande d\'absence créée avec succès.');
 }
@@ -149,6 +159,9 @@ class DemandeAbsenceController extends Controller
         $demande->date_validation = now();
         $demande->save();
 
+        // Envoyer notification de validation à l'utilisateur
+        $this->notificationService->notifyValidation($demande, 'demande d\'absence', true, Auth::user());
+
         return redirect()->route('demandes_absence.index')->with('success', 'Demande validée avec succès');
     }
 
@@ -163,10 +176,13 @@ class DemandeAbsenceController extends Controller
         }
 
         // Mettre à jour la demande pour la rejeter
-        $demande->validation_superieur = false;
+        $demande->validation_superieur = 0;
         $demande->date_validation = now();
         $demande->save();
 
-        return redirect()->route('demandes_absence.index')->with('success', 'Demande rejetée avec succès');
+        // Envoyer notification de rejet à l'utilisateur
+        $this->notificationService->notifyValidation($demande, 'demande d\'absence', false, Auth::user());
+
+        return redirect()->route('demandes_absence.index')->with('error', 'Demande rejetée.');
     }
 }

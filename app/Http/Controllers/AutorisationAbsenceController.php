@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\AutorisationAbsence;
 use App\Models\User; // Pour récupérer les utilisateurs
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AutorisationAbsenceController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
     public function index()
     {
         $user = Auth::user();
@@ -36,7 +43,11 @@ class AutorisationAbsenceController extends Controller
             'raison' => 'required',
         ]);
 
-        AutorisationAbsence::create($request->all());
+        $autorisation = AutorisationAbsence::create($request->all());
+        
+        // Envoyer notification aux RH, supérieurs et validateurs
+        $this->notificationService->notifyNewRequest($autorisation, 'autorisation d\'absence', Auth::user());
+        
         return redirect()->route('autorisations.index');
     }
 
@@ -98,6 +109,9 @@ public function show($id)
         $autorisation->date_validation = now(); // Ajoutez la date de validation
         $autorisation->save();
 
+        // Envoyer notification de validation à l'utilisateur
+        $this->notificationService->notifyValidation($autorisation, 'autorisation d\'absence', true, Auth::user());
+
         // Rediriger vers la liste des autorisations avec un message de succès
         return redirect()->route('autorisations.index')->with('success', 'L\'autorisation a été validée avec succès.');
     }
@@ -111,6 +125,9 @@ public function show($id)
         $autorisation->validation_directeur = false;
         $autorisation->date_validation = null; // Annuler la date de validation
         $autorisation->save();
+
+        // Envoyer notification de rejet à l'utilisateur
+        $this->notificationService->notifyValidation($autorisation, 'autorisation d\'absence', false, Auth::user());
 
         // Rediriger vers la liste des autorisations avec un message de succès
         return redirect()->route('autorisations.index')->with('error', 'L\'autorisation a été rejetée.');

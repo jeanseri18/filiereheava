@@ -9,11 +9,18 @@ use App\Models\User;
 use App\Models\ShareGroup;
 use App\Models\Share;
 use App\Models\SharedUser;
+use App\Services\NotificationService;
 
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
     // Affiche la liste des documents
     public function index(Request $request)
     {
@@ -209,6 +216,9 @@ public function rejected(Request $request)
         'status' => 'ajouté',  // Statut initial
     ]);
 
+    // Envoyer notification de création aux RH, supérieurs et validateurs
+    $this->notificationService->notifyDocumentCreation($document, auth()->user());
+
     // Gestion du partage selon le type
     if ($request->type_share === 'privé' && $request->has('users')) {
         // Partage avec des utilisateurs spécifiques
@@ -223,6 +233,11 @@ public function rejected(Request $request)
                 'id_document' => $document->id,
                 'type_share' => 'utilisateur',
             ]);
+            // Envoyer notification de partage à chaque utilisateur
+            $sharedUser = User::find($userId);
+            if ($sharedUser) {
+                $this->notificationService->notifyDocumentShared($document, $sharedUser, auth()->user(), 'utilisateur');
+            }
         }
     } elseif ($request->type_share === 'groupe' && $request->has('groups')) {
         // Partage avec des groupes
@@ -235,6 +250,8 @@ public function rejected(Request $request)
                     'id_document' => $document->id,
                     'type_share' => 'groupe',
                 ]);
+                // Envoyer notification de partage à chaque membre du groupe
+                $this->notificationService->notifyDocumentShared($document, $member, auth()->user(), 'groupe');
             }
         }
     }
@@ -308,6 +325,11 @@ public function update(Request $request, Document $document)
                 'id_document' => $document->id,
                 'type_share' => 'privé',
             ]);
+            // Envoyer notification de partage à chaque utilisateur
+            $sharedUser = User::find($userId);
+            if ($sharedUser) {
+                $this->notificationService->notifyDocumentShared($document, $sharedUser, auth()->user(), 'utilisateur');
+            }
         }
     } elseif ($request->type_share === 'groupe' && $request->has('groups')) {
         // Partage avec des groupes
@@ -320,6 +342,8 @@ public function update(Request $request, Document $document)
                     'id_document' => $document->id,
                     'type_share' => 'groupe',
                 ]);
+                // Envoyer notification de partage à chaque membre du groupe
+                $this->notificationService->notifyDocumentShared($document, $member, auth()->user(), 'groupe');
             }
         }
     }

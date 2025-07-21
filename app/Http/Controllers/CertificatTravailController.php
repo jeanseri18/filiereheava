@@ -1,15 +1,21 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Models\CertificatTravail;
 use App\Models\User;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CertificatTravailController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
     // Afficher la liste des certificats
     public function index()
     {
@@ -39,12 +45,15 @@ class CertificatTravailController extends Controller
             'type_contrat' => 'required|in:CDI,CDD,Autre',
         ]);
 
-        CertificatTravail::create([
+        $certificat = CertificatTravail::create([
             'id_user' => $request->id_user,
             'date_debut' => $request->date_debut,
             'date_fin' => $request->date_fin,
             'type_contrat' => $request->type_contrat,
         ]);
+
+        // Envoyer notification aux RH, supérieurs et validateurs
+        $this->notificationService->notifyNewRequest($certificat, 'certificat de travail', Auth::user());
 
         return redirect()->route('certificats.index')->with('success', 'Certificat de travail créé avec succès.');
     }
@@ -102,6 +111,9 @@ class CertificatTravailController extends Controller
         $certificat->date_validation = now();
         $certificat->save();
 
+        // Envoyer notification de validation à l'utilisateur
+        $this->notificationService->notifyValidation($certificat, 'certificat de travail', true, Auth::user());
+
         return redirect()->route('certificats.index')->with('success', 'Certificat validé avec succès.');
     }
 
@@ -112,6 +124,9 @@ class CertificatTravailController extends Controller
         $certificat->validation_directeur = false;
         $certificat->date_validation = null;
         $certificat->save();
+
+        // Envoyer notification de rejet à l'utilisateur
+        $this->notificationService->notifyValidation($certificat, 'certificat de travail', false, Auth::user());
 
         return redirect()->route('certificats.index')->with('error', 'Certificat rejeté.');
     }

@@ -3,11 +3,18 @@ namespace App\Http\Controllers;
 
 use App\Models\AttestationTravail;
 use App\Models\User;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AttestationTravailController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
     // Afficher la liste des attestations de travail
     public function index()
     {
@@ -37,7 +44,10 @@ class AttestationTravailController extends Controller
 
         ]);
 
-        AttestationTravail::create($request->all());
+        $attestation = AttestationTravail::create($request->all());
+
+        // Envoyer notification aux RH, supérieurs et validateurs
+        $this->notificationService->notifyNewRequest($attestation, 'attestation de travail', Auth::user());
 
         return redirect()->route('attestations_travail.index')->with('success', 'Attestation de travail créée avec succès.');
     }
@@ -98,10 +108,13 @@ public function show($id)
     public function validateAttestation($id)
     {
         $attestation = AttestationTravail::findOrFail($id);
-              // Appeler la méthode validateAttestation() dans le modèle
-              $attestation->validation_directeur = true;
-              $attestation->date_validation = now(); // Ajoutez la date de validation
-              $attestation->save();
+        // Appeler la méthode validateAttestation() dans le modèle
+        $attestation->validation_directeur = true;
+        $attestation->date_validation = now(); // Ajoutez la date de validation
+        $attestation->save();
+
+        // Envoyer notification de validation à l'utilisateur
+        $this->notificationService->notifyValidation($attestation, 'attestation de travail', true, Auth::user());
 
         return redirect()->route('attestations_travail.index')->with('success', 'Attestation validée.');
     }
@@ -115,6 +128,10 @@ public function show($id)
         $attestation->validation_directeur = false;
         $attestation->date_validation = null; // Annuler la date de validation
         $attestation->save();
+
+        // Envoyer notification de rejet à l'utilisateur
+        $this->notificationService->notifyValidation($attestation, 'attestation de travail', false, Auth::user());
+
         return redirect()->route('attestations_travail.index')->with('error', 'Attestation rejetée.');
     }
 }

@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\DemandeDepartConges;
 use App\Models\Service;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DemandeDepartCongesController extends Controller
 {
+    protected $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
     /**
      * Affiche la liste des demandes.
      */
@@ -61,7 +68,7 @@ class DemandeDepartCongesController extends Controller
         }
     
         // Créer la demande si la limite n'est pas atteinte
-        DemandeDepartConges::create([
+        $demande = DemandeDepartConges::create([
             'id_user' => Auth::id(),
             'service_secteur' => $request->service_secteur,
             'motif' => $request->motif,
@@ -72,6 +79,9 @@ class DemandeDepartCongesController extends Controller
             'adresse_sejour' => $request->adresse_sejour,
             'id_superieur' => $request->id_superieur,
         ]);
+    
+        // Envoyer notification aux RH, supérieurs et validateurs
+        $this->notificationService->notifyNewRequest($demande, 'demande de congé', Auth::user());
     
         return redirect()->route('demandes.index')->with('success', 'Demande créée avec succès.');
     }
@@ -162,40 +172,54 @@ public function show($id)
         $demande->delete();
         return redirect()->route('demandes.index')->with('success', 'Demande supprimée avec succès.');
     }
- // Valider la demande d'absence par le supérieur
- public function validateDemande($id)
- {
-     $demande = DemandeDepartConges::findOrFail($id);
+    // Valider la demande de congé par le supérieur
+    public function validateDemande($id)
+    {
+        $demande = DemandeDepartConges::findOrFail($id);
 
-     // Vérifier si l'utilisateur connecté est bien le supérieur
-     if ($demande->id_superieur != Auth::id()  && !in_array(Auth::user()->permissionrh, ['rh', 'valideur'])) {
-         return redirect()->route('demandes.index')->with('error', 'Vous n\'êtes pas autorisé à valider cette demande.');
-     }
+        // Vérifier si l'utilisateur connecté est bien le supérieur
+        if ($demande->id_superieur != Auth::id() && !in_array(Auth::user()->permissionrh, ['rh', 'valideur'])) {
+            return redirect()->route('demandes.index')->with('error', 'Vous n\'êtes pas autorisé à valider cette demande.');
+        }
 
-     // Mettre à jour la demande pour la valider
-     $demande->avis_superieur = true;
-     $demande->date_validation = now();
-     $demande->save();
+        // Mettre à jour la demande pour la valider
+        $demande->avis_superieur = true;
+        $demande->date_validation = now();
+        $demande->save();
 
-     return redirect()->route('demandes.index')->with('success', 'Demande validée avec succès');
- }
+        // Envoyer notification de validation à l'utilisateur
+        $this->notificationService->notifyValidation($demande, 'demande de congé', true, Auth::user());
 
- // Rejeter la demande d'absence par le supérieur
- public function rejectDemande($id)
- {
-     $demande = DemandeDepartConges::findOrFail($id);
+        return redirect()->route('demandes.index')->with('success', 'Demande validée avec succès');
+    }
 
-     // Vérifier si l'utilisateur connecté est bien le supérieur
-     if ($demande->id_superieur != Auth::id() && !in_array(Auth::user()->permissionrh, ['rh', 'valideur'])) {
-         return redirect()->route('demandes.index')->with('error', 'Vous n\'êtes pas autorisé à rejeter cette demande.');
-     }
+    // Rejeter la demande de congé par le supérieur
+    public function rejectDemande($id)
+    {
+        $demande = DemandeDepartConges::findOrFail($id);
+
+        // Vérifier si l'utilisateur connecté est bien le supérieur
+        if ($demande->id_superieur != Auth::id() && !in_array(Auth::user()->permissionrh, ['rh', 'valideur'])) {
+            return redirect()->route('demandes.index')->with('error', 'Vous n\'êtes pas autorisé à rejeter cette demande.');
+        }
+
+        // Mettre à jour la demande pour la rejeter
+        $demande->avis_superieur = false;
+        $demande->date_validation = now();
+        $demande->save();
+
+        // Envoyer notification de rejet à l'utilisateur
+        $this->notificationService->notifyValidation($demande, 'demande de congé', false, Auth::user());
+
+        return redirect()->route('demandes.index')->with('error', 'Demande rejetée.');
+    }
 
      // Mettre à jour la demande pour la rejeter
-     $demande->avis_superieur = false;
-     $demande->date_validation = now();
-     $demande->save();
+//      $demande->avis_superieur = false;
+//      $demande->date_validation = now();
+//      $demande->save();
 
-     return redirect()->route('demandes.index')->with('success', 'Demande rejetée avec succès');
- }
+//      return redirect()->route('demandes.index')->with('success', 'Demande rejetée avec succès');
+//  }
 }
 
