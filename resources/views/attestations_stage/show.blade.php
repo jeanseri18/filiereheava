@@ -8,7 +8,7 @@
 </h1>
 
 <div class="text-center mb-4" style="margin-top: 30px;">
-    <h3><strong><u>ATTESTATION DE STAGE : {{$attestation->id }}</u></strong></h3>
+    <h3><strong><u>ATTESTATION DE STAGE </u></strong></h3>
 </div>
 
 <div style="text-align: justify; font-size: 12pt;">
@@ -21,8 +21,8 @@
 
     <p>
         Ledit stage s'est déroulé au bureau FPH-CI du secteur hévéicole de
-        <strong>{{ $attestation->secteur }}</strong>, du <strong>{{ date('d/m/Y', strtotime($attestation->date_debut)) }}</strong>
-        au <strong>{{ date('d/m/Y', strtotime($attestation->date_fin)) }}</strong>.
+        <strong>{{ $attestation->secteur }}</strong>, du <strong>{{ \Carbon\Carbon::parse($attestation->date_debut)->locale('fr')->isoFormat('D MMMM YYYY') }}</strong>
+        au <strong>{{ \Carbon\Carbon::parse($attestation->date_fin)->locale('fr')->isoFormat('D MMMM YYYY') }}</strong>.
     </p>
 
     <p>
@@ -32,7 +32,7 @@
 
 <div style="margin-top: 80px;">
     <p class="text-end">
-        Fait à Abidjan, le <strong>{{ now()->format('d/m/Y') }}</strong>
+        Fait à Abidjan, le <strong>{{ now()->locale('fr')->isoFormat('D MMMM YYYY') }}</strong>
     </p>
     <p class="text-end" style="margin-top: 10px;">
         <strong>Le Directeur Exécutif</strong>
@@ -42,8 +42,8 @@
         <strong>GBAHI Djoua Luc</strong>
     </p>
     
-    <p class="text-end" style="color:green; margin-top: 5px;">
+    {{-- <p class="text-end" style="color:green; margin-top: 5px;">
         <strong>{{ $attestation->validation_directeur ? 'Validée' : 'Non Validée' }}</strong>
-    </p>
+    </p> --}}
 </div>
 @endsection

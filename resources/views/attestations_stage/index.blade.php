@@ -36,7 +36,7 @@
                         <th>Durée Stage</th>
                         <th>Secteur</th>
                         <th>Dates</th>
-                        <th>Statut</th>
+                        <!-- <th>Statut</th> -->
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -49,12 +49,12 @@
                         <td>{{ $attestation->secteur }}</td>
                         <td>{{ $attestation->date_debut->format('d/m/Y') }} -
                             {{ $attestation->date_fin->format('d/m/Y') }}</td>
-                        <td> @if($attestation->validation_directeur)
-                            <span class="text-success">Validée</span>
+                        <!-- <td> @if($attestation->validation_directeur) -->
+                            <!-- <span class="text-success">Validée</span>
                             @else
                             <span class="text-danger">Non validée</span>
-                            @endif
-                        </td>
+                            @endif -->
+                        <!-- </td> -->
                         <td>
                             <div class="d-flex gap-2">
                                 <a href="{{ route('attestations_stage.show', $attestation->id) }}"

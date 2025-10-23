@@ -40,4 +40,28 @@ class DemandeDepartConges extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'service_secteur', 'id');
+    }
+
+    public function superieur()
+    {
+        return $this->belongsTo(User::class, 'id_superieur');
+    }
+
+    public function getLastLeaveDate()
+    {
+        return DemandeDepartConges::where('id_user', $this->id_user)
+            ->where('id', '!=', $this->id)
+            ->where('avis_superieur', true)
+            ->orderBy('date_fin', 'desc')
+            ->first()?->date_fin;
+    }
+
+    public function attestationConge()
+    {
+        return $this->hasOne(AttestationConge::class, 'demande_conge_id');
+    }
 }

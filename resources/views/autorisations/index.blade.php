@@ -35,7 +35,7 @@
                 <th>Date de fin</th>
                 <th>Nombre de jours</th>
                 <th>Raison</th>
-                <th>Validation Directeur</th>
+                <!-- <th>Validation Directeur</th> -->
                 <th>Actions</th>
             </tr>
         </thead>
@@ -50,13 +50,13 @@
                 <td>{{ $autorisation->date_fin->format('d/m/Y') }}</td>
                 <td>{{ $autorisation->nombre_jours }}</td>
                 <td>{{ $autorisation->raison }}</td>
-                <td>
+                <!-- <td>
                     @if($autorisation->validation_directeur)
                     <span class="text-success">Validée</span>
                     @else
                     <span class="text-danger">Non validée</span>
                     @endif
-                </td>
+                </td> -->
                 <td> <a href="{{ route('autorisations.show', $autorisation->id) }}"
                         class="btn btn-info btn-sm">Afficher</a>
 

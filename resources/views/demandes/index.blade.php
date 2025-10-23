@@ -15,6 +15,9 @@
     <a href="{{ route('demandes.create') }}" class="btn btn-success mb-3">Nouvelle demande</a>
     @endif
     </div>    </div>
+
+        <a href="{{ route('demandes.create') }}" class="btn btn-success mb-3">Nouvelle demande</a>
+
 <br>
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -49,7 +52,8 @@
                     @endif
                 </td>
                     <td>
-                        <a href="{{ route('demandes.show', $demande) }}" class="btn btn-info btn-sm">Voir</a>
+                        <!-- <a href="{{ route('demandes.show', $demande) }}" class="btn btn-info btn-sm">Voir</a> -->
+                        <a href="{{ route('demandes.pdf', $demande) }}" class="btn btn-secondary btn-sm" target="_blank">voir</a>
                         <a href="{{ route('demandes.edit', $demande) }}" class="btn btn-warning btn-sm">Modifier</a>
                         @if(in_array($permission, ['rh', 'superieur','valideur']))
                         @if($demande->avis_superieur)

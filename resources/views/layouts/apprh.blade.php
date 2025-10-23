@@ -197,6 +197,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('attestations_conge.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-file-earmark-text text-white"></i>
+                                <p>Attestations de Congé</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('demandes_absence.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-gear text-white"></i>
                                 <p>Demande d'absence</p>

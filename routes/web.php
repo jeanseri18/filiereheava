@@ -29,6 +29,7 @@ use App\Http\Controllers\DocumentworkerController;
 use App\Http\Controllers\AttestationController;
 use App\Http\Controllers\OrdreMissionController;
 use App\Http\Controllers\DemandeSpecialeController;
+use App\Http\Controllers\AttestationCongeController;
 
 Route::resource('demandes_speciales', DemandeSpecialeController::class);
 Route::patch('/demandes_speciales/{id}/valider', [DemandeSpecialeController::class, 'valider'])->name('demandes_speciales.valider');
@@ -89,6 +90,7 @@ Route::get('/demandes', [DemandeDepartCongesController::class, 'index'])->name('
 Route::get('/demandes/create', [DemandeDepartCongesController::class, 'create'])->name('demandes.create');
 Route::post('/demandes', [DemandeDepartCongesController::class, 'store'])->name('demandes.store');
 Route::get('/demandes/{id}', [DemandeDepartCongesController::class, 'show'])->name('demandes.show');
+Route::get('/demandes/{id}/pdf', [DemandeDepartCongesController::class, 'generatePdf'])->name('demandes.pdf');
 Route::get('/demandesvalide/{id}', [DemandeDepartCongesController::class, 'showvalidedoc'])->name('demandes.showvalidedoc');
 Route::get('/demandes/{id}/edit', [DemandeDepartCongesController::class, 'edit'])->name('demandes.edit');
 Route::put('/demandes/{id}', [DemandeDepartCongesController::class, 'update'])->name('demandes.update');
@@ -365,5 +367,12 @@ Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
     Route::put('/{id}', [UserController::class, 'update'])->name('update');
     Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+});
+
+// Routes pour les attestations de congé
+Route::middleware(['auth'])->group(function () {
+    Route::resource('attestations_conge', AttestationCongeController::class);
+    Route::post('/attestations_conge/{id}/valider', [AttestationCongeController::class, 'valider'])->name('attestations_conge.valider');
+    Route::post('/attestations_conge/{id}/rejeter', [AttestationCongeController::class, 'rejeter'])->name('attestations_conge.rejeter');
 });
 //

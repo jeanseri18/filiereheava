@@ -22,4 +22,9 @@ class Attestation extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function serviceRelation()
+    {
+        return $this->belongsTo(Service::class, 'service', 'nom');
+    }
 }

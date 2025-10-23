@@ -8,7 +8,7 @@
 </h1>
 
 <div class="text-center mb-4" style="margin-top: 30px;">
-    <h3><strong><u>ATTESTATION DE TRAVAIL : {{ $attestation->id }}</u></strong></h3>
+    <h3><strong><u>ATTESTATION DE TRAVAIL </u></strong></h3>
 </div>
 
 <div style="text-align: justify; font-size: 12pt;">
@@ -16,7 +16,7 @@
         Je soussigné <strong>GBAHI Djoua Luc</strong>, Directeur Exécutif de la Fédération des OPA de Producteurs
         de la Filière Hévéa de Côte d'Ivoire (FPH-CI), atteste que <strong>M./Mme {{ $attestation->user->nom }}</strong>,
         de numéro matricule <strong>{{ $attestation->user->matricule }}</strong>, travaille au sein de ma structure
-        depuis le <strong>{{ $attestation->date_embauche->format('d/m/Y') }}</strong>.
+        depuis le <strong>{{ $attestation->date_embauche->locale('fr')->isoFormat('D MMMM YYYY') }}</strong>.
     </p>
 
     <p>
@@ -31,7 +31,7 @@
 
 <div style="margin-top: 80px;">
     <p class="text-end">
-        Fait à Abidjan, le <strong>{{ $attestation->created_at->format('d/m/Y') }}</strong>
+        Fait à Abidjan, le <strong>{{ $attestation->created_at->locale('fr')->isoFormat('D MMMM YYYY') }}</strong>
     </p>
     <p class="text-end" style="margin-top: 10px;">
         <strong>Le Directeur Exécutif</strong>
@@ -41,8 +41,8 @@
         <strong>GBAHI Djoua Luc</strong>
     </p>
     
-    <p class="text-end" style="color:green; margin-top: 5px;">
+    {{-- <p class="text-end" style="color:green; margin-top: 5px;">
         <strong>{{ $attestation->validation_directeur ? 'Validée' : 'Non validée' }}</strong>
-    </p>
+    </p> --}}
 </div>
 @endsection

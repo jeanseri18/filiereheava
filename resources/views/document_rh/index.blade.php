@@ -64,8 +64,8 @@
                     <tr>
                         <td>{{ $document->nom_document }}</td>
                         <td>{{ $document->user->nom }}</td>
-                        <td>{{ $document->famille }}</td>
-                        <td>{{ $document->sous_famille }}</td>
+                        <td>{{ $document->categorie ? $document->categorie->nom : 'N/A' }}</td>
+                        <td>{{ $document->sousCategorie ? $document->sousCategorie->nom : 'N/A' }}</td>
                         <td>
                             @php
                             $extension = pathinfo('storage/'.$document->file_url, PATHINFO_EXTENSION);

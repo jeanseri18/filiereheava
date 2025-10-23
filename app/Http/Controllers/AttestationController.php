@@ -15,8 +15,8 @@ class AttestationController extends Controller
 
         $autorisations = in_array($user->permissionrh, ['rh', 'validateur'])
             ?
-        $attestations = Attestation::all():
-        $attestations = Attestation::where('user_id', auth()->id())->get();
+        $attestations = Attestation::with(['user.service'])->get():
+        $attestations = Attestation::with(['user.service'])->where('user_id', auth()->id())->get();
         return view('attestations.index', compact('attestations'));
 
     }
@@ -59,6 +59,7 @@ public function show(Attestation $attestation)
         set_time_limit(300);
 
     // $this->authorize('view', $attestation);
+    $attestation->load(['user.service']);
     $pdf = \PDF::loadView('attestations.show', compact('attestation'));
     // Réduire la qualité pour améliorer les performances
     $pdf->setPaper('a4');

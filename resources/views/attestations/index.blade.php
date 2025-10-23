@@ -46,7 +46,7 @@
                             <tr>
                                 <td>{{ $attestation->nom }}</td>
                                 <td>{{ $attestation->poste }}</td>
-                                <td>{{ $attestation->service }}</td>
+                                <td>{{ $attestation->user->service->nom ?? $attestation->service }}</td>
                                 <td>{{ \Carbon\Carbon::parse($attestation->date_reprise)->format('d/m/Y') }}</td>
                                 <td>{{ $attestation->lieu }}</td>
                                 <td class="text-center">

@@ -24,8 +24,8 @@ class DemandeDepartCongesController extends Controller
         $user = Auth::user();
 
         $demandes = in_array($user->permissionrh, ['rh', 'validateur'])
-            ? DemandeDepartConges::all()
-            : DemandeDepartConges::where('id_user', $user->id)->orwhere('id_superieur', $user->id)->get();
+            ? DemandeDepartConges::with(['user', 'service', 'superieur'])->get()
+            : DemandeDepartConges::with(['user', 'service', 'superieur'])->where('id_user', $user->id)->orwhere('id_superieur', $user->id)->get();
     
         return view('demandes.index', compact('demandes'));
     }
@@ -50,9 +50,12 @@ class DemandeDepartCongesController extends Controller
             'motif' => 'required|string',
             'date_debut' => 'required|date',
             'date_fin' => 'required|date|after_or_equal:date_debut',
-            'nombre_jours_ouvrables' => 'required|integer|min:1',
+            'nombre_jours_ouvrables' => 'nullable|integer|min:1',
             'nombre_jours_calendaires' => 'required|integer|min:1',
             'adresse_sejour' => 'required|string',
+            'nom_interimaire' => 'nullable|string|max:255',
+            'qualification_interimaire' => 'nullable|string|max:255',
+            'fonction_interimaire' => 'nullable|string|max:255',
             'id_superieur' => 'required|exists:users,id',
         ]);
     
@@ -74,9 +77,12 @@ class DemandeDepartCongesController extends Controller
             'motif' => $request->motif,
             'date_debut' => $request->date_debut,
             'date_fin' => $request->date_fin,
-            'nombre_jours_ouvrables' => $request->nombre_jours_ouvrables,
+            'nombre_jours_ouvrables' => $request->nombre_jours_ouvrables ?? 1,
             'nombre_jours_calendaires' => $request->nombre_jours_calendaires,
             'adresse_sejour' => $request->adresse_sejour,
+            'nom_interimaire' => $request->nom_interimaire,
+            'qualification_interimaire' => $request->qualification_interimaire,
+            'fonction_interimaire' => $request->fonction_interimaire,
             'id_superieur' => $request->id_superieur,
         ]);
     
@@ -91,9 +97,15 @@ class DemandeDepartCongesController extends Controller
      */
 public function show($id)
 {
-        set_time_limit(300);
+    $demande = DemandeDepartConges::with(['user.service', 'service', 'superieur'])->findOrFail($id);
+    return view('demandes.show', compact('demande'));
+}
 
-    $demande = DemandeDepartConges::findOrFail($id);
+public function generatePdf($id)
+{
+    set_time_limit(300);
+
+    $demande = DemandeDepartConges::with(['user.service', 'service', 'superieur'])->findOrFail($id);
     $pdf = \PDF::loadView('demandes.show', compact('demande'));
     $pdf->setPaper('a4');
     // Réduire la qualité pour améliorer les performances
@@ -142,21 +154,31 @@ public function show($id)
         'motif' => 'required|string',
         'date_debut' => 'required|date',
         'date_fin' => 'required|date|after_or_equal:date_debut',
-        'nombre_jours_ouvrables' => 'required|integer|min:1',
+        'nombre_jours_ouvrables' => 'nullable|integer|min:1',
         'nombre_jours_calendaires' => 'required|integer|min:1',
         'adresse_sejour' => 'required|string',
+        'nom_interimaire' => 'nullable|string|max:255',
+        'qualification_interimaire' => 'nullable|string|max:255',
+        'fonction_interimaire' => 'nullable|string|max:255',
         'id_superieur' => 'required|exists:users,id',
     ]);
 
     // Mise à jour de la demande
-    $demande->update($request->only([
+    $updateData = $request->only([
         'motif', 
         'date_debut', 
         'date_fin', 
-        'nombre_jours_ouvrables', 
         'nombre_jours_calendaires', 
         'adresse_sejour',
-    ]));
+        'nom_interimaire',
+        'qualification_interimaire',
+        'fonction_interimaire',
+        'id_superieur',
+    ]);
+    
+    $updateData['nombre_jours_ouvrables'] = $request->nombre_jours_ouvrables ?? $demande->nombre_jours_ouvrables;
+    
+    $demande->update($updateData);
 
     // Redirection avec message de succès
     return redirect()->route('demandes.index')->with('success', 'Demande mise à jour avec succès.');

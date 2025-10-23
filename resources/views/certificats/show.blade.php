@@ -11,10 +11,10 @@
         <div class="col-md-12">
             <div class=" p-4">
                 <div class="text-center mb-4">
-                    <h3><strong><u> CERTIFICAT DE TRAVAIL:{{$certificat->id }}</u></strong></h3>
+                    <h3><strong><u> CERTIFICAT DE TRAVAIL</u></strong></h3>
                 </div>
 
-                <p>Je soussigné <strong>GBAHI Djoua Luc</strong>, Directeur Exécutif de la Fédération des OPA de Producteurs de la Filière Hévéa de Côte d’Ivoire (FPH-CI), certifie que M./Mme <strong>{{ $certificat->user->name }}</strong>, de numéro CNPS ou numero de paie <strong>{{ $certificat->user->numcnps }}</strong>, a travaillé à la FPH-CI du <strong>{{ \Carbon\Carbon::parse($certificat->date_debut)->format('d/m/Y') }}</strong> au <strong>{{ \Carbon\Carbon::parse($certificat->date_fin)->format('d/m/Y') }}</strong>.</p>
+                <p>Je soussigné <strong>GBAHI Djoua Luc</strong>, Directeur Exécutif de la Fédération des OPA de Producteurs de la Filière Hévéa de Côte d'Ivoire (FPH-CI), certifie que M./Mme <strong>{{ $certificat->user->name }}</strong>, de numéro CNPS ou numero de paie <strong>{{ $certificat->user->numcnps }}</strong>, a travaillé à la FPH-CI du <strong>{{ \Carbon\Carbon::parse($certificat->date_debut)->locale('fr')->isoFormat('D MMMM YYYY') }}</strong> au <strong>{{ \Carbon\Carbon::parse($certificat->date_fin)->locale('fr')->isoFormat('D MMMM YYYY') }}</strong>.</p>
 
 <p>Il y était sous Contrat à Durée Indéterminée (CDI) en qualité de <strong>{{ $certificat->type_contrat }}</strong>.</p>
 
@@ -30,16 +30,16 @@
 <br/>
 <br/>
                 <p class="text-end">
-                    Fait à Abidjan, le <strong>{{ now()->format('d/m/Y') }}</strong>
+                    Fait à Abidjan, le <strong>{{ now()->locale('fr')->isoFormat('D MMMM YYYY') }}</strong>
                 </p>
                 <p class="text-end">
                <strong>Le Directeur Exécutif</strong>
                 </p>
-                @if($certificat->validation_directeur)
+                {{-- @if($certificat->validation_directeur)
                 <p class="text-end"><strong>Validée</strong></p>
             @else
                 <p class="text-end"><strong>Non Validée</strong></p>
-            @endif
+            @endif --}}
                 <p class="text-end">
                <strong>GBAHI Djoua Luc</strong>
                 </p>

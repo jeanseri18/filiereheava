@@ -141,3 +141,22 @@ Pour tester le système :
 - Le mot de passe email doit être sécurisé
 - Les templates échappent automatiquement les données utilisateur
 - Seuls les utilisateurs autorisés reçoivent les notifications
+
+
+Nom d'utilisateur :	notification.archivage@fphci.com
+Mot de passe :	Utilisez le mot de passe du compte de messagerie.
+Serveur entrant :	mail.fphci.com
+IMAP Port: 993 POP3 Port: 995
+Serveur sortant :	mail.fphci.com
+SMTP Port: 465
+IMAP, POP3 et SMTP require authentication. cree un systeme de notification pour :
+les document partage ,
+creation (notifier les   rh superieur validateur)
+, les validation (notifier le user concerne par la demande ou Autorisations) :
+Autorisations d'Absence ,
+Attestations de Travail,
+Certificats de Travail,
+ Demandes d'Absence,
+ demandes de congés,
+ 
+ Demandes Spéciales (notifier les user dont permissionrh est rh superieur validateur )

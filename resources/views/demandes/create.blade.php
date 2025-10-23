@@ -43,9 +43,9 @@
             <input type="date" name="date_fin" class="form-control" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3" style="display: none;">
             <label>Nombre de jours ouvrables</label>
-            <input type="number" name="nombre_jours_ouvrables" class="form-control" min="1" required>
+            <input type="number" name="nombre_jours_ouvrables" class="form-control" min="1" value="1">
         </div>
 
         <div class="mb-3">
@@ -57,6 +57,22 @@
             <label>Adresse de séjour</label>
             <input type="text" name="adresse_sejour" class="form-control" required>
         </div>
+
+        <div class="mb-3">
+            <label>Nom de la personne assurant l'intérim</label>
+            <input type="text" name="nom_interimaire" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Qualification de l'intérimaire</label>
+            <input type="text" name="qualification_interimaire" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Fonction de l'intérimaire</label>
+            <input type="text" name="fonction_interimaire" class="form-control">
+        </div>
+
         <div class="mb-3">
             <label for="id_superieur" class="form-label">Supérieur Hiérarchique</label>
             <select class="form-control" name="id_superieur" id="id_superieur">

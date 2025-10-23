@@ -41,7 +41,7 @@
                 @foreach ($certificats as $certificat)
                     <tr>
                         <td>{{ $certificat->user->nom }}</td>
-                        <td>{{ $certificat->numero_cnps }}</td>
+                        <td>{{ $certificat->user->numcnps }}</td>
                         <td>{{ $certificat->date_debut->format('d/m/Y') }}</td>
                         <td>{{ $certificat->date_fin->format('d/m/Y') }}</td>
                         <td>{{ $certificat->type_contrat }}</td>

@@ -42,9 +42,9 @@
             <input type="date" name="date_fin" class="form-control" value="{{ $demande->date_fin ? $demande->date_fin->format('Y-m-d') : '' }}" required>
             </div>
 
-        <div class="mb-3">
+        <div class="mb-3" style="display: none;">
             <label>Nombre de jours ouvrables</label>
-            <input type="number" name="nombre_jours_ouvrables" class="form-control" min="1" value="{{ $demande->nombre_jours_ouvrables }}" required>
+            <input type="number" name="nombre_jours_ouvrables" class="form-control" min="1" value="{{ $demande->nombre_jours_ouvrables }}">
         </div>
 
         <div class="mb-3">
@@ -55,6 +55,31 @@
         <div class="mb-3">
             <label>Adresse de séjour</label>
             <input type="text" name="adresse_sejour" class="form-control" value="{{ $demande->adresse_sejour }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Nom de la personne assurant l'intérim</label>
+            <input type="text" name="nom_interimaire" class="form-control" value="{{ $demande->nom_interimaire }}">
+        </div>
+
+        <div class="mb-3">
+            <label>Qualification de l'intérimaire</label>
+            <input type="text" name="qualification_interimaire" class="form-control" value="{{ $demande->qualification_interimaire }}">
+        </div>
+
+        <div class="mb-3">
+            <label>Fonction de l'intérimaire</label>
+            <input type="text" name="fonction_interimaire" class="form-control" value="{{ $demande->fonction_interimaire }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="id_superieur" class="form-label">Supérieur Hiérarchique</label>
+            <select class="form-control" name="id_superieur" id="id_superieur">
+                <option value="">Choisir un supérieur</option>
+                @foreach($superieurs as $superieur)
+                    <option value="{{ $superieur->id }}" {{ $demande->id_superieur == $superieur->id ? 'selected' : '' }}>{{ $superieur->nom }}</option>
+                @endforeach
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary">Mettre à jour</button>
