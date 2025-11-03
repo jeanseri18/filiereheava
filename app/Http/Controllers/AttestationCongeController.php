@@ -16,7 +16,12 @@ class AttestationCongeController extends Controller
      */
     public function index()
     {
-        $attestations = AttestationConge::with(['user', 'demandeConge'])->get();
+        $user = Auth::user();
+
+        $attestations = in_array($user->permissionrh, ['rh', 'validateur'])
+            ? AttestationConge::with(['user', 'demandeConge'])->get()
+            : AttestationConge::with(['user', 'demandeConge'])->where('user_id', $user->id)->get();
+
         return view('attestations_conge.index', compact('attestations'));
     }
 

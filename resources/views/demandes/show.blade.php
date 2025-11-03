@@ -69,9 +69,7 @@
         </tr>
     </table>
 
-    <p class="text-end" style="margin-top: 40px;">
-        Fait à Abidjan, le <strong>{{ now()->locale('fr')->isoFormat('D MMMM YYYY') }}</strong>
-    </p>
+<!-- 
 
     @if($demande->nom_interimaire || $demande->qualification_interimaire || $demande->fonction_interimaire)
     <div class="row mt-3">
@@ -97,7 +95,11 @@
         </div>
         @endif
     </div>
-    @endif
+    @endif -->
+
+        <p class="text-end" style="margin-top: 40px;">
+        Fait à Abidjan, le <strong>{{ now()->locale('fr')->isoFormat('D MMMM YYYY') }}</strong>
+    </p>
 
     <div class="row" style="margin-top: 40px;">
         <div class="col-md-6 text-start">

@@ -7,7 +7,12 @@
         <h1>Liste des Certificats de Travail</h1>
         </div>
         <div  class="col-md-3">
-        <a href="{{ route('certificats.create') }}" class="btn btn-success mb-3">Créer un nouveau certificat</a>
+            @php
+                $permission = Auth::user()->permissionrh ?? null;
+            @endphp
+            @if(in_array($permission, ['rh', 'validateur', ]))
+            <a href="{{ route('certificats.create') }}" class="btn btn-success mb-3">Créer un nouveau certificat</a>
+            @endif
         </div>    </div>
 <br>
 
@@ -55,29 +60,36 @@
                         </td>
                         <td>
                             <a href="{{ route('certificats.show', $certificat->id) }}" class="btn btn-info btn-sm">Afficher</a>
-                            <a href="{{ route('certificats.edit', $certificat->id) }}" class="btn btn-warning btn-sm">Modifier</a>
                             @php
-                        $permission = Auth::user()->permissionrh ?? null;
-                        @endphp
-
-    @if(in_array($permission, ['valideur']))
-                            @if(!$certificat->validation_directeur)
-                                <form action="{{ route('certificats.valider', $certificat->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">Valider</button>
-                                </form>
-                          
-                                <form action="{{ route('certificats.rejeter', $certificat->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
-                                </form>
+                                $permission = Auth::user()->permissionrh ?? null;
+                                $currentUserId = Auth::user()->id;
+                            @endphp
+                            
+                            @if(in_array($permission, ['rh', 'validateur']) || $certificat->id_user == $currentUserId)
+                            <a href="{{ route('certificats.edit', $certificat->id) }}" class="btn btn-warning btn-sm">Modifier</a>
                             @endif
-@endif
+
+                            @if(in_array($permission, ['validateur']))
+                                @if(!$certificat->validation_directeur)
+                                    <form action="{{ route('certificats.valider', $certificat->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success btn-sm">Valider</button>
+                                    </form>
+                              
+                                    <form action="{{ route('certificats.rejeter', $certificat->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
+                                    </form>
+                                @endif
+                            @endif
+                            
+                            @if(in_array($permission, ['rh']) || $certificat->id_user == $currentUserId)
                             <form action="{{ route('certificats.destroy', $certificat->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce certificat ?')">Supprimer</button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

@@ -11,9 +11,13 @@
             <h1>Liste des Attestations de Stage</h1>
         </div>
         <div class="col-md-3">
-
+            @php
+                $permission = Auth::user()->permissionrh ?? null;
+            @endphp
+            @if(in_array($permission, ['rh', 'validateur', ]))
             <a href="{{ route('attestations_stage.create') }}" class="btn btn-success">Créer une Attestation de
                 Stage</a>
+            @endif
         </div>
     </div>
     <br>
@@ -36,7 +40,7 @@
                         <th>Durée Stage</th>
                         <th>Secteur</th>
                         <th>Dates</th>
-                        <!-- <th>Statut</th> -->
+                        <th>Statut</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -49,42 +53,49 @@
                         <td>{{ $attestation->secteur }}</td>
                         <td>{{ $attestation->date_debut->format('d/m/Y') }} -
                             {{ $attestation->date_fin->format('d/m/Y') }}</td>
-                        <!-- <td> @if($attestation->validation_directeur) -->
-                            <!-- <span class="text-success">Validée</span>
+                        <td> @if($attestation->validation_directeur)
+                            <span class="text-success">Validée</span>
                             @else
                             <span class="text-danger">Non validée</span>
-                            @endif -->
-                        <!-- </td> -->
+                            @endif
+                        </td>
                         <td>
                             <div class="d-flex gap-2">
                                 <a href="{{ route('attestations_stage.show', $attestation->id) }}"
                                     class="btn btn-info btn-sm">Voir</a>
+                                @php
+                                    $permission = Auth::user()->permissionrh ?? null;
+                                    $currentUserId = Auth::user()->id;
+                                @endphp
+                                
+                                @if(in_array($permission, ['rh', 'validateur']) || $attestation->id_user == $currentUserId)
                                 <a href="{{ route('attestations_stage.edit', $attestation->id) }}"
                                     class="btn btn-warning btn-sm">Éditer</a>
-                                    @php
-                        $permission = Auth::user()->permissionrh ?? null;
-                        @endphp
-
-    @if(in_array($permission, ['valideur']))
-                                @if(!$attestation->validation_directeur)
-                                <form action="{{ route('attestations_stage.validate', $attestation->id) }}"
-                                    method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">Valider</button>
-                                </form>
-
-                                <form action="{{ route('attestations_stage.reject', $attestation->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
-                                </form>
                                 @endif
-@endif
+
+                                @if(in_array($permission, ['validateur']))
+                                    @if(!$attestation->validation_directeur)
+                                    <form action="{{ route('attestations_stage.validate', $attestation->id) }}"
+                                        method="POST" style="display: inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success btn-sm">Valider</button>
+                                    </form>
+
+                                    <form action="{{ route('attestations_stage.reject', $attestation->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
+                                    </form>
+                                    @endif
+                                @endif
+                                
+                                @if(in_array($permission, ['rh']) || $attestation->id_user == $currentUserId)
                                 <form action="{{ route('attestations_stage.destroy', $attestation->id) }}"
-                                    method="POST">
+                                    method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
                                 </form>
+                                @endif
                             </div>
                         </td>
 

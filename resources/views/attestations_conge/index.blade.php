@@ -10,7 +10,7 @@
             @php
                 $permission = Auth::user()->permissionrh ?? null;
             @endphp
-            @if(in_array($permission, ['rh', 'valideur']))
+            @if(in_array($permission, ['rh', 'validateur', ]))
                 <a href="{{ route('attestations_conge.create') }}" class="btn btn-success">Créer une Attestation</a>
             @endif
         </div>
@@ -63,9 +63,10 @@
                             
                             @php
                                 $permission = Auth::user()->permissionrh ?? null;
+                                $currentUserId = Auth::user()->id;
                             @endphp
                             
-                            @if(in_array($permission, ['rh', 'valideur']))
+                            @if(in_array($permission, ['validateur']))
                                 @if(!$attestation->valide_directeur)
                                     <form action="{{ route('attestations_conge.valider', $attestation->id) }}" method="POST" class="d-inline">
                                         @csrf
@@ -76,9 +77,13 @@
                                         <button type="submit" class="btn btn-warning btn-sm">Rejeter</button>
                                     </form>
                                 @endif
-                                
+                            @endif
+                            
+                            @if(in_array($permission, ['rh', 'validateur']) || $attestation->id_user == $currentUserId)
                                 <a href="{{ route('attestations_conge.edit', $attestation->id) }}" class="btn btn-primary btn-sm">Modifier</a>
-                                
+                            @endif
+                            
+                            @if(in_array($permission, ['rh']) || $attestation->id_user == $currentUserId)
                                 <form action="{{ route('attestations_conge.destroy', $attestation->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')

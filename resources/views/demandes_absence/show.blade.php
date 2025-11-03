@@ -35,7 +35,7 @@
         <div class="row" style="margin-top: 40px;">
             <div class="col-md-6 text-start">
                 <p><strong>Signature du demandeur :</strong><br>
-                {{ $demande->signature_demandeur ?? 'Non signée' }}</p>
+                {{ $demande->signature_demandeur ?? '' }}</p>
             </div>
             {{-- <div class="col-md-11 text-end" style="text-align: right;">
                 <p  style="text-align: right;"><strong>Avis du supérieur :</strong><br>

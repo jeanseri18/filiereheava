@@ -16,7 +16,6 @@
     @endif
     </div>    </div>
 
-        <a href="{{ route('demandes.create') }}" class="btn btn-success mb-3">Nouvelle demande</a>
 
 <br>
     @if(session('success'))

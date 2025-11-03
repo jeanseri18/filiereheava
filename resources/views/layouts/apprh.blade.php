@@ -203,6 +203,30 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('attestations_stage.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-file-earmark-check text-white"></i>
+                                <p>Attestations de Stage</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('attestations_travail.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-file-earmark-person text-white"></i>
+                                <p>Attestations de Travail</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('certificats.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-award text-white"></i>
+                                <p>Certificats de Travail</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('autorisations.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-check-circle text-white"></i>
+                                <p>Autorisations d'Absence</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('demandes_absence.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-gear text-white"></i>
                                 <p>Demande d'absence</p>
@@ -231,15 +255,39 @@
                      
                         
                         @if(in_array($permission, ['demandeur', 'superieur']))
-
-@if(in_array($role, ['manager', 'secretariat']))
-                                   <li class="nav-item">
-                            <a href="{{ route('attestations_travail.index') }}" class="nav-link" style="color:white">
-                                <i class="nav-icon bi bi-gear text-white"></i>
-                                <p>Attestation de travail</p>
+                        <!-- Attestations Section -->
+                        <li class="nav-item">
+                            <a href="{{ route('attestations_stage.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-file-earmark-text text-white"></i>
+                                <p>Attestations de Stage</p>
                             </a>
                         </li>
-                        @endif
+                        <li class="nav-item">
+                            <a href="{{ route('attestations_travail.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-file-earmark-check text-white"></i>
+                                <p>Attestations de Travail</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('certificats.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-file-earmark-medical text-white"></i>
+                                <p>Certificats de Travail</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('autorisations.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-file-earmark-plus text-white"></i>
+                                <p>Autorisations d'Absence</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('attestations_conge.index') }}" class="nav-link" style="color:white">
+                                <i class="nav-icon bi bi-file-earmark-text text-white"></i>
+                                <p>Attestations de Congé</p>
+                            </a>
+                        </li>
+                        
+                        <!-- Demandes Section -->
                         <li class="nav-item">
                             <a href="{{ route('demandes_absence.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-gear text-white"></i>
@@ -258,7 +306,6 @@
                                 <p>Identification personnel</p>
                             </a>
                         </li>
-
                         <li class="nav-item">
                             <a href="{{ route('demandes_speciales.index') }}" class="nav-link" style="color:white">
                                 <i class="nav-icon bi bi-gear text-white"></i>
@@ -271,7 +318,6 @@
                                 <p>Ordre de mission</p>
                             </a>
                         </li>
-                        
                         @endif
 
 

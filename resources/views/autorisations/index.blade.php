@@ -7,8 +7,13 @@
             <h1>Liste des Autorisations d'Absence</h1>
         </div>
         <div class="col-md-3">
+            @php
+                $permission = Auth::user()->permissionrh ?? null;
+            @endphp
+            @if(in_array($permission, ['rh', 'validateur',]))
             <a href="{{ route('autorisations.create') }}" class="btn btn-success mb-3">Créer une nouvelle
                 autorisation</a>
+            @endif
         </div>
     </div>
     <br>
@@ -50,38 +55,43 @@
                 <td>{{ $autorisation->date_fin->format('d/m/Y') }}</td>
                 <td>{{ $autorisation->nombre_jours }}</td>
                 <td>{{ $autorisation->raison }}</td>
-                <!-- <td>
+                <td>
                     @if($autorisation->validation_directeur)
                     <span class="text-success">Validée</span>
                     @else
                     <span class="text-danger">Non validée</span>
                     @endif
-                </td> -->
-                <td> <a href="{{ route('autorisations.show', $autorisation->id) }}"
+                </td>
+                <td> 
+                    <a href="{{ route('autorisations.show', $autorisation->id) }}"
                         class="btn btn-info btn-sm">Afficher</a>
-
-                    <a href="{{ route('autorisations.edit', $autorisation->id) }}"
-                        class="btn btn-warning btn-sm">Modifier</a>
-                    <!-- Formulaire pour la validation -->
                     @php
                         $permission = Auth::user()->permissionrh ?? null;
-                        @endphp
-
-    @if(in_array($permission, ['valideur']))
-                    @if(!$autorisation->validation_directeur)
-                    <form action="{{ route('autorisations.valider', $autorisation->id) }}" method="POST"
-                        style="display:inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-success btn-sm">Valider</button>
-                    </form>
-
-                    <form action="{{ route('autorisations.rejeter', $autorisation->id) }}" method="POST"
-                        style="display:inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
-                    </form>
+                        $currentUserId = Auth::user()->id;
+                    @endphp
+                    
+                    @if(in_array($permission, ['rh', 'validateur']) || $autorisation->id_user == $currentUserId)
+                    <a href="{{ route('autorisations.edit', $autorisation->id) }}"
+                        class="btn btn-warning btn-sm">Modifier</a>
                     @endif
+                    
+                    @if(in_array($permission, ['validateur']))
+                        @if(!$autorisation->validation_directeur)
+                        <form action="{{ route('autorisations.valider', $autorisation->id) }}" method="POST"
+                            style="display:inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-success btn-sm">Valider</button>
+                        </form>
+
+                        <form action="{{ route('autorisations.rejeter', $autorisation->id) }}" method="POST"
+                            style="display:inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
+                        </form>
+                        @endif
                     @endif
+                    
+                    @if(in_array($permission, ['rh']) || $autorisation->id_user == $currentUserId)
                     <form action="{{ route('autorisations.destroy', $autorisation->id) }}" method="POST"
                         style="display:inline;">
                         @csrf
@@ -89,6 +99,7 @@
                         <button type="submit" class="btn btn-danger btn-sm"
                             onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette autorisation ?')">Supprimer</button>
                     </form>
+                    @endif
                 </td>
             </tr>
             @endforeach

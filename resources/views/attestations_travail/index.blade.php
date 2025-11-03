@@ -5,7 +5,12 @@
 <div class="col-md-9">
     <h1>Liste des Attestations de Travail</h1>   </div>
     <div  class="col-md-3">
-    <a href="{{ route('attestations_travail.create') }}" class="btn btn-success">Créer une Attestation</a>
+        @php
+            $permission = Auth::user()->permissionrh ?? null;
+        @endphp
+        @if(in_array($permission, ['rh', 'validateur', ]))
+        <a href="{{ route('attestations_travail.create') }}" class="btn btn-success">Créer une Attestation</a>
+        @endif
     </div>    </div>
     @if(session('success'))
             <div class="alert alert-success">
@@ -48,28 +53,35 @@
                 </td>
                 <td class="d-flex gap-2">
                     <a href="{{ route('attestations_travail.show', $attestation->id) }}" class="btn btn-info btn-sm">Voir</a>
-                    <a href="{{ route('attestations_travail.edit', $attestation->id) }}" class="btn btn-warning btn-sm">Éditer</a>
                     @php
                         $permission = Auth::user()->permissionrh ?? null;
-                        @endphp
-
-    @if(in_array($permission, ['valideur']))
-                    @if(!$attestation->date_validation)
-                        <form action="{{ route('attestations_travail.validate', $attestation->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-success btn-sm">Valider</button>
-                        </form>
-                        <form action="{{ route('attestations_travail.reject', $attestation->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
-                        </form>
+                        $currentUserId = Auth::user()->id;
+                    @endphp
+                    
+                    @if(in_array($permission, ['rh', 'validateur']) || $attestation->id_user == $currentUserId)
+                    <a href="{{ route('attestations_travail.edit', $attestation->id) }}" class="btn btn-warning btn-sm">Éditer</a>
                     @endif
-@endif
+
+                    @if(in_array($permission, ['validateur']))
+                        @if(!$attestation->date_validation)
+                            <form action="{{ route('attestations_travail.validate', $attestation->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-success btn-sm">Valider</button>
+                            </form>
+                            <form action="{{ route('attestations_travail.reject', $attestation->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
+                            </form>
+                        @endif
+                    @endif
+                    
+                    @if(in_array($permission, ['rh']) || $attestation->id_user == $currentUserId)
                     <form action="{{ route('attestations_travail.destroy', $attestation->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
                     </form>
+                    @endif
                 </td>
             </tr>
             @endforeach
